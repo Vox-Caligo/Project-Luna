@@ -27,7 +27,7 @@ public class Pursuing : MonoBehaviour
 		
 		if(xDistance >= yDistance) {
 			if(currentX > targetX) {
-				// test
+				// testing more
 				return 0;
 			} else {
 			
