@@ -1,0 +1,2005 @@
+fileFormatVersion: 2
+guid: f6f79c498d3ad10459aaed2437cc12bb
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: aegis_full_0
+    21300002: aegis_full_1
+    21300004: aegis_full_2
+    21300006: aegis_full_3
+    21300008: aegis_full_4
+    21300010: aegis_full_5
+    21300012: aegis_full_6
+    21300014: aegis_full_7
+    21300016: aegis_full_8
+    21300018: aegis_full_9
+    21300020: aegis_full_10
+    21300022: aegis_full_11
+    21300024: aegis_full_12
+    21300026: aegis_full_13
+    21300028: aegis_full_14
+    21300030: aegis_full_15
+    21300032: aegis_full_16
+    21300034: aegis_full_17
+    21300036: aegis_full_18
+    21300038: aegis_full_19
+    21300040: aegis_full_20
+    21300042: aegis_full_21
+    21300044: aegis_full_22
+    21300046: aegis_full_23
+    21300048: aegis_full_24
+    21300050: aegis_full_25
+    21300052: aegis_full_26
+    21300054: aegis_full_27
+    21300056: aegis_full_28
+    21300058: aegis_full_29
+    21300060: aegis_full_30
+    21300062: aegis_full_31
+    21300064: aegis_full_32
+    21300066: aegis_full_33
+    21300068: aegis_full_34
+    21300070: aegis_full_35
+    21300072: aegis_full_36
+    21300074: aegis_full_37
+    21300076: aegis_full_38
+    21300078: aegis_full_39
+    21300080: aegis_full_40
+    21300082: aegis_full_41
+    21300084: aegis_full_42
+    21300086: aegis_full_43
+    21300088: aegis_full_44
+    21300090: aegis_full_45
+    21300092: aegis_full_46
+    21300094: aegis_full_47
+    21300096: aegis_full_48
+    21300098: aegis_full_49
+    21300100: aegis_full_50
+    21300102: aegis_full_51
+    21300104: aegis_full_52
+    21300106: aegis_full_53
+    21300108: aegis_full_54
+    21300110: aegis_full_55
+    21300112: aegis_full_56
+    21300114: aegis_full_57
+    21300116: aegis_full_58
+    21300118: aegis_full_59
+    21300120: aegis_full_60
+    21300122: aegis_full_61
+    21300124: aegis_full_62
+    21300126: aegis_full_63
+    21300128: aegis_full_64
+    21300130: aegis_full_65
+    21300132: aegis_full_66
+    21300134: aegis_full_67
+    21300136: aegis_full_68
+    21300138: aegis_full_69
+    21300140: aegis_full_70
+    21300142: aegis_full_71
+    21300144: aegis_full_72
+    21300146: aegis_full_73
+    21300148: aegis_full_74
+    21300150: aegis_full_75
+    21300152: aegis_full_76
+    21300154: aegis_full_77
+    21300156: aegis_full_78
+    21300158: aegis_full_79
+    21300160: aegis_full_80
+    21300162: aegis_full_81
+    21300164: aegis_full_82
+    21300166: aegis_full_83
+    21300168: aegis_full_84
+    21300170: aegis_full_85
+    21300172: aegis_full_86
+    21300174: aegis_full_87
+    21300176: aegis_full_88
+    21300178: aegis_full_89
+    21300180: aegis_full_90
+    21300182: aegis_full_91
+    21300184: aegis_full_92
+    21300186: aegis_full_93
+    21300188: aegis_full_94
+    21300190: aegis_full_95
+    21300192: aegis_full_96
+    21300194: aegis_full_97
+    21300196: aegis_full_98
+    21300198: aegis_full_99
+    21300200: aegis_full_100
+    21300202: aegis_full_101
+    21300204: aegis_full_102
+    21300206: aegis_full_103
+    21300208: aegis_full_104
+    21300210: aegis_full_105
+    21300212: aegis_full_106
+    21300214: aegis_full_107
+    21300216: aegis_full_108
+    21300218: aegis_full_109
+    21300220: aegis_full_110
+    21300222: aegis_full_111
+    21300224: aegis_full_112
+    21300226: aegis_full_113
+    21300228: aegis_full_114
+    21300230: aegis_full_115
+    21300232: aegis_full_116
+    21300234: aegis_full_117
+    21300236: aegis_full_118
+    21300238: aegis_full_119
+    21300240: aegis_full_120
+    21300242: aegis_full_121
+    21300244: aegis_full_122
+    21300246: aegis_full_123
+    21300248: aegis_full_124
+    21300250: aegis_full_125
+    21300252: aegis_full_126
+    21300254: aegis_full_127
+    21300256: aegis_full_128
+    21300258: aegis_full_129
+    21300260: aegis_full_130
+    21300262: aegis_full_131
+    21300264: aegis_full_132
+    21300266: aegis_full_133
+    21300268: aegis_full_134
+    21300270: aegis_full_135
+    21300272: aegis_full_136
+    21300274: aegis_full_137
+    21300276: aegis_full_138
+    21300278: aegis_full_139
+    21300280: aegis_full_140
+    21300282: aegis_full_141
+    21300284: aegis_full_142
+    21300286: aegis_full_143
+    21300288: aegis_full_144
+    21300290: aegis_full_145
+    21300292: aegis_full_146
+    21300294: aegis_full_147
+    21300296: aegis_full_148
+    21300298: aegis_full_149
+    21300300: aegis_full_150
+    21300302: aegis_full_151
+    21300304: aegis_full_152
+    21300306: aegis_full_153
+    21300308: aegis_full_154
+    21300310: aegis_full_155
+    21300312: aegis_full_156
+    21300314: aegis_full_157
+    21300316: aegis_full_158
+    21300318: aegis_full_159
+    21300320: aegis_full_160
+    21300322: aegis_full_161
+    21300324: aegis_full_162
+    21300326: aegis_full_163
+    21300328: aegis_full_164
+    21300330: aegis_full_165
+    21300332: aegis_full_166
+    21300334: aegis_full_167
+    21300336: aegis_full_168
+    21300338: aegis_full_169
+    21300340: aegis_full_170
+    21300342: aegis_full_171
+    21300344: aegis_full_172
+    21300346: aegis_full_173
+    21300348: aegis_full_174
+    21300350: aegis_full_175
+    21300352: aegis_full_176
+    21300354: aegis_full_177
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: aegis_full_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 1280
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_1
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 1280
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_2
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 1280
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_3
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 1280
+        width: 37
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_4
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 1280
+        width: 48
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_5
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 1280
+        width: 46
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_6
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 1280
+        width: 36
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_7
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1217
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_8
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1217
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_9
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 1217
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_10
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 1217
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_11
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 1217
+        width: 36
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_12
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 1217
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_13
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 1217
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_14
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 1153
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_15
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 1153
+        width: 30
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_16
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 1153
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_17
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 1153
+        width: 34
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_18
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 1153
+        width: 48
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_19
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 1153
+        width: 46
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_20
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 1153
+        width: 36
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_21
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 1089
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_22
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 1089
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_23
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 1089
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_24
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 1089
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_25
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 1089
+        width: 36
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_26
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 1089
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_27
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 1089
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_28
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 1024
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_29
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 1023
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_30
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 1023
+        width: 31
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_31
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 1023
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_32
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 1023
+        width: 31
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_33
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 1023
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_34
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 1023
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_35
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 1023
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_36
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 961
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_37
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 961
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_38
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 961
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_39
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 961
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_40
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 961
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_41
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 961
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_42
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 961
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_43
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 961
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_44
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 897
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_45
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 897
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_46
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 898
+        width: 27
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_47
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 898
+        width: 28
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_48
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 898
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_49
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 898
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_50
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 898
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_51
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 898
+        width: 28
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_52
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 833
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_53
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 833
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_54
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 833
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_55
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 833
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_56
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 833
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_57
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 833
+        width: 38
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_58
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 833
+        width: 34
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_59
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 833
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_60
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 768
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_61
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 768
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_62
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 768
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_63
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 767
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_64
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 768
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_65
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 768
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_66
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 768
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_67
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 767
+        width: 32
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_68
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 768
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_69
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 705
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_70
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 705
+        width: 31
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_71
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 705
+        width: 32
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_72
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 705
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_73
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 705
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_74
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 705
+        width: 32
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_75
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 705
+        width: 32
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_76
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 705
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_77
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 705
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_78
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 641
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_79
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 641
+        width: 30
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_80
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 640
+        width: 29
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_81
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 640
+        width: 29
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_82
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 640
+        width: 32
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_83
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 641
+        width: 30
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_84
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 640
+        width: 29
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_85
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 640
+        width: 28
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_86
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 640
+        width: 32
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_87
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 577
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_88
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 577
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_89
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 578
+        width: 31
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_90
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 578
+        width: 32
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_91
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 577
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_92
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 577
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_93
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 577
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_94
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 577
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_95
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 577
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_96
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 513
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_97
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 513
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_98
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 513
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_99
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 513
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_100
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 513
+        width: 35
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_101
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 513
+        width: 38
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_102
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 448
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_103
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 448
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_104
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 448
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_105
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 448
+        width: 37
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_106
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 448
+        width: 38
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_107
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 448
+        width: 37
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_108
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 385
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_109
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 385
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_110
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 385
+        width: 28
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_111
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 385
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_112
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 385
+        width: 33
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_113
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 385
+        width: 36
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_114
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 321
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_115
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 321
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_116
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 321
+        width: 31
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_117
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 321
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_118
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 321
+        width: 38
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_119
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 321
+        width: 38
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_120
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 257
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_121
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 255
+        width: 32
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_122
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 255
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_123
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 255
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_124
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 255
+        width: 32
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_125
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 255
+        width: 32
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_126
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 255
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_127
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 255
+        width: 33
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_128
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 255
+        width: 33
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_129
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 255
+        width: 32
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_130
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 255
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_131
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 255
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_132
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 255
+        width: 32
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_133
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 192
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_134
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 192
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_135
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 192
+        width: 37
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_136
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 192
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_137
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 192
+        width: 39
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_138
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 192
+        width: 41
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_139
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 192
+        width: 40
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_140
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 192
+        width: 39
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_141
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 192
+        width: 41
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_142
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 192
+        width: 40
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_143
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 192
+        width: 40
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_144
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 192
+        width: 39
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_145
+      rect:
+        serializedVersion: 2
+        x: 779
+        y: 192
+        width: 39
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_146
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 129
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_147
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 128
+        width: 27
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_148
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 129
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_149
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 129
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_150
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 129
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_151
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 129
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_152
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 129
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_153
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 129
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_154
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 129
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_155
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 129
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_156
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 129
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_157
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 129
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_158
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 129
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_159
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 65
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_160
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 65
+        width: 33
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_161
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 65
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_162
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 65
+        width: 40
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_163
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 65
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_164
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 65
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_165
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 65
+        width: 41
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_166
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 65
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_167
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 65
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_168
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 65
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_169
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 65
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_170
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 65
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_171
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 65
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_172
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_173
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_174
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 1
+        width: 30
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_175
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 1
+        width: 29
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_176
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 2
+        width: 31
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: aegis_full_177
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 0
+        width: 37
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
