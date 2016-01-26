@@ -37,7 +37,6 @@ public class Wandering : MonoBehaviour
 				character.rigidbody2D.velocity = new Vector2(0,0);
 			}
 		}
-		
 		return currentDirection;
 	}
 	

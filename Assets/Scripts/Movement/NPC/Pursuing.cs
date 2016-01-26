@@ -4,15 +4,15 @@ using System.Collections;
 public class Pursuing : MonoBehaviour
 {
 	private GameObject character;
-	private GameObject targetCharacter;
+	private Vector2 targetPoint;
 	
 	public Pursuing (GameObject character) {
 		this.character = character;
 	}
 
 	public int inPursuit() {
-		float targetX = targetCharacter.rigidbody2D.position.x;
-		float targetY = targetCharacter.rigidbody2D.position.y;
+		float targetX = targetPoint.x;
+		float targetY = targetPoint.y;
 		float currentX = this.character.rigidbody2D.position.x;
 		float currentY = this.character.rigidbody2D.position.y;
 		float xVelocity = 0;
@@ -46,7 +46,7 @@ public class Pursuing : MonoBehaviour
 		return currentDirection;
 	}
 	
-	public GameObject TargetCharacter {
-		set {targetCharacter = value;}
+	public Vector2 TargetPoint {
+		set {targetPoint = value;}
 	}
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class NpcMovement : MonoBehaviour {
-	private int currentAction = 1;
+	private int currentAction = 2;
 	private int movementSpeed = 0;
 	private int currentDirection = 0;
 	
@@ -11,6 +11,7 @@ public class NpcMovement : MonoBehaviour {
 	
 	private Wandering wanderingFunctions;
 	private Pursuing pursuingFunctions;
+	private PathFollowing pathfollowingFunctions;
 	
 	// Use this for initialization
 	void Start () {
@@ -18,7 +19,14 @@ public class NpcMovement : MonoBehaviour {
 		movementSpeed = 1;
 		wanderingFunctions = new Wandering(this.gameObject);
 		pursuingFunctions = new Pursuing(this.gameObject);
-		pursuingFunctions.TargetCharacter = GameObject.FindGameObjectWithTag("Player");
+		pursuingFunctions.TargetPoint = GameObject.FindGameObjectWithTag("Player").rigidbody2D.position;
+		
+		ArrayList testPoints = new ArrayList();
+		testPoints.Add(new Vector2(115f, 5f));
+		testPoints.Add(new Vector2(115f, 10f));
+		testPoints.Add(new Vector2(120f, 10f));
+		testPoints.Add(new Vector2(120f, 5f));
+		pathfollowingFunctions = new PathFollowing(this.gameObject, testPoints, true);
 	}
 	
 	// wandering around
@@ -32,19 +40,8 @@ public class NpcMovement : MonoBehaviour {
 		currentDirection = wanderingFunctions.checkDistance(currentDirection);
 	}
 	
-	// following a path
-	private void pathFinding() {
-	
-	}
-	
 	// searching around
-	private void searching() {
-	
-	}
-	
-	public void startPursuit(GameObject targetCharacter) {
-		pursuingFunctions.TargetCharacter = targetCharacter;
-	}
+	private void searching() { }
 	
 	// animation
 	
@@ -58,6 +55,7 @@ public class NpcMovement : MonoBehaviour {
 			currentDirection = pursuingFunctions.inPursuit();
 			break;
 		case 2:
+			currentDirection = pathfollowingFunctions.followPathPoints();
 			break;
 		case 3:
 			break;
