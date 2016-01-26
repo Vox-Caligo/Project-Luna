@@ -11,6 +11,7 @@ public class NpcMovement : MonoBehaviour {
 	
 	private Wandering wanderingFunctions;
 	private Pursuing pursuingFunctions;
+	private PathFollowing pathfollowingFunctions;
 	
 	// Use this for initialization
 	void Start () {
@@ -18,6 +19,13 @@ public class NpcMovement : MonoBehaviour {
 		movementSpeed = 1;
 		wanderingFunctions = new Wandering(this.gameObject);
 		pursuingFunctions = new Pursuing(this.gameObject);
+		pursuingFunctions.TargetCharacter = GameObject.FindGameObjectWithTag("Player");
+		
+		ArrayList testPoints = new ArrayList();
+		testPoints.Add(Vector2(122.7059f, 5.353575f));
+		testPoints.Add(Vector2(122.7059f, 5.353575f));
+		testPoints.Add(Vector2(122.7059f, 5.353575f));
+		pathfollowingFunctions = new PathFollowing(testPoints);
 	}
 	
 	// wandering around
