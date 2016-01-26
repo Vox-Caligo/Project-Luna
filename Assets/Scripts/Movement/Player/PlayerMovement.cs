@@ -14,8 +14,7 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// used to walk around the map as well as apply the correct animation
 	void walk() {
-		Vector2 movement;
-		float turnAroundTime = -.2f;
+		Vector2 movement = new Vector2(0,0);
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");
 		
@@ -23,29 +22,26 @@ public class PlayerMovement : MonoBehaviour {
 			animator.SetBool ("Walking", true);
 			animator.speed = 1;
 			
-			if(inputX != 0) {
-				movement = new Vector2 (speed.x * inputX, 0);
-				
-				if (inputX > turnAroundTime) {
+			if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
+				if (inputX > 0) {
 					animator.SetInteger ("Direction", 3);
 					currDirection = 1;
-				} else if (inputX < -turnAroundTime) {
+				} else {
 					animator.SetInteger ("Direction", 1);
 					currDirection = 0;
 				}
 			} else {
-				movement = new Vector2 (0, speed.y * inputY);
-				
-				if (inputY > turnAroundTime) {
+				if (inputY > 0) {
 					animator.SetInteger ("Direction", 2);
 					currDirection = 2;
-				} else if (inputY < -turnAroundTime) {
+				} else {
 					animator.SetInteger ("Direction", 0);
 					currDirection = 3;
 				}
 			}
+			
+			movement = new Vector2 (speed.x * inputX, speed.y * inputY);
 		} else {
-			movement = new Vector2(0,0);
 			animator.speed = 0;
 			animator.SetBool ("Walking", false);
 		}
