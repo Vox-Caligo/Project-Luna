@@ -18,6 +18,7 @@ public class NpcMovement : MonoBehaviour {
 		movementSpeed = 1;
 		wanderingFunctions = new Wandering(this.gameObject);
 		pursuingFunctions = new Pursuing(this.gameObject);
+		pursuingFunctions.TargetCharacter = GameObject.FindGameObjectWithTag("Player");
 	}
 	
 	// wandering around
