@@ -20,7 +20,6 @@ public class PathFollowing : MonoBehaviour
 	}
 
 	public int followPathPoints() {
-		print (previousPoint + " and " + character.rigidbody2D.position);
 		if(previousPoint != character.rigidbody2D.position) {
 			previousPoint = character.rigidbody2D.position;
 			pursuingFunctions.TargetPoint = (Vector2)pathPoints[currentPoint];
