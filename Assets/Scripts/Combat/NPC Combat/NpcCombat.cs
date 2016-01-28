@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class NpcMovement : MonoBehaviour {
-	
-	public string npcMovementType;
+public class NpcCombat : MonoBehaviour
+{
+	public string npcCombatType;
 	private DefaultMovement npcMovement;
 	
 	// Use this for initialization
 	void Start () {
-		switch(npcMovementType) {
+		switch(npcCombatType) {
 		case "Minion":
 			npcMovement = new MinionMovement(this.gameObject);
 			break;
@@ -23,3 +23,4 @@ public class NpcMovement : MonoBehaviour {
 		npcMovement.runScript();
 	}
 }
+
