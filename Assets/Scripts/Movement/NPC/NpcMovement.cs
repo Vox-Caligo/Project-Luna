@@ -6,7 +6,7 @@ public class NpcMovement : MonoBehaviour {
 	public string npcMovementType;
 	private DefaultMovement npcMovement;
 	
-	// Use this for initialization
+	// Use this for initialization (what)
 	void Start () {
 		switch(npcMovementType) {
 		case "Minion":
