@@ -2,11 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class NpcMovement : MonoBehaviour {
-	public string npcMovementType;
 	private DefaultMovement npcMovement;
 	
 	// Use this for initialization
-	void Start () {
+	public NpcMovement (string npcMovementType) {
 		switch(npcMovementType) {
 		case "Minion":
 			npcMovement = new MinionMovement(this.gameObject);
