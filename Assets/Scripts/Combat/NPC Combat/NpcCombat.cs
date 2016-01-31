@@ -3,24 +3,22 @@ using System.Collections;
 
 public class NpcCombat : MonoBehaviour
 {
-	public string npcCombatType;
-	private DefaultMovement npcMovement;
+	private DefaultCombat npcCombat;
 	
 	// Use this for initialization
-	void Start () {
+	public NpcCombat (string npcCombatType) {
 		switch(npcCombatType) {
 		case "Minion":
-			npcMovement = new MinionMovement(this.gameObject);
+			npcCombat = new MinionCombat();
 			break;
 		default:
-			npcMovement = new DefaultMovement(this.gameObject);
+			npcCombat = new DefaultCombat();
 			break;
 		}
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		npcMovement.runScript();
+		npcCombat.runScript();
 	}
 }
-
