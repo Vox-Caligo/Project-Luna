@@ -9,6 +9,15 @@ public class PlayerCombat : MonoBehaviour
 	private float timerTick = .5f;
 	private float maxTimer = .5f;
 	
+	/* Attack Box: 
+		void Start ()
+		{
+			attackArea = new GameObject();
+			attackArea.transform.parent = gameObject.transform;
+			attackArea.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y);
+		}
+	*/
+	
 	// taking damage
 	// dealing damage
 	// animation
