@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour {
 			animator.SetBool ("Walking", false);
 		}
 		
-		rigidbody2D.velocity = movement;
+		GetComponent<Rigidbody2D>().velocity = movement;
 	}
 	
 	// used for movement

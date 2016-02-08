@@ -4,8 +4,6 @@ using System.Collections;
 public class MinionMovement : DefaultMovement
 {
 	public MinionMovement(GameObject character) : base(character) { 
-		currentAction = 1;
-		movementSpeed = 1;
 		// can change functions here by calling the different ones needed
 	}
 

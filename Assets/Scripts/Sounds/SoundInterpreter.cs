@@ -6,11 +6,11 @@ public class SoundInterpreter : MonoBehaviour {
 	private AudioClip currentSound;
 	
 	void Start() {
-		source = Camera.main.audio;
+		source = Camera.main.GetComponent<AudioSource>();
 	}
 	
 	public void playOneShot(string newSound){
-		source = Camera.main.audio;
+		source = Camera.main.GetComponent<AudioSource>();
 		
 		switch(newSound) {
 		case "slashing attack":
@@ -30,7 +30,7 @@ public class SoundInterpreter : MonoBehaviour {
 	}
 	
 	public void playMusic(string musicTitle, bool repeat){
-		source = Camera.main.audio;
+		source = Camera.main.GetComponent<AudioSource>();
 		
 		switch(musicTitle) {
 		case "Title":

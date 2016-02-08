@@ -8,7 +8,7 @@ public class Wandering : MonoBehaviour
 	
 	public Wandering (GameObject character) {
 		this.character = character;
-		startPoint = character.rigidbody2D.position;
+		startPoint = character.GetComponent<Rigidbody2D>().position;
 	}
 	
 	public int startWandering(int currentDirection, int movementSpeed) {
@@ -23,7 +23,7 @@ public class Wandering : MonoBehaviour
 						currentDirection = 3;
 						movementSpeed *= -1;
 					}
-					character.rigidbody2D.velocity = new Vector2(movementSpeed,0);
+					character.GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed,0);
 				} else {
 					if(newDirection == 0) {
 						currentDirection = 0;
@@ -31,10 +31,10 @@ public class Wandering : MonoBehaviour
 						currentDirection = 2;
 						movementSpeed *= -1;
 					}
-					character.rigidbody2D.velocity = new Vector2(0,movementSpeed);
+					character.GetComponent<Rigidbody2D>().velocity = new Vector2(0,movementSpeed);
 				}
 			} else {
-				character.rigidbody2D.velocity = new Vector2(0,0);
+				character.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
 			}
 		}
 		return currentDirection;
@@ -42,8 +42,8 @@ public class Wandering : MonoBehaviour
 	
 	// Update is called once per frame
 	public int checkDistance(int currentDirection) {
-		if(Vector2.Distance(startPoint, this.character.rigidbody2D.position) > 2) {
-			character.rigidbody2D.velocity = new Vector2(character.rigidbody2D.velocity.x * -1, character.rigidbody2D.velocity.y * -1);
+		if(Vector2.Distance(startPoint, this.character.GetComponent<Rigidbody2D>().position) > 2) {
+			character.GetComponent<Rigidbody2D>().velocity = new Vector2(character.GetComponent<Rigidbody2D>().velocity.x * -1, character.GetComponent<Rigidbody2D>().velocity.y * -1);
 			
 			if(currentDirection < 2)
 				currentDirection += 2;

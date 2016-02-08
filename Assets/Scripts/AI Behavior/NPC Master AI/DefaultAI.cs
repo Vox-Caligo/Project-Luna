@@ -4,16 +4,17 @@ using System.Collections;
 public class DefaultAI : MonoBehaviour
 {
 	public string characterName;
+	protected bool hostile = false;
 	protected NpcCombat characterCombat;
 	protected NpcMovement characterMovement;
-	
+
 	// know when/where to move
 	// know when to attack
 
 	// Use this for initialization
-	public DefaultAI() {
+	public virtual void Start() {
 		characterCombat = new NpcCombat(characterName);
-		characterMovement = new NpcMovement(characterName);
+		characterMovement = new NpcMovement(characterName, this.gameObject);
 	}
 	
 	protected virtual void processDecisions() {
@@ -28,5 +29,9 @@ public class DefaultAI : MonoBehaviour
 	{
 		processDecisions();
 	}
-}
 
+	protected void OnCollisionEnter2D (Collision2D col) {
+		characterMovement.npcMovement.respondToCollision (col.gameObject.tag);
+		// do same for combat
+	}
+}
