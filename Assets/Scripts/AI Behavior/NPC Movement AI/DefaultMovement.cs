@@ -5,8 +5,8 @@ public class DefaultMovement : MonoBehaviour
 {
 	protected GameObject character;
 
-	protected int currentAction = 2;
-	protected int movementSpeed = 0;
+	protected string currentAction = "wander";
+	protected int movementSpeed = 1;
 	protected int currentDirection = 0;
 	
 	protected float timerTick = 2f;
@@ -39,26 +39,33 @@ public class DefaultMovement : MonoBehaviour
 	
 	public virtual void runScript() {		
 		switch(currentAction) {
-		case 0:
+		case "halt":
+			character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
+			break;
+		case "wander":
 			wandering();
 			break;
-		case 1:
-			currentDirection = pursuingFunctions.inPursuit();
+		case "pursue":
+			currentDirection = pursuingFunctions.inPursuit(movementSpeed);
 			break;
-		case 2:
-			currentDirection = pathfollowingFunctions.followPathPoints();
+		case "dash":
+			currentDirection = pursuingFunctions.inPursuit(movementSpeed, true);
 			break;
-		case 3:
+		case "path follow":
+			currentDirection = pathfollowingFunctions.followPathPoints(movementSpeed);
 			break;
 		default:
 			print("Not given a valid movement option");
 			break;
 		}
 	}
+
+	public void respondToCollision(string collidedObject) {
+		print ("Ouchie");
+	}
 	
-	public int CurrentAction {
+	public string CurrentAction {
 		get {return currentAction;}
 		set {currentAction = value;}
 	}
 }
-
