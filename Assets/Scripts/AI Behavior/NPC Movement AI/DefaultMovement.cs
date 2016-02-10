@@ -16,12 +16,16 @@ public class DefaultMovement : MonoBehaviour
 	protected Pursuing pursuingFunctions;
 	protected PathFollowing pathfollowingFunctions;
 	protected ArrayList pathFollowingPoints;
+	protected Bounce bouncingFunctions;
+	protected Dash dashingFunctions;
 	
 	public DefaultMovement(GameObject character) {
 		this.character = character;
 		wanderingFunctions = new Wandering(this.character);
 		pursuingFunctions = new Pursuing(this.character);
 		pathfollowingFunctions = new PathFollowing(this.character, new ArrayList(){new Vector2(115f, 5f), new Vector2(115f, 10f), new Vector2(120f, 10f), new Vector2(120f, 5f)}, true);
+		bouncingFunctions = new Bounce(this.character);
+		dashingFunctions = new Dash(this.character);
 	}
 	
 	// wandering around
@@ -46,13 +50,16 @@ public class DefaultMovement : MonoBehaviour
 			wandering();
 			break;
 		case "pursue":
-			currentDirection = pursuingFunctions.inPursuit(movementSpeed);
+			currentDirection = pursuingFunctions.pursuitCheck(movementSpeed);
 			break;
 		case "dash":
-			currentDirection = pursuingFunctions.inPursuit(movementSpeed, true);
+			currentDirection = dashingFunctions.dashCheck(movementSpeed);
 			break;
 		case "path follow":
 			currentDirection = pathfollowingFunctions.followPathPoints(movementSpeed);
+			break;
+		case "bounce":
+			bouncingFunctions.inBounce(movementSpeed, 5, "north", "west");
 			break;
 		default:
 			print("Not given a valid movement option");
@@ -60,8 +67,13 @@ public class DefaultMovement : MonoBehaviour
 		}
 	}
 
-	public void respondToCollision(string collidedObject) {
-		print ("Ouchie");
+	public void respondToCollision(Collision2D col) {
+		if(col.gameObject.tag == "Structure" && currentAction == "bounce") {
+			if(col.contacts[0].point.x != col.contacts[1].point.x)
+				bouncingFunctions.changeDirection(true);
+			else
+				bouncingFunctions.changeDirection(false);
+		}
 	}
 	
 	public string CurrentAction {

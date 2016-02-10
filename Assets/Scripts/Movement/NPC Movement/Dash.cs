@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
-public class Pursuing : MonoBehaviour
+public class Dash : MonoBehaviour
 {
 	private GameObject character;
 	private Vector2 targetPoint;
@@ -12,11 +12,11 @@ public class Pursuing : MonoBehaviour
 	private float timerTick = .5f;
 	private float maxTimer = .5f;
 	
-	public Pursuing (GameObject character) {
+	public Dash (GameObject character) {
 		this.character = character;
 	}
 
-	public int pursuitCheck(int movementSpeed) {
+	public int dashCheck(int movementSpeed) {
 		float targetX = targetPoint.x;
 		float targetY = targetPoint.y;
 		float currentX = this.character.GetComponent<Rigidbody2D>().position.x;
