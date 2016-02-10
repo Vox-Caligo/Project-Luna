@@ -31,7 +31,7 @@ public class DefaultAI : MonoBehaviour
 	}
 
 	protected void OnCollisionEnter2D (Collision2D col) {
-		characterMovement.npcMovement.respondToCollision (col.gameObject.tag);
+		characterMovement.npcMovement.respondToCollision (col);
 		// do same for combat
 	}
 }
