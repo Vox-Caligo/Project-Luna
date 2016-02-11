@@ -50,10 +50,10 @@ public class DefaultMovement : MonoBehaviour
 			wandering();
 			break;
 		case "pursue":
-			currentDirection = pursuingFunctions.pursuitCheck(movementSpeed);
+			currentDirection = pursuingFunctions.pursuitCheck(movementSpeed, false);
 			break;
 		case "dash":
-			currentDirection = dashingFunctions.dashCheck(movementSpeed);
+			currentDirection = pursuingFunctions.pursuitCheck(movementSpeed, true);
 			break;
 		case "path follow":
 			currentDirection = pathfollowingFunctions.followPathPoints(movementSpeed);
@@ -68,11 +68,13 @@ public class DefaultMovement : MonoBehaviour
 	}
 
 	public void respondToCollision(Collision2D col) {
-		if(col.gameObject.tag == "Structure" && currentAction == "bounce") {
-			if(col.contacts[0].point.x != col.contacts[1].point.x)
-				bouncingFunctions.changeDirection(true);
+		if (col.gameObject.tag == "Structure" && currentAction == "bounce") {
+			if (col.contacts [0].point.x != col.contacts [1].point.x)
+				bouncingFunctions.changeDirection (true);
 			else
-				bouncingFunctions.changeDirection(false);
+				bouncingFunctions.changeDirection (false);
+		} else if (currentAction == "dash") {
+			pursuingFunctions.Dashing = false;
 		}
 	}
 	

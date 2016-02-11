@@ -8,7 +8,9 @@ public class MinionMovement : DefaultMovement
 	}
 
 	public override void runScript() {
-		pursuingFunctions.TargetPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
+		if(!pursuingFunctions.Dashing)
+			pursuingFunctions.TargetPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
+
 		base.runScript();
 	}
 }

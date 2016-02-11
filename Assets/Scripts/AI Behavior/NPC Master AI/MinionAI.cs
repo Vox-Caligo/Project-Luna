@@ -13,7 +13,7 @@ public class MinionAI : DefaultAI
 		//print ("I am a minion making minion decisions");
 
 		// initiate dash
-		characterMovement.npcMovement.CurrentAction = "bounce";
+		characterMovement.npcMovement.CurrentAction = "dash";
 		characterMovement.npcMovement.runScript();
 	}
 }
