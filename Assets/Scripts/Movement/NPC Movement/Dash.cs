@@ -24,14 +24,6 @@ public class Dash : MonoBehaviour
 		float xVelocity = 0;
 		float yVelocity = 0;
 	
-		// float total distance - needed for far range to run at the player accurately
-		float totalDistance = Vector2.Distance(new Vector2(currentX, currentY), new Vector2(targetX, targetY));
-		float xDistance = Vector2.Distance(new Vector2(currentX, 0), new Vector2(targetX, 0));
-		float yDistance = Vector2.Distance(new Vector2(0, currentY), new Vector2(0, targetY));
-
-		// if(totalDistance < )
-		// increase flexability
-
 		if (currentX > targetX) {
 			xVelocity -= movementSpeed;
 			currentDirection = 2;

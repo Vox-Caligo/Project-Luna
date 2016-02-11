@@ -33,6 +33,6 @@ public class PathFollowing : MonoBehaviour
 			}
 		}
 		
-		return pursuingFunctions.inPursuit(movementSpeed);
+		return pursuingFunctions.pursuitCheck(movementSpeed, false);
 	}
 }
