@@ -50,10 +50,13 @@ public class DefaultMovement : MonoBehaviour
 			wandering();
 			break;
 		case "pursue":
-			currentDirection = pursuingFunctions.pursuitCheck(movementSpeed, false);
+			currentDirection = pursuingFunctions.pursuitCheck(movementSpeed);
 			break;
 		case "dash":
-			currentDirection = pursuingFunctions.pursuitCheck(movementSpeed, true);
+			currentDirection = pursuingFunctions.dashCheck(movementSpeed);
+			break;
+		case "flee":
+			currentDirection = pursuingFunctions.fleeCheck (movementSpeed);
 			break;
 		case "path follow":
 			currentDirection = pathfollowingFunctions.followPathPoints(movementSpeed);
