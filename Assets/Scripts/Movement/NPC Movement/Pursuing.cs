@@ -7,9 +7,7 @@ public class Pursuing : MonoBehaviour
 	private Vector2 targetPoint;
 	private Vector2 currentMovement;
 	private int currentDirection = 0;
-
-	// dashing variables
-	private bool dashing = false; 
+	private bool dashing = false;
 
 	// timer properties
 	private float timerTick = .5f;
@@ -19,15 +17,12 @@ public class Pursuing : MonoBehaviour
 		this.character = character;
 	}
 
-	public int pursuitCheck(int movementSpeed, bool dashing) {
-		if (!this.dashing) {
+	public int pursuitCheck(float movementSpeed) {
+		if (!dashing) {
 			float targetX = targetPoint.x;
 			float targetY = targetPoint.y;
 			float currentX = this.character.GetComponent<Rigidbody2D> ().position.x;
 			float currentY = this.character.GetComponent<Rigidbody2D> ().position.y;
-
-			if (dashing)
-				this.dashing = dashing;
 
 			if (currentX > targetX) 
 				currentDirection = 2;
@@ -40,19 +35,26 @@ public class Pursuing : MonoBehaviour
 				currentDirection = 1;
 		}
 
-		if (this.dashing) {
-			movementSpeed *= 5;
-			float newTargetPointX = (targetPoint.x - character.transform.position.x) * 2f;
-			float newTargetPointY = (targetPoint.y - character.transform.position.y) * 2f;
-
-			if (Mathf.Abs(newTargetPointX) <= 100 && Mathf.Abs(newTargetPointY) <= 100) {
-				targetPoint.x += (targetPoint.x - character.transform.position.x) * 2f;
-				targetPoint.y += (targetPoint.y - character.transform.position.y) * 2f;
-			}
-		}
-		
 		character.transform.position = Vector2.MoveTowards(character.transform.position, targetPoint, Time.deltaTime * movementSpeed);
 		return currentDirection;
+	}
+
+	public int dashCheck(float movementSpeed) {
+		float newTargetPointX = (targetPoint.x - character.transform.position.x) * 2f;
+		float newTargetPointY = (targetPoint.y - character.transform.position.y) * 2f;
+
+		if (Mathf.Abs(newTargetPointX) <= 100 && Mathf.Abs(newTargetPointY) <= 100) {
+			targetPoint.x += (targetPoint.x - character.transform.position.x) * 2f;
+			targetPoint.y += (targetPoint.y - character.transform.position.y) * 2f;
+		}
+
+		int newDirection = pursuitCheck (movementSpeed * 2);
+		dashing = true;
+		return newDirection;
+	}
+
+	public int fleeCheck(float movementSpeed) {
+		return pursuitCheck (-movementSpeed);
 	}
 
 	public Vector2 TargetPoint {
