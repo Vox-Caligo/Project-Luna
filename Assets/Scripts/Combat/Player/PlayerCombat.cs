@@ -8,13 +8,11 @@ public class PlayerCombat : Combat
 		// spacebar does attacks (similar to player movement and keys)
 	}
 
-	private void attack() {
-
-	}
-
 	// used for movement
 	void FixedUpdate() {
-		attack ();
+		if(Input.GetKeyDown("space")) {
+
+		}
 	}
 }
 
