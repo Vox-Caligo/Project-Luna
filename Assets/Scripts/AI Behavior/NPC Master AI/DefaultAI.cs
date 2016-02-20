@@ -13,7 +13,7 @@ public class DefaultAI : MonoBehaviour
 
 	// Use this for initialization
 	public virtual void Start() {
-		characterCombat = new NpcCombat(characterName);
+		characterCombat = new NpcCombat(characterName, this.gameObject);
 		characterMovement = new NpcMovement(characterName, this.gameObject);
 	}
 	

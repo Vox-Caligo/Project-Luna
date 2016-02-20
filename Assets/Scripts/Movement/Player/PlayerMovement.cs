@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	// used to walk around the map as well as apply the correct animation
-	void walk() {
+	private void walk() {
 		Vector2 movement = new Vector2(0,0);
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");
