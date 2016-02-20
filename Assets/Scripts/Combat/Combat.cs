@@ -8,8 +8,8 @@ public class Combat : MonoBehaviour {
 
 	// attack timer
 	protected bool inAttack = false;
-	protected float timerTick = .5f;
-	protected float maxTimer = .5f;
+	protected float timerTick = 1500f;
+	protected float maxTimer = 1500f;
 	
 	// attack box variables
 	protected GameObject attackArea;
@@ -23,10 +23,16 @@ public class Combat : MonoBehaviour {
 		this.character = character;
 	}
 
-	public void attacking(int currDirection) {
+	/*
+	protected float attackSpeed() {
+
+	}
+	*/
+	protected void attacking(int currDirection) {
 		if (!inAttack) {
 			inAttack = true;
-			initiateAttack ();
+			if(GameObject.Find ("Player Attack") == null /* || changed weapon*/)
+				initiateAttack ();
 			changeAttackPosition (currDirection, attackWidth, attackRange);
 		}
 	}
@@ -45,35 +51,35 @@ public class Combat : MonoBehaviour {
 		else if(currDirection == 2) { attackArea.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1);} 
 		else if(currDirection == 3) {	attackArea.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1);}
 		
-		BoxCollider2D newView = attackArea.AddComponent<BoxCollider2D>();
-		
 		if(atkWidth < .5f) 
 			atkWidth = .5f;
 		if(atkLength < .5f) 
 			atkLength = .5f;
-		
-		newView.size = new Vector2(atkWidth, atkLength);
-		
+		print ("Doing it");
+		BoxCollider2D weaponHitbox = attackArea.AddComponent<BoxCollider2D>();
+		weaponHitbox.size = new Vector2(atkWidth, atkLength);
+		weaponHitbox.isTrigger = true;
+		weaponHitbox.name = "Player Attack";
+
 		if((currDirection <= 1 && !isHorz) || (currDirection > 1 && isHorz)) {		// left and  right
 			isHorz = !isHorz;
 			attackArea.transform.Rotate(new Vector3(0,0,90));
 		}
-		
-		newView.isTrigger = true;
-		newView.name = "Player Attack";
 	}	
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
-	public void applyAttackDamage(string targetName) {
+	protected void applyAttackDamage(string targetName) {
 		int atkDamage = DialogueLua.GetActorField(characterName, "Damage").AsInt - DialogueLua.GetActorField(targetName, "Defense").AsInt;
 		DialogueLua.SetActorField(targetName, "Health", DialogueLua.GetActorField(targetName, "Health").AsInt - atkDamage);
 	}
 
 	protected virtual void FixedUpdate() {
 		if(inAttack) {
+			print ("TT: " + timerTick);
 			if(timerTick > 0) {
 				timerTick -= Time.deltaTime;						
-			} else if (timerTick <= 0) {
+			} else if (timerTick <= 0 /*weapon speed*/) {
+				print ("Removed hitbox");
 				inAttack = false;
 				timerTick = maxTimer;
 				Destroy(GameObject.Find ("Player Attack").GetComponent<BoxCollider2D>());

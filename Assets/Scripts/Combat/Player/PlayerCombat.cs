@@ -9,10 +9,11 @@ public class PlayerCombat : Combat
 	}
 
 	// used for movement
-	void FixedUpdate() {
+	protected override void FixedUpdate() {
 		if(Input.GetKeyDown("space")) {
-
+			attacking (3);
 		}
+		print ("PTT: " + timerTick + " but at the same time atkRng: " + attackRange);
+		base.FixedUpdate ();
 	}
 }
-
