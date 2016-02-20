@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 
 public class DefaultAI : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class DefaultAI : MonoBehaviour
 	protected bool hostile = false;
 	protected NpcCombat characterCombat;
 	protected NpcMovement characterMovement;
+	protected int health;
 
 	// know when/where to move
 	// know when to attack
@@ -15,6 +17,7 @@ public class DefaultAI : MonoBehaviour
 	public virtual void Start() {
 		characterCombat = new NpcCombat(characterName, this.gameObject);
 		characterMovement = new NpcMovement(characterName, this.gameObject);
+		health = DialogueLua.GetActorField(characterName, "Health").AsInt;
 	}
 	
 	protected virtual void processDecisions() {
@@ -27,7 +30,12 @@ public class DefaultAI : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		processDecisions();
+		print("Health: " + DialogueLua.GetActorField("Player", "Health").AsInt);
+		if(health > 0) {
+			processDecisions();
+		} else {
+			print(characterName + " has died.");
+		}
 	}
 
 	protected void OnCollisionEnter2D (Collision2D col) {
