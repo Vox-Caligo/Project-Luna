@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 
 public class DefaultAI : MonoBehaviour
 {
@@ -7,14 +8,16 @@ public class DefaultAI : MonoBehaviour
 	protected bool hostile = false;
 	protected NpcCombat characterCombat;
 	protected NpcMovement characterMovement;
+	protected int health;
 
 	// know when/where to move
 	// know when to attack
 
 	// Use this for initialization
 	public virtual void Start() {
-		characterCombat = new NpcCombat(characterName);
+		characterCombat = new NpcCombat(characterName, this.gameObject);
 		characterMovement = new NpcMovement(characterName, this.gameObject);
+		health = DialogueLua.GetActorField(characterName, "Health").AsInt;
 	}
 	
 	protected virtual void processDecisions() {

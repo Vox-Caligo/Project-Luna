@@ -3,17 +3,18 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 	// movement variables
+	private GameObject player;
 	private Animator animator;
 	private int currDirection = 2;
 	private Vector2 speed = new Vector2 (5, 5);
 
-	void Start ()
-	{
-		animator = this.GetComponent<Animator> ();
+	public PlayerMovement (GameObject player) {
+		this.player = player;
+		animator = this.player.GetComponent<Animator>();
 	}
 	
 	// used to walk around the map as well as apply the correct animation
-	void walk() {
+	public void walk() {
 		Vector2 movement = new Vector2(0,0);
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");
@@ -46,12 +47,7 @@ public class PlayerMovement : MonoBehaviour {
 			animator.SetBool ("Walking", false);
 		}
 		
-		GetComponent<Rigidbody2D>().velocity = movement;
-	}
-	
-	// used for movement
-	void FixedUpdate() {
-		walk ();
+		player.GetComponent<Rigidbody2D>().velocity = movement;
 	}
 	
 	public int CurrDirection {
