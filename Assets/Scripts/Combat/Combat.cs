@@ -23,6 +23,7 @@ public class Combat : MonoBehaviour {
 	public Combat(string characterName, GameObject character) {
 		this.characterName = characterName;
 		this.character = character;
+		initiateAttackBox ();
 		health = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Health");
 		damage = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Damage");
 		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
@@ -31,21 +32,20 @@ public class Combat : MonoBehaviour {
 	protected void attacking(int currDirection) {
 		if (!inAttack) {
 			inAttack = true;
-			if(GameObject.Find ("Player Attack") == null /* || changed weapon*/)
-				initiateAttack ();
-			changeAttackPosition (currDirection, attackWidth, attackRange);
+			launchAttack (currDirection, attackWidth, attackRange);
 		}
 	}
 
 	// makes the attack area that the character will send out
-	protected virtual void initiateAttack() {
+	protected virtual void initiateAttackBox() {
 		attackArea = new GameObject();
 		attackArea.transform.parent = character.transform;
 		attackArea.transform.position = new Vector3(character.transform.position.x, character.transform.position.y);
+		attackArea.name = characterName + " Attack";
 	}
 	
 	// used for generating the appropriate attack hit box (size, direction, height, width)
-	protected void changeAttackPosition(int currDirection, float atkWidth, float atkLength) {		
+	protected void launchAttack(int currDirection, float atkWidth, float atkLength) {		
 		if(currDirection == 0) { attackArea.transform.position = new Vector3(character.transform.position.x - 1, character.transform.position.y); } 
 		else if(currDirection == 1) {	attackArea.transform.position = new Vector3(character.transform.position.x + 1, character.transform.position.y);} 
 		else if(currDirection == 2) { attackArea.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1);} 
@@ -58,8 +58,6 @@ public class Combat : MonoBehaviour {
 		
 		BoxCollider2D weaponHitbox = attackArea.AddComponent<BoxCollider2D>();
 		weaponHitbox.size = new Vector2(atkWidth, atkLength);
-		weaponHitbox.isTrigger = true;
-		weaponHitbox.name = "Player Attack";
 
 		if((currDirection <= 1 && !isHorz) || (currDirection > 1 && isHorz)) {		// left and  right
 			isHorz = !isHorz;
@@ -68,9 +66,13 @@ public class Combat : MonoBehaviour {
 	}	
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
-	protected void applyAttackDamage(string targetName) {
-		//int atkDamage = damage - DialogueLua.GetActorField(targetName, "Defense").AsInt;
-		//DialogueLua.SetActorField(targetName, "Health", DialogueLua.GetActorField(targetName, "Health").AsInt - atkDamage);
+	public void applyAttackDamage(GameObject target) {
+		int atkDamage = damage - target.GetComponent<Combat>().Defense;
+		target.GetComponent<Combat>().Health = target.GetComponent<Combat>().Health - damage;
+	}
+
+	protected void OnTriggerEnter2D(Collider2D other) {
+		print("test");
 	}
 
 	protected virtual void FixedUpdate() {
@@ -83,5 +85,24 @@ public class Combat : MonoBehaviour {
 				Destroy(GameObject.Find ("Player Attack").GetComponent<BoxCollider2D>());
 			}
 		}
+	}
+
+	public bool InAttack {
+		get {	return inAttack; }
+	}
+
+	public int Health {	
+		get {	return health;	} 
+		set {	health = value;	}
+	}
+
+	public int Damage {	
+		get {	return damage;	} 
+		set {	damage = value;	}
+	}
+
+	public int Defense {	
+		get {	return defense;	} 
+		set {	defense = value;}
 	}
 }

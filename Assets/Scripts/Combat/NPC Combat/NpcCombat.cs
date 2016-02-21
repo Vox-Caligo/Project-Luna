@@ -18,7 +18,7 @@ public class NpcCombat : Combat
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	protected override void FixedUpdate () {
 		npcCombat.runScript();
 	}
 }
