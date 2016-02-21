@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using PixelCrushers.DialogueSystem;
 
 public class Combat : MonoBehaviour {
 	protected GameObject character;
 	protected string characterName;
+	protected int health;
 	protected int damage;
 	protected int defense;
 
@@ -23,11 +23,10 @@ public class Combat : MonoBehaviour {
 	public Combat(string characterName, GameObject character) {
 		this.characterName = characterName;
 		this.character = character;
-		damage = DialogueLua.GetActorField(characterName, "Damage").AsInt;
-		defense = DialogueLua.GetActorField(characterName, "Defense").AsInt;
+		health = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Health");
+		damage = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Damage");
+		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
 	}
-
-	//protected float attackSpeed() {	}
 
 	protected void attacking(int currDirection) {
 		if (!inAttack) {
@@ -70,8 +69,8 @@ public class Combat : MonoBehaviour {
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
 	protected void applyAttackDamage(string targetName) {
-		int atkDamage = damage - DialogueLua.GetActorField(targetName, "Defense").AsInt;
-		DialogueLua.SetActorField(targetName, "Health", DialogueLua.GetActorField(targetName, "Health").AsInt - atkDamage);
+		//int atkDamage = damage - DialogueLua.GetActorField(targetName, "Defense").AsInt;
+		//DialogueLua.SetActorField(targetName, "Health", DialogueLua.GetActorField(targetName, "Health").AsInt - atkDamage);
 	}
 
 	protected virtual void FixedUpdate() {

@@ -30,12 +30,7 @@ public class DefaultAI : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		print("Health: " + DialogueLua.GetActorField("Player", "Health").AsInt);
-		if(health > 0) {
-			processDecisions();
-		} else {
-			print(characterName + " has died.");
-		}
+		processDecisions();
 	}
 
 	protected void OnCollisionEnter2D (Collision2D col) {
