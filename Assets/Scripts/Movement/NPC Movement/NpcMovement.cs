@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class NpcMovement : MonoBehaviour {
+public class NpcMovement : CharacterMovement {
 	public DefaultMovement npcMovement;
 	
 	// Use this for initialization

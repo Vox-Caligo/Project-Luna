@@ -67,8 +67,8 @@ public class Combat : MonoBehaviour {
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
 	public void applyAttackDamage(GameObject target) {
-		int atkDamage = damage - target.GetComponent<Combat>().Defense;
-		target.GetComponent<Combat>().Health = target.GetComponent<Combat>().Health - damage;
+		print("Hitting " + target.name + " with health " + target.GetComponent<DefaultAI>().characterHealth());
+		target.GetComponent<DefaultAI>().characterHealth(target.GetComponent<DefaultAI>().characterHealth() - damage);
 	}
 
 	protected void OnTriggerEnter2D(Collider2D other) {
@@ -82,7 +82,7 @@ public class Combat : MonoBehaviour {
 			} else if (timerTick <= 0 /*weapon speed*/) {
 				inAttack = false;
 				timerTick = maxTimer;
-				Destroy(GameObject.Find ("Player Attack").GetComponent<BoxCollider2D>());
+				Destroy(character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>());
 			}
 		}
 	}
@@ -105,4 +105,6 @@ public class Combat : MonoBehaviour {
 		get {	return defense;	} 
 		set {	defense = value;}
 	}
+
+	public virtual void updatePlayerCombat() {}
 }

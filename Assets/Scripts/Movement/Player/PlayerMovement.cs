@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : CharacterMovement {
 	// movement variables
 	private GameObject player;
 	private Animator animator;
@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	// used to walk around the map as well as apply the correct animation
-	public void walk() {
+	public override void walk() {
 		Vector2 movement = new Vector2(0,0);
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");

@@ -1,23 +1,21 @@
 using UnityEngine;
 using System.Collections;
-using PixelCrushers.DialogueSystem;
 
 public class DefaultAI : MonoBehaviour
 {
 	public string characterName;
 	protected bool hostile = false;
-	protected NpcCombat characterCombat;
-	protected NpcMovement characterMovement;
-	protected int health;
+	protected Combat characterCombat;
+	protected CharacterMovement characterMovement;
 
 	// know when/where to move
 	// know when to attack
 
 	// Use this for initialization
 	public virtual void Start() {
+		print ("Not going here I guess?");
 		characterCombat = new NpcCombat(characterName, this.gameObject);
 		characterMovement = new NpcMovement(characterName, this.gameObject);
-		health = DialogueLua.GetActorField(characterName, "Health").AsInt;
 	}
 	
 	protected virtual void processDecisions() {
@@ -28,13 +26,23 @@ public class DefaultAI : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void FixedUpdate ()
+	protected virtual void FixedUpdate ()
 	{
 		processDecisions();
 	}
 
-	protected void OnCollisionEnter2D (Collision2D col) {
-		characterMovement.npcMovement.respondToCollision (col);
+	protected virtual void OnCollisionEnter2D (Collision2D col) {
+		//characterMovement.npcMovement.respondToCollision (col);
 		// do same for combat
+	}
+
+	// changing values but done so combat doesn't have to be seen by everyone.
+	public int characterHealth(int newHealthValue = -1) {
+		if (newHealthValue == -1) {
+			return characterCombat.Health;
+		} else {
+			characterCombat.Health = newHealthValue;
+			return -1;
+		}
 	}
 }
