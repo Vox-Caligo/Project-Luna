@@ -1,13 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class DefaultMovement : CharacterMovement
+public class DefaultMovementController : CharacterMovementController
 {
 	protected GameObject character;
 	protected string characterName;
 	protected string currentAction = "wander";
 	protected int movementSpeed = 1;
 	protected int currentDirection = 0;
+	protected bool injureViaMovement = false;
 	
 	protected float timerTick = 2f;
 	protected float maxTimer = 2f;
@@ -19,7 +20,7 @@ public class DefaultMovement : CharacterMovement
 	protected Bounce bouncingFunctions;
 	protected Dash dashingFunctions;
 	
-	public DefaultMovement(string characterName, GameObject character) {
+	public DefaultMovementController(string characterName, GameObject character) {
 		this.characterName = characterName;
 		this.character = character;
 		wanderingFunctions = new Wandering(this.character);
@@ -73,10 +74,11 @@ public class DefaultMovement : CharacterMovement
 
 	public void respondToCollision(Collision2D col) {
 		if (col.gameObject.tag == "Structure" && currentAction == "bounce") {
-			if (col.contacts [0].point.x != col.contacts [1].point.x)
+			if (col.contacts [0].point.x != col.contacts [1].point.x) {
 				bouncingFunctions.changeDirection (true);
-			else
+			} else {
 				bouncingFunctions.changeDirection (false);
+			}
 		} else if (currentAction == "dash") {
 			pursuingFunctions.Dashing = false;
 		}
@@ -85,5 +87,10 @@ public class DefaultMovement : CharacterMovement
 	public string CurrentAction {
 		get {return currentAction;}
 		set {currentAction = value;}
+	}
+
+	public bool InjureViaMovement {
+		get {return injureViaMovement;}
+		set {injureViaMovement = value;}
 	}
 }

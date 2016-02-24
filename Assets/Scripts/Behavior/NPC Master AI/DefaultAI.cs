@@ -5,8 +5,8 @@ public class DefaultAI : MasterBehavior
 {
 	// Use this for initialization
 	protected override void Start() {
-		npcCombat = new DefaultCombat(characterName, this.gameObject);
-		npcMovement = new DefaultMovement(characterName, this.gameObject);
+		npcCombat = new DefaultCombatController(characterName, this.gameObject);
+		npcMovement = new DefaultMovementController(characterName, this.gameObject);
 	}
 
 	protected virtual void processDecisions() {

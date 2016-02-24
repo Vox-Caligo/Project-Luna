@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class DefaultCombat : MonoBehaviour
+public class DefaultCombatController : MonoBehaviour
 {
 	protected DefaultNPCCombat npcCombat;
 	
 	// Use this for initialization
-	public DefaultCombat (string characterName, GameObject character) {
+	public DefaultCombatController (string characterName, GameObject character) {
 		switch(characterName) {
 		case "Minion":
 			npcCombat = new DefaultNPCCombat(characterName, character); //MinionCombat();

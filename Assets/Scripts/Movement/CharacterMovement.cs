@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovementController : MonoBehaviour
 {
-	public CharacterMovement() {}
+	public CharacterMovementController() {}
 }
 

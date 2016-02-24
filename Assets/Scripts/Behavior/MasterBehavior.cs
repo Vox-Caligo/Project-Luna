@@ -5,9 +5,9 @@ public class MasterBehavior : MonoBehaviour
 {
 	protected string characterName;
 	protected Combat characterCombat;
-	protected CharacterMovement characterMovement;
-	protected DefaultMovement npcMovement;
-	protected DefaultCombat npcCombat;
+	protected CharacterMovementController characterMovement;
+	protected DefaultMovementController npcMovement;
+	protected DefaultCombatController npcCombat;
 
 	// know when/where to move
 	// know when to attack

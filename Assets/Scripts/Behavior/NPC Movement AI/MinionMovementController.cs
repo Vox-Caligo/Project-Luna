@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class MinionMovement : DefaultMovement
+public class MinionMovementController : DefaultMovementController
 {
-	public MinionMovement(string characterName, GameObject character) : base(characterName, character) { 
+	public MinionMovementController(string characterName, GameObject character) : base(characterName, character) { 
 		// can change functions here by calling the different ones needed
 	}
 

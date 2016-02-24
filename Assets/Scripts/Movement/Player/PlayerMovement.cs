@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : CharacterMovement {
+public class PlayerMovement : CharacterMovementController {
 	// movement variables
 	private GameObject player;
 	private Animator animator;
