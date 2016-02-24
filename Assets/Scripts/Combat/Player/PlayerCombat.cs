@@ -7,9 +7,9 @@ public class PlayerCombat : Combat
 	public PlayerCombat(string characterName, GameObject character) : base(characterName, character) {
 	}
 
-	public void updatePlayerCombat() {
+	public void updatePlayerCombat(int currentDirectior) {
 		if(Input.GetKeyDown("space")) {
-			attacking (3);
+			attacking (currentDirectior);
 		}
 		base.FixedUpdate ();
 	}

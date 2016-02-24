@@ -1,24 +1,24 @@
 using UnityEngine;
 using System.Collections;
 
-public class NpcCombat : Combat
+public class NpcCombat : MonoBehaviour
 {
 	private DefaultCombat npcCombat;
 	
 	// Use this for initialization
-	public NpcCombat (string characterName, GameObject character) : base(characterName, character) {
+	public NpcCombat (string characterName, GameObject character) {
 		switch(characterName) {
 		case "Minion":
-			npcCombat = new MinionCombat();
+			npcCombat = new MinionCombat(characterName, character);
 			break;
 		default:
-			npcCombat = new DefaultCombat();
+			npcCombat = new DefaultCombat(characterName, character);
 			break;
 		}
 	}
 	
 	// Update is called once per frame
-	protected override void FixedUpdate () {
-		npcCombat.runScript();
+	protected virtual void FixedUpdate () {
+		//npcCombat.runScript();
 	}
 }

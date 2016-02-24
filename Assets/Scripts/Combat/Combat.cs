@@ -67,8 +67,14 @@ public class Combat : MonoBehaviour {
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
 	public void applyAttackDamage(GameObject target) {
-		print("Hitting " + target.name + " with health " + target.GetComponent<DefaultAI>().characterHealth());
-		target.GetComponent<DefaultAI>().characterHealth(target.GetComponent<DefaultAI>().characterHealth() - damage);
+		if(target.GetComponent<MasterBehavior>() != null) {
+			print("Hitting " + target.name + " with health " + target.GetComponent<MasterBehavior>().characterHealth());
+			target.GetComponent<MasterBehavior>().characterHealth(target.GetComponent<MasterBehavior>().characterHealth() - damage);
+
+			if(target.GetComponent<MasterBehavior>().characterHealth() <= 0) {
+				Destroy(target);
+			}
+		}
 	}
 
 	protected void OnTriggerEnter2D(Collider2D other) {

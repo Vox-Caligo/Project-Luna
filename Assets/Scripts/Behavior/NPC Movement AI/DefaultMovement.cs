@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class DefaultMovement : MonoBehaviour
+public class DefaultMovement : CharacterMovement
 {
 	protected GameObject character;
-
+	protected string characterName;
 	protected string currentAction = "wander";
 	protected int movementSpeed = 1;
 	protected int currentDirection = 0;
@@ -19,7 +19,8 @@ public class DefaultMovement : MonoBehaviour
 	protected Bounce bouncingFunctions;
 	protected Dash dashingFunctions;
 	
-	public DefaultMovement(GameObject character) {
+	public DefaultMovement(string characterName, GameObject character) {
+		this.characterName = characterName;
 		this.character = character;
 		wanderingFunctions = new Wandering(this.character);
 		pursuingFunctions = new Pursuing(this.character);

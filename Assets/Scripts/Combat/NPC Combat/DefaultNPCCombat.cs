@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DefaultNPCCombat : MonoBehaviour
+public class DefaultNPCCombat : Combat
 {
 
-	public DefaultNPCCombat(GameObject character) {
+	public DefaultNPCCombat(string characterName, GameObject character) : base(characterName, character) {
 
 	}
 

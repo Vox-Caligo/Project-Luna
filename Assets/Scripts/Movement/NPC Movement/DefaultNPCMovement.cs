@@ -6,12 +6,13 @@ public class NpcMovement : CharacterMovement {
 	
 	// Use this for initialization
 	public NpcMovement (string npcMovementType, GameObject character) {
+		print("Not getting here");
 		switch(npcMovementType) {
 		case "Minion":
-			npcMovement = new MinionMovement(character);
+			npcMovement = new MinionMovement(npcMovementType, character);
 			break;
 		default:
-			npcMovement = new DefaultMovement(character);
+			npcMovement = new DefaultMovement(npcMovementType, character);
 			break;
 		}
 	}

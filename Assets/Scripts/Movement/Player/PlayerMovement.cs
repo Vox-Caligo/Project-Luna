@@ -14,7 +14,7 @@ public class PlayerMovement : CharacterMovement {
 	}
 	
 	// used to walk around the map as well as apply the correct animation
-	public override void walk() {
+	public void walk() {
 		Vector2 movement = new Vector2(0,0);
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");

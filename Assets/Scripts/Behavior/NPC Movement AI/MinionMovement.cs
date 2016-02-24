@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MinionMovement : DefaultMovement
 {
-	public MinionMovement(GameObject character) : base(character) { 
+	public MinionMovement(string characterName, GameObject character) : base(characterName, character) { 
 		// can change functions here by calling the different ones needed
 	}
 
