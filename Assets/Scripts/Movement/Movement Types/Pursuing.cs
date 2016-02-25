@@ -58,6 +58,7 @@ public class Pursuing : MonoBehaviour
 	}
 
 	public Vector2 TargetPoint {
+		get { return targetPoint; }
 		set { targetPoint = value; }
 	}
 

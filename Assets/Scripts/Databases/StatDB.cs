@@ -21,14 +21,11 @@ public class StatDB : MonoBehaviour {
 	public int getValue(string character, string soughtValue) {
 		switch (soughtValue) {
 		case "Health":
-			return allCharacters [character].Health;
-			break;
+			return allCharacters[character].Health;
 		case "Damage":
-			return allCharacters [character].Damage;
-			break;
+			return allCharacters[character].Damage;
 		case "Defense":
-			return allCharacters [character].Defense;
-			break;
+			return allCharacters[character].Defense;
 		}
 
 		return -1;
