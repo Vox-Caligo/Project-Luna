@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class PlayerMaster : MasterBehavior {
-	private int currentDirection = 0;
-
 	// know when/where to move
 	// know when to attack
 

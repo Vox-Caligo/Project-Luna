@@ -73,14 +73,23 @@ public class DefaultMovementController : CharacterMovementController
 	}
 
 	public void respondToCollision(Collision2D col) {
-		if (col.gameObject.tag == "Structure" && currentAction == "bounce") {
-			if (col.contacts [0].point.x != col.contacts [1].point.x) {
-				bouncingFunctions.changeDirection (true);
-			} else {
-				bouncingFunctions.changeDirection (false);
+		if (col.gameObject.tag == "Structure") {
+			if(currentAction == "bounce") {
+				if (col.contacts [0].point.x != col.contacts [1].point.x) {
+					bouncingFunctions.changeDirection (true);
+				} else {
+					bouncingFunctions.changeDirection (false);
+				}
+			} else if(currentAction == "dash") {
+				pursuingFunctions.Dashing = false;
 			}
-		} else if (currentAction == "dash") {
-			pursuingFunctions.Dashing = false;
+		} else if(col.gameObject.tag == "Player") {
+			if(currentAction == "bounce") {
+				injureViaMovement = true;
+			} else if (currentAction == "dash") {
+				pursuingFunctions.Dashing = false;
+				injureViaMovement = true;
+			}
 		}
 	}
 	

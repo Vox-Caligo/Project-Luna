@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DefaultAI : MasterBehavior
 {
+	protected Collision2D lastCollision;
+
 	// Use this for initialization
 	protected override void Start() {
 		npcCombat = new DefaultCombatController(characterName, this.gameObject);
@@ -13,10 +15,16 @@ public class DefaultAI : MasterBehavior
 		// determine if actor should move, attack, or other
 		// if move, determine how to move
 		// if attack, determine how to attack
-		print("I am no minion!");
+		if(npcMovement.CurrentAction == "dash" || npcMovement.CurrentAction == "bounce") {
+			if(npcMovement.InjureViaMovement) {
+				// pass to combat apply damage (lastCollision does not contain the actual gameObject)
+				npcCombat.applyAiAttackDamage(lastCollision.gameObject);
+			}
+		}
 	}
 
 	protected virtual void OnCollisionEnter2D (Collision2D col) {
+		lastCollision = col;
 		/*	if(npcCombat.InAttack 
 		if(((NpcCombat)characterCombat).InAttack && col.contacts[0].otherCollider.name == characterName + " Attack") {
 			((NpcCombat)characterCombat).applyAttackDamage (col.contacts [0].collider.gameObject);

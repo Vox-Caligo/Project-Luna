@@ -29,7 +29,7 @@ public class Combat : MonoBehaviour {
 		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
 	}
 
-	protected void attacking(int currDirection) {
+	public void attacking(int currDirection) {
 		if (!inAttack) {
 			inAttack = true;
 			launchAttack (currDirection, attackWidth, attackRange);
@@ -72,7 +72,11 @@ public class Combat : MonoBehaviour {
 			target.GetComponent<MasterBehavior>().characterHealth(target.GetComponent<MasterBehavior>().characterHealth() - damage);
 
 			if(target.GetComponent<MasterBehavior>().characterHealth() <= 0) {
-				Destroy(target);
+				if(target.tag == "Player") {
+					print("The Player has died!");
+				} else {
+					Destroy(target);
+				}
 			}
 		}
 	}
