@@ -2,20 +2,17 @@
 using System.Collections;
 
 public class PlayerMaster : MasterBehavior {
-	private int currentDirection = 0;
-
-	// know when/where to move
-	// know when to attack
+	// get current weapon
+	private string playerWeapon = "Sword";
 
 	// Use this for initialization
 	protected override void Start() {
-		characterCombat = new PlayerCombat("Player", this.gameObject);
+		characterCombat = new PlayerCombat("Player", this.gameObject, playerWeapon);
 		characterMovement = new PlayerMovement(this.gameObject);
 	}
 
 	// Update is called once per frame
-	protected void FixedUpdate ()
-	{
+	protected void FixedUpdate () {
 		((PlayerMovement)characterMovement).walk();
 		((PlayerCombat)characterCombat).updatePlayerCombat(((PlayerMovement)characterMovement).CurrDirection);
 	}

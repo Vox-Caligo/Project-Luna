@@ -11,7 +11,7 @@ public class Wandering : MonoBehaviour
 		startPoint = character.GetComponent<Rigidbody2D>().position;
 	}
 	
-	public int startWandering(int currentDirection, int movementSpeed) {
+	public void startWandering(int currentDirection, int movementSpeed) {
 		if(Random.Range(0, 100) <= 20) {
 			int newDirection = Random.Range(0, 100) % 2;
 			
@@ -37,7 +37,6 @@ public class Wandering : MonoBehaviour
 				character.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
 			}
 		}
-		return currentDirection;
 	}
 	
 	// Update is called once per frame

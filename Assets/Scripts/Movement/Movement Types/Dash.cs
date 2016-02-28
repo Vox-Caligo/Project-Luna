@@ -16,7 +16,7 @@ public class Dash : MonoBehaviour
 		this.character = character;
 	}
 
-	public int dashCheck(int movementSpeed) {
+	public void dashCheck(int movementSpeed) {
 		float targetX = targetPoint.x;
 		float targetY = targetPoint.y;
 		float currentX = this.character.GetComponent<Rigidbody2D>().position.x;
@@ -42,8 +42,6 @@ public class Dash : MonoBehaviour
 			
 		currentMovement = new Vector2 (xVelocity, yVelocity);
 		character.transform.position = Vector3.Lerp(character.transform.position, targetPoint, movementSpeed*Time.deltaTime);
-		//character.GetComponent<Rigidbody2D>().velocity = currentMovement;
-		return currentDirection;
 	}
 
 	public Vector2 TargetPoint {
