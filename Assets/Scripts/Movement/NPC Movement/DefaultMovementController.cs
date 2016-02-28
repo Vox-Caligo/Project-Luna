@@ -49,7 +49,7 @@ public class DefaultMovementController : CharacterMovementController
 	// animation
 	
 	public virtual void runScript() {		
-		bool moving = true;
+		calculateCurrentDirection();
 
 		switch(currentAction) {
 		case "halt":
@@ -75,21 +75,17 @@ public class DefaultMovementController : CharacterMovementController
 			break;
 		case "nearby-player":
 			// face the player
-			nearbyPlayerFunctions.nearbyPlayerCheck(movementSpeed);
-			currentDirection = nearbyPlayerFunctions.CurrentDirection;
-			moving = false;
+			nearbyPlayerFunctions.nearbyPlayerCheck(movementSpeed, currentDirection);
 			break;
 		default:
 			break;
 		}
-
-		calculateCurrentDirection(moving);
 	}
 
-	protected void calculateCurrentDirection(bool moving) {
+	protected void calculateCurrentDirection() {
 		Vector3 currentLocation = character.transform.position;
 
-		if(moving && currentLocation != previousLocation) {
+		if(currentLocation != previousLocation) {
 			if((int)currentLocation.x != (int)previousLocation.x) {
 				// check x coordinates
 				if(currentLocation.x > previousLocation.x) {

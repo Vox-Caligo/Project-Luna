@@ -1,0 +1,27 @@
+To Do:
+	Enemies shouldn't have their movements changed unless they are the cause of it
+	When enemies are below and going for a side attack, maybe they should be at the feet of the enemy?
+		-issue getting stuck on people
+	Probably should have target point for movement be a passed in variable instead of relying on the change to be made manually
+	Standardize left, right, up, and down for currentDirection variable
+		Left:	0
+		Up:		1
+		Right: 	2
+		Down:	3
+
+Done:
+	2/28
+		-When enemies are near for an attack, make sure they are looking at the player even if their last position says otherwise
+	2/27
+		-Attack delay
+		-End attack when opponent is hit
+		-Weapon database
+		-Have it so if character/weapon doesn't exist then it tells the user
+		-Set currentDirection for NPC to be determined by movement (so if they are moving of their own accord the currentDirection reflects the correct way)
+			allow controller to see so it can pass it on to the combat area
+		-Weapon range + width (in database and implemented)
+		
+		Left:	0
+		Right: 	1
+		Up:		2
+		Down:	3

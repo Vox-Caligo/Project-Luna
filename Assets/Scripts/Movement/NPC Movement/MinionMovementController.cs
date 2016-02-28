@@ -9,8 +9,10 @@ public class MinionMovementController : DefaultMovementController
 	}
 
 	public override void runScript() {
-		if(!pursuingFunctions.Dashing)
+		if(!pursuingFunctions.Dashing) {
 			pursuingFunctions.TargetPoint = targetPoint;
+			nearbyPlayerFunctions.TargetPoint = targetPoint;
+		}
 
 		base.runScript();
 	}
