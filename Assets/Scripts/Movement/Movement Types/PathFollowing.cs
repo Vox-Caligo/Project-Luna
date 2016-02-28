@@ -19,7 +19,7 @@ public class PathFollowing : MonoBehaviour
 		previousPoint = new Vector2();
 	}
 
-	public int followPathPoints(int movementSpeed) {
+	public void followPathPoints(int movementSpeed) {
 		if(previousPoint != character.GetComponent<Rigidbody2D>().position) {
 			previousPoint = character.GetComponent<Rigidbody2D>().position;
 			pursuingFunctions.TargetPoint = (Vector2)pathPoints[currentPoint];
@@ -32,7 +32,5 @@ public class PathFollowing : MonoBehaviour
 				previousPoint = new Vector2();
 			}
 		}
-		
-		return pursuingFunctions.pursuitCheck(movementSpeed);
 	}
 }

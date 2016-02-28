@@ -7,7 +7,6 @@ public class MinionAI : DefaultAI
 
 	protected override void Start() {
 		characterName = "Minion";
-		base.Start ();
 		npcCombat = new MinionCombatController(characterName, this.gameObject);
 		npcMovement = new MinionMovementController(characterName, this.gameObject);
 	}
@@ -15,9 +14,19 @@ public class MinionAI : DefaultAI
 	protected override void processDecisions ()
 	{
 		// will eventually go through and actually think things through
-		npcMovement.CurrentAction = "flee";
+		npcMovement.TargetPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
+
+		// pursue the player until close enough, then decide to attack
+		if(Vector2.Distance(currentPosition, npcMovement.TargetPoint) > 1.5f/*this.gameObject.GetComponent<BoxCollider2D>().bounds.*/) {
+			npcMovement.CurrentAction = "pursue";
+			npcCombat.CurrentAction = "";
+		} else {
+			npcMovement.CurrentAction = "nearby-player";
+			npcCombat.CurrentAction = "attack";
+		}
+
 		npcMovement.runScript();
-		npcCombat.runScript();
+		npcCombat.runScript(npcMovement.CurrentDirection);
 		base.processDecisions();
 	}
 

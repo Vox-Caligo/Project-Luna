@@ -5,10 +5,12 @@ public class DefaultMovementController : CharacterMovementController
 {
 	protected GameObject character;
 	protected string characterName;
-	protected string currentAction = "wander";
+	protected string currentAction = "";
 	protected int movementSpeed = 1;
 	protected int currentDirection = 0;
 	protected bool injureViaMovement = false;
+	protected Vector2 targetPoint;
+	protected Vector3 previousLocation;
 	
 	protected float timerTick = 2f;
 	protected float maxTimer = 2f;
@@ -19,6 +21,7 @@ public class DefaultMovementController : CharacterMovementController
 	protected ArrayList pathFollowingPoints;
 	protected Bounce bouncingFunctions;
 	protected Dash dashingFunctions;
+	protected NearbyTarget nearbyPlayerFunctions;
 	
 	public DefaultMovementController(string characterName, GameObject character) {
 		this.characterName = characterName;
@@ -28,6 +31,8 @@ public class DefaultMovementController : CharacterMovementController
 		pathfollowingFunctions = new PathFollowing(this.character, new ArrayList(){new Vector2(115f, 5f), new Vector2(115f, 10f), new Vector2(120f, 10f), new Vector2(120f, 5f)}, true);
 		bouncingFunctions = new Bounce(this.character);
 		dashingFunctions = new Dash(this.character);
+		nearbyPlayerFunctions = new NearbyTarget(this.character, targetPoint, .5f);
+		previousLocation = character.transform.position;
 	}
 	
 	// wandering around
@@ -36,7 +41,7 @@ public class DefaultMovementController : CharacterMovementController
 			timerTick -= Time.deltaTime;						
 		} else if (timerTick <= 0) {
 			timerTick = Random.Range(maxTimer - maxTimer / .25f, maxTimer);
-			currentDirection = wanderingFunctions.startWandering(currentDirection, movementSpeed);
+			wanderingFunctions.startWandering(currentDirection, movementSpeed);
 		}
 		currentDirection = wanderingFunctions.checkDistance(currentDirection);
 	}
@@ -44,6 +49,8 @@ public class DefaultMovementController : CharacterMovementController
 	// animation
 	
 	public virtual void runScript() {		
+		bool moving = true;
+
 		switch(currentAction) {
 		case "halt":
 			character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
@@ -52,24 +59,55 @@ public class DefaultMovementController : CharacterMovementController
 			wandering();
 			break;
 		case "pursue":
-			currentDirection = pursuingFunctions.pursuitCheck(movementSpeed);
+			pursuingFunctions.pursuitCheck(movementSpeed);
 			break;
 		case "dash":
-			currentDirection = pursuingFunctions.dashCheck(movementSpeed);
+			pursuingFunctions.dashCheck(movementSpeed);
 			break;
 		case "flee":
-			currentDirection = pursuingFunctions.fleeCheck (movementSpeed);
+			pursuingFunctions.fleeCheck (movementSpeed);
 			break;
 		case "path follow":
-			currentDirection = pathfollowingFunctions.followPathPoints(movementSpeed);
+			pathfollowingFunctions.followPathPoints(movementSpeed);
 			break;
 		case "bounce":
 			bouncingFunctions.inBounce(movementSpeed, 5, "north", "west");
 			break;
+		case "nearby-player":
+			// face the player
+			nearbyPlayerFunctions.nearbyPlayerCheck(movementSpeed);
+			currentDirection = nearbyPlayerFunctions.CurrentDirection;
+			moving = false;
+			break;
 		default:
-			print("Not given a valid movement option");
 			break;
 		}
+
+		calculateCurrentDirection(moving);
+	}
+
+	protected void calculateCurrentDirection(bool moving) {
+		Vector3 currentLocation = character.transform.position;
+
+		if(moving && currentLocation != previousLocation) {
+			if((int)currentLocation.x != (int)previousLocation.x) {
+				// check x coordinates
+				if(currentLocation.x > previousLocation.x) {
+					currentDirection = 1; // go right
+				} else if(currentLocation.x < previousLocation.x) {
+					currentDirection = 0; // go left
+				}
+			} else {
+				// check y coordinates
+				if((int)currentLocation.y > (int)previousLocation.y) {
+					currentDirection = 2; // go up
+				} else if((int)currentLocation.y < (int)previousLocation.y) {
+					currentDirection = 3; // go down
+				}
+			}
+		}
+
+		previousLocation = currentLocation;
 	}
 
 	public void respondToCollision(Collision2D col) {
@@ -98,8 +136,18 @@ public class DefaultMovementController : CharacterMovementController
 		set {currentAction = value;}
 	}
 
+	public int CurrentDirection {
+		get {return currentDirection;}
+		set {currentDirection = value;}
+	}
+
 	public bool InjureViaMovement {
 		get {return injureViaMovement;}
 		set {injureViaMovement = value;}
+	}
+
+	public Vector2 TargetPoint {
+		get {return targetPoint;}
+		set {targetPoint = value;}
 	}
 }

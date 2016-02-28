@@ -3,8 +3,9 @@ using System.Collections;
 
 public class DefaultCombatController : MonoBehaviour
 {
-	protected DefaultNPCCombat npcCombat;
+	protected DefaultNpcCombat npcCombat;
 	protected string characterName;
+	protected string currentAction = "";
 	
 	// Use this for initialization
 	public DefaultCombatController (string characterName, GameObject character) {
@@ -12,15 +13,29 @@ public class DefaultCombatController : MonoBehaviour
 
 		switch(characterName) {
 		case "Minion":
-			npcCombat = new DefaultNPCCombat(characterName, character); //MinionCombat();
+			npcCombat = new DefaultNpcCombat(characterName, character, "Sword"); //MinionCombat();
 			break;
 		default:
-			npcCombat = new DefaultNPCCombat(characterName, character);
+			npcCombat = new DefaultNpcCombat(characterName, character, "Sword");
 			break;
 		}
 	}
 	
-	public virtual void runScript() { }
+	public virtual void runScript(int currentDirection) {
+		switch(currentAction) {
+		case "attack":
+			npcCombat.attacking(currentDirection);
+			break;
+		case "defend":
+			break;
+		case "counter":
+			break;
+		default:
+			break;
+		}
+
+		npcCombat.updateNpcCombat(currentDirection);
+	}
 
 	public void respondToCollision(Collision2D col) {
 		if(npcCombat.InAttack && col.contacts[0].otherCollider.name == characterName + " Attack") {
@@ -40,6 +55,11 @@ public class DefaultCombatController : MonoBehaviour
 
 	public void applyAiAttackDamage(GameObject targetCharacter) {
 		npcCombat.applyAttackDamage(targetCharacter);
+	}
+
+	public string CurrentAction {
+		get {return currentAction;}
+		set {currentAction = value;}
 	}
 }
 

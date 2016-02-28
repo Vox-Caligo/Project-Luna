@@ -3,15 +3,20 @@ using System.Collections;
 
 public class DefaultAI : MasterBehavior
 {
+	protected Vector2 currentPosition;
 	protected Collision2D lastCollision;
 
 	// Use this for initialization
 	protected override void Start() {
-		npcCombat = new DefaultCombatController(characterName, this.gameObject);
-		npcMovement = new DefaultMovementController(characterName, this.gameObject);
+		if(npcCombat == null)
+			npcCombat = new DefaultCombatController(characterName, this.gameObject);
+
+		if(npcMovement == null)
+			npcMovement = new DefaultMovementController(characterName, this.gameObject);
 	}
 
 	protected virtual void processDecisions() {
+		currentPosition = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
 		// determine if actor should move, attack, or other
 		// if move, determine how to move
 		// if attack, determine how to attack
