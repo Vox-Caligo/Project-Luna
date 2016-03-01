@@ -5,7 +5,7 @@ public class PlayerMovement : CharacterMovementController {
 	// movement variables
 	private GameObject player;
 	private Animator animator;
-	private int currentDirection = 2;
+	private int currentDirection = 3;
 	private Vector2 speed = new Vector2 (5, 5);
 
 	public PlayerMovement (GameObject player) {
@@ -25,18 +25,18 @@ public class PlayerMovement : CharacterMovementController {
 			
 			if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
 				if (inputX > 0) {
-					animator.SetInteger ("Direction", 3);	// go right
-					currentDirection = 1;
-				} else {
-					animator.SetInteger ("Direction", 1);	// go left
+					animator.SetInteger ("Direction", 0);	// go left
 					currentDirection = 0;
+				} else {
+					animator.SetInteger ("Direction", 2);	// go right
+					currentDirection = 2;
 				}
 			} else {
 				if (inputY > 0) {
-					animator.SetInteger ("Direction", 2);	// go up
-					currentDirection = 2;
+					animator.SetInteger ("Direction", 1);	// go up
+					currentDirection = 1;
 				} else {
-					animator.SetInteger ("Direction", 0);	// go down
+					animator.SetInteger ("Direction", 3);	// go down
 					currentDirection = 3;
 				}
 			}

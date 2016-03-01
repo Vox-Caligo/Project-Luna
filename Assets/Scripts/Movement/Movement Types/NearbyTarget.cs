@@ -1,52 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NearbyTarget : MonoBehaviour
+public class NearbyTarget : BaseMovement
 {
-	private GameObject character;
-	private Vector2 targetPoint;
 	private float weaponRange;
 
-	public NearbyTarget (GameObject character, Vector2 targetPoint, float weaponRange) {
-		this.character = character;
-		this.targetPoint = targetPoint;
+	public NearbyTarget (GameObject character, Vector2 targetPoint, float weaponRange) : base(character) {
 		this.weaponRange = weaponRange;
 	}
 
-	public void nearbyPlayerCheck(int movementSpeed, int currentDirection) {
+	public int nearbyPlayerCheck(Vector2 targetPoint, int movementSpeed) {
 		// use a compass rose and proceed to a point on the access near the player and attack
 		// depending on the current direction, line them up
 
 		Vector2 modifiedTargetPoint;
+		int newDirection = -1;
 
-		print("Checking the currentDirection: " + currentDirection);
-		switch(currentDirection) {
-		case 0:	// left
-			modifiedTargetPoint = new Vector2(targetPoint.x - weaponRange, targetPoint.y);
-			break;
-		case 1:	// right
-			modifiedTargetPoint = new Vector2(targetPoint.x + weaponRange, targetPoint.y);
-			break;
-		case 2:	// up
-			modifiedTargetPoint = new Vector2(targetPoint.x, targetPoint.y - weaponRange);
-			break;
-		case 3:	// down
-			modifiedTargetPoint = new Vector2(targetPoint.x, targetPoint.y + weaponRange);
-			break;
-		default:
-			print("Not a valid direction");
-			modifiedTargetPoint = new Vector2();
-			break;
-		}
-
-		if(currentDirection == 0) {
-
+		if(Mathf.Abs(character.transform.position.x - targetPoint.x) >= Mathf.Abs(character.transform.position.y - targetPoint.y)) {
+			if(character.transform.position.x < targetPoint.x) {
+				newDirection = 2;
+				modifiedTargetPoint = new Vector2(targetPoint.x + weaponRange, targetPoint.y);
+			} else {
+				newDirection = 0;
+				modifiedTargetPoint = new Vector2(targetPoint.x - weaponRange, targetPoint.y);
+			}
+		} else {
+			if(character.transform.position.y < targetPoint.y) {
+				newDirection = 1;
+				modifiedTargetPoint = new Vector2(targetPoint.x, targetPoint.y - weaponRange);
+			} else {
+				newDirection = 3;
+				modifiedTargetPoint = new Vector2(targetPoint.x, targetPoint.y + weaponRange);
+			}
 		}
 
 		character.transform.position = Vector3.Lerp(character.transform.position, modifiedTargetPoint, movementSpeed*Time.deltaTime);
-	}
-
-	public Vector2 TargetPoint {
-		set {targetPoint = value;}
+		return newDirection;
 	}
 }

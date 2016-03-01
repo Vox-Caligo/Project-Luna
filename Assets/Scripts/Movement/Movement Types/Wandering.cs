@@ -1,13 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class Wandering : MonoBehaviour
+public class Wandering : BaseMovement
 {
-	private GameObject character;
 	private Vector2 startPoint;
 	
-	public Wandering (GameObject character) {
-		this.character = character;
+	public Wandering (GameObject character) : base(character) {
 		startPoint = character.GetComponent<Rigidbody2D>().position;
 	}
 	

@@ -20,7 +20,6 @@ public class DefaultMovementController : CharacterMovementController
 	protected PathFollowing pathfollowingFunctions;
 	protected ArrayList pathFollowingPoints;
 	protected Bounce bouncingFunctions;
-	protected Dash dashingFunctions;
 	protected NearbyTarget nearbyPlayerFunctions;
 	
 	public DefaultMovementController(string characterName, GameObject character) {
@@ -30,80 +29,58 @@ public class DefaultMovementController : CharacterMovementController
 		pursuingFunctions = new Pursuing(this.character);
 		pathfollowingFunctions = new PathFollowing(this.character, new ArrayList(){new Vector2(115f, 5f), new Vector2(115f, 10f), new Vector2(120f, 10f), new Vector2(120f, 5f)}, true);
 		bouncingFunctions = new Bounce(this.character);
-		dashingFunctions = new Dash(this.character);
 		nearbyPlayerFunctions = new NearbyTarget(this.character, targetPoint, .5f);
 		previousLocation = character.transform.position;
 	}
-	
+
 	// wandering around
-	public virtual void wandering() {
+	public int wandering() {
 		if(timerTick > 0) {
 			timerTick -= Time.deltaTime;						
 		} else if (timerTick <= 0) {
 			timerTick = Random.Range(maxTimer - maxTimer / .25f, maxTimer);
 			wanderingFunctions.startWandering(currentDirection, movementSpeed);
 		}
-		currentDirection = wanderingFunctions.checkDistance(currentDirection);
+
+		return wanderingFunctions.checkDistance(currentDirection);
 	}
 	
 	// animation
 	
-	public virtual void runScript() {		
-		calculateCurrentDirection();
+	public virtual void runScript() {	
+		int moveCharacter = -1;
 
 		switch(currentAction) {
 		case "halt":
 			character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
 			break;
 		case "wander":
-			wandering();
+			moveCharacter = wandering();
 			break;
 		case "pursue":
-			pursuingFunctions.pursuitCheck(movementSpeed);
+			moveCharacter = pursuingFunctions.pursuitCheck(targetPoint, movementSpeed);
 			break;
 		case "dash":
-			pursuingFunctions.dashCheck(movementSpeed);
+			moveCharacter = pursuingFunctions.dashCheck(targetPoint, movementSpeed);
 			break;
 		case "flee":
-			pursuingFunctions.fleeCheck (movementSpeed);
+			moveCharacter = pursuingFunctions.fleeCheck (targetPoint, movementSpeed);
 			break;
 		case "path follow":
-			pathfollowingFunctions.followPathPoints(movementSpeed);
+			moveCharacter = pathfollowingFunctions.followPathPoints(movementSpeed);
 			break;
 		case "bounce":
-			bouncingFunctions.inBounce(movementSpeed, 5, "north", "west");
+			moveCharacter = bouncingFunctions.inBounce(movementSpeed, 5, "north", "west");
 			break;
 		case "nearby-player":
-			// face the player
-			nearbyPlayerFunctions.nearbyPlayerCheck(movementSpeed, currentDirection);
+			moveCharacter = nearbyPlayerFunctions.nearbyPlayerCheck(targetPoint, movementSpeed);
 			break;
 		default:
 			break;
 		}
-	}
 
-	protected void calculateCurrentDirection() {
-		Vector3 currentLocation = character.transform.position;
-
-		if(currentLocation != previousLocation) {
-			if((int)currentLocation.x != (int)previousLocation.x) {
-				// check x coordinates
-				if(currentLocation.x > previousLocation.x) {
-					currentDirection = 1; // go right
-				} else if(currentLocation.x < previousLocation.x) {
-					currentDirection = 0; // go left
-				}
-			} else {
-				// check y coordinates
-				if((int)currentLocation.y > (int)previousLocation.y) {
-					currentDirection = 2; // go up
-				} else if((int)currentLocation.y < (int)previousLocation.y) {
-					currentDirection = 3; // go down
-				}
-			}
-		}
-
-		previousLocation = currentLocation;
+		// TODO: eventually just move this down here when wander is tweaked
+		currentDirection = (moveCharacter != -1) ? moveCharacter : currentDirection;
 	}
 
 	public void respondToCollision(Collision2D col) {
@@ -123,6 +100,10 @@ public class DefaultMovementController : CharacterMovementController
 			} else if (currentAction == "dash") {
 				pursuingFunctions.Dashing = false;
 				injureViaMovement = true;
+				character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
+			} else {
+				print("testing the stop");
+				character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
 			}
 		}
 	}

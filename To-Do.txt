@@ -1,17 +1,24 @@
 To Do:
 	Enemies shouldn't have their movements changed unless they are the cause of it
+		applied to player as well, shouldn't have pushing
+			maybe try applying a reverse force?
+				might have to rethink calculateCurrentDirection in the case of a collision
 	When enemies are below and going for a side attack, maybe they should be at the feet of the enemy?
 		-issue getting stuck on people
-	Probably should have target point for movement be a passed in variable instead of relying on the change to be made manually
-	Standardize left, right, up, and down for currentDirection variable
-		Left:	0
-		Up:		1
-		Right: 	2
-		Down:	3
 
+Future:
+	During polishing, with the directions have them have a bit of nuance but not 100% correct
+		Replace the int casting for a little bit of range
+		
 Done:
+	2/29
+		
 	2/28
 		-When enemies are near for an attack, make sure they are looking at the player even if their last position says otherwise
+		-Probably should have target point for movement be a passed in variable instead of relying on the change to be made manually
+		-Repair dash
+		-Get rid of dash standalone
+		-Standardize left, right, up, and down for currentDirection variable (Left:0 - Up:1 - Right:2 - Down:3)
 	2/27
 		-Attack delay
 		-End attack when opponent is hit
@@ -21,7 +28,8 @@ Done:
 			allow controller to see so it can pass it on to the combat area
 		-Weapon range + width (in database and implemented)
 		
-		Left:	0
-		Right: 	1
-		Up:		2
-		Down:	3
+		
+		Down = Good
+		Left = new Vector2(0, -attackRange);
+		Up = new Vector2(0, attackRange);
+		Right = new Vector2(0, attackRange);

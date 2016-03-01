@@ -56,23 +56,19 @@ public class Combat : MonoBehaviour {
 		BoxCollider2D weaponHitbox = attackArea.AddComponent<BoxCollider2D>();
 		weaponHitbox.size = new Vector2(attackWidth, attackRange);
 
-		if(currentDirection <= 1 && !isHorizontal) {
+		if(currentDirection % 2 == 0 && !isHorizontal) {
 			isHorizontal = true;
 			attackArea.transform.Rotate(new Vector3(0,0,90));
-		} else if (currentDirection > 1 && isHorizontal) {
+		} else if (currentDirection % 2 == 1 && isHorizontal) {
 			isHorizontal = false;
 			attackArea.transform.Rotate(new Vector3(0,0,-90));
 		}
 
-		if(currentDirection == 0) { 		
+		if(currentDirection == 0 || currentDirection == 1) { 		
 			weaponHitbox.offset = new Vector2(0, attackRange); 
-		} else if(currentDirection == 1) {	
+		} else {	
 			weaponHitbox.offset = new Vector2(0, -attackRange);
-		} else if(currentDirection == 2) { 	
-			weaponHitbox.offset = new Vector2(0, attackRange);
-		} else if(currentDirection == 3) {	
-			weaponHitbox.offset = new Vector2(0, -attackRange);
-		}
+		} 
 	}	
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
