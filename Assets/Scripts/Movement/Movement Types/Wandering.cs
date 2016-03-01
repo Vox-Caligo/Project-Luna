@@ -3,50 +3,52 @@ using System.Collections;
 
 public class Wandering : BaseMovement
 {
+	private Vector2 currentDirectionVelocity = new Vector2();
 	private Vector2 startPoint;
+	private float timerTick = 2f;
+	private float maxTimer = 2f;
 	
 	public Wandering (GameObject character) : base(character) {
 		startPoint = character.GetComponent<Rigidbody2D>().position;
 	}
-	
-	public void startWandering(int currentDirection, int movementSpeed) {
-		if(Random.Range(0, 100) <= 20) {
-			int newDirection = Random.Range(0, 100) % 2;
-			
-			if(newDirection <= 20) {
-				if(currentDirection % 2 == 0) {
-					if(newDirection == 0) {
-						currentDirection = 1;
-					} else {
-						currentDirection = 3;
-						movementSpeed *= -1;
-					}
-					character.GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed,0);
-				} else {
-					if(newDirection == 0) {
-						currentDirection = 0;
-					} else {
-						currentDirection = 2;
-						movementSpeed *= -1;
-					}
-					character.GetComponent<Rigidbody2D>().velocity = new Vector2(0,movementSpeed);
-				}
-			} else {
-				character.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
-			}
+
+	// wandering around
+	public int wanderingCheck(float movementSpeed) {
+		if(timerTick > 0) {
+			timerTick -= Time.deltaTime;
+			return proceedToWandering(movementSpeed, false);						
+		} else {
+			timerTick = Random.Range(maxTimer - maxTimer / .25f, maxTimer);
+			return proceedToWandering(movementSpeed, true);
 		}
 	}
-	
-	// Update is called once per frame
-	public int checkDistance(int currentDirection) {
-		if(Vector2.Distance(startPoint, this.character.GetComponent<Rigidbody2D>().position) > 2) {
-			character.GetComponent<Rigidbody2D>().velocity = new Vector2(character.GetComponent<Rigidbody2D>().velocity.x * -1, character.GetComponent<Rigidbody2D>().velocity.y * -1);
-			
-			if(currentDirection < 2)
-				currentDirection += 2;
-			else
-				currentDirection -= 2;
+
+	// has the player move and sets the direction they are going
+	private int proceedToWandering(float movementSpeed, bool determineNewDirection) {
+		int newCurrentDirection = -1;
+
+		if(determineNewDirection) {
+			int newDirection = Random.Range(0, 20);
+
+			if(newDirection <= 5) {
+				currentDirectionVelocity = new Vector2(-movementSpeed, 0);
+				newCurrentDirection = 0;
+			} else if(newDirection <= 10) {
+				currentDirectionVelocity = new Vector2(0, movementSpeed);
+				newCurrentDirection = 1;
+			} else if(newDirection <= 15) {
+				currentDirectionVelocity = new Vector2(movementSpeed, 0);
+				newCurrentDirection = 2;
+			} else if(newDirection <= 20) {
+				currentDirectionVelocity = new Vector2(0, -movementSpeed);
+				return 3;
+			} else {
+				currentDirectionVelocity = new Vector2(0,0);
+				newCurrentDirection = -1;
+			}
 		}
-		return currentDirection;
+
+		character.GetComponent<Rigidbody2D>().velocity = currentDirectionVelocity;
+		return newCurrentDirection;
 	}
 }

@@ -1,18 +1,16 @@
 To Do:
-	Enemies shouldn't have their movements changed unless they are the cause of it
-		applied to player as well, shouldn't have pushing
-			maybe try applying a reverse force?
-				might have to rethink calculateCurrentDirection in the case of a collision
-	When enemies are below and going for a side attack, maybe they should be at the feet of the enemy?
-		-issue getting stuck on people
+	Puzzle pieces
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
 		Replace the int casting for a little bit of range
+	During polishing, wander should not stray too far from the start point when it begins to move
 		
 Done:
 	2/29
-		
+		-Enemies shouldn't have their movements changed unless they are the cause of it
+		-When enemies are below and going for a side attack, maybe they should be at the feet of the enemy?
+		-Replace wander with a more up to date version (not having it segmented around)
 	2/28
 		-When enemies are near for an attack, make sure they are looking at the player even if their last position says otherwise
 		-Probably should have target point for movement be a passed in variable instead of relying on the change to be made manually

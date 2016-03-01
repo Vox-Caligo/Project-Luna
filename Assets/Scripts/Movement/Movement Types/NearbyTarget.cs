@@ -9,7 +9,7 @@ public class NearbyTarget : BaseMovement
 		this.weaponRange = weaponRange;
 	}
 
-	public int nearbyPlayerCheck(Vector2 targetPoint, int movementSpeed) {
+	public int nearbyPlayerCheck(Vector2 targetPoint, float movementSpeed) {
 		// use a compass rose and proceed to a point on the access near the player and attack
 		// depending on the current direction, line them up
 

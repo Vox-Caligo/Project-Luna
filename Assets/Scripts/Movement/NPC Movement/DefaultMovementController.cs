@@ -6,14 +6,11 @@ public class DefaultMovementController : CharacterMovementController
 	protected GameObject character;
 	protected string characterName;
 	protected string currentAction = "";
-	protected int movementSpeed = 1;
+	protected float movementSpeed = 1;
 	protected int currentDirection = 0;
 	protected bool injureViaMovement = false;
 	protected Vector2 targetPoint;
 	protected Vector3 previousLocation;
-	
-	protected float timerTick = 2f;
-	protected float maxTimer = 2f;
 	
 	protected Wandering wanderingFunctions;
 	protected Pursuing pursuingFunctions;
@@ -32,18 +29,6 @@ public class DefaultMovementController : CharacterMovementController
 		nearbyPlayerFunctions = new NearbyTarget(this.character, targetPoint, .5f);
 		previousLocation = character.transform.position;
 	}
-
-	// wandering around
-	public int wandering() {
-		if(timerTick > 0) {
-			timerTick -= Time.deltaTime;						
-		} else if (timerTick <= 0) {
-			timerTick = Random.Range(maxTimer - maxTimer / .25f, maxTimer);
-			wanderingFunctions.startWandering(currentDirection, movementSpeed);
-		}
-
-		return wanderingFunctions.checkDistance(currentDirection);
-	}
 	
 	// animation
 	
@@ -55,7 +40,7 @@ public class DefaultMovementController : CharacterMovementController
 			character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
 			break;
 		case "wander":
-			moveCharacter = wandering();
+			moveCharacter = wanderingFunctions.wanderingCheck(movementSpeed);
 			break;
 		case "pursue":
 			moveCharacter = pursuingFunctions.pursuitCheck(targetPoint, movementSpeed);

@@ -18,7 +18,7 @@ public class PathFollowing : BaseMovement
 		previousPoint = new Vector2();
 	}
 
-	public int followPathPoints(int movementSpeed) {
+	public int followPathPoints(float movementSpeed) {
 		if(previousPoint != character.GetComponent<Rigidbody2D>().position) {
 			previousPoint = character.GetComponent<Rigidbody2D>().position;
 			return pursuingFunctions.pursuitCheck((Vector2)pathPoints[currentPoint], movementSpeed);
