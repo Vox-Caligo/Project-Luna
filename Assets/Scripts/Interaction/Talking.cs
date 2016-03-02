@@ -15,7 +15,7 @@ public class Talking : MonoBehaviour
 	}
 
 	void FixedUpdate() {
-		reticle.direction = this.gameObject.GetComponent<PlayerMovement>().CurrDirection;
+		reticle.direction = this.gameObject.GetComponent<PlayerMovement>().CurrentDirection;
 		reticle.CustomPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y);
 	}
 }
