@@ -4,6 +4,7 @@ using System.Collections;
 public class OnOffPuzzlePiece : LeverPuzzlePiece {
 	public bool isOn = false;
 	public bool shouldBeOn = false;
+	public int pieceId = 0;
 
 	// Use this for initialization
 	void Start () {

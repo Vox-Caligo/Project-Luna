@@ -3,6 +3,9 @@ using System.Collections;
 
 public class InOrderPuzzlePiece : LeverPuzzlePiece {
 
+	public int[] whenToHitInOrder;
+	private int numberOfActivations = 0;
+
 	// Use this for initialization
 	void Start () {
 		foreach(GameObject newPuzzleController in GameObject.FindGameObjectsWithTag("Puzzle Controller")) {
@@ -17,8 +20,25 @@ public class InOrderPuzzlePiece : LeverPuzzlePiece {
 
 	public override void onInteraction() {
 		if(!deactivated) {
-			((InOrderPuzzleController)puzzleController).addToPiecesCollected(this.pieceId);
+			bool resetActivations;
+
+			if (numberOfActivations < whenToHitInOrder.Length) {
+				resetActivations =((InOrderPuzzleController)puzzleController).addToPiecesCollected((int)whenToHitInOrder [numberOfActivations]);
+			} else {
+				resetActivations = ((InOrderPuzzleController)puzzleController).addToPiecesCollected (-1);
+			}
+
+			if (resetActivations) {
+				numberOfActivations++;
+			} else {
+				numberOfActivations = 0;
+			}
+
 			base.onInteraction();
 		}
+	}
+
+	public int countOfWhenToHitInOrder() {
+		return whenToHitInOrder.Length;
 	}
 }

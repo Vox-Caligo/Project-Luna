@@ -4,7 +4,6 @@ using System.Collections;
 public class LeverPuzzlePiece : InteractableItem
 {
 	public int puzzleGroup = 0;
-	public int pieceId = 0;
 	protected bool deactivated = false;
 	protected LeverPuzzleController puzzleController;
 

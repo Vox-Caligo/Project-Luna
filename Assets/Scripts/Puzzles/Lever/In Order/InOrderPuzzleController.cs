@@ -3,7 +3,7 @@ using System.Collections;
 
 public class InOrderPuzzleController : LeverPuzzleController
 {
-	private ArrayList puzzlePiecesCollected = new ArrayList();
+	private int puzzlePieceRunner = 0;
 
 	void Start() {
 		foreach(GameObject possiblePieces in GameObject.FindGameObjectsWithTag("Puzzle Piece")) {
@@ -11,23 +11,26 @@ public class InOrderPuzzleController : LeverPuzzleController
 
 			if(possiblePiece != null && possiblePiece.PuzzleGroup == puzzleGroup) {
 				puzzlePiecesOfGroup.Add(possiblePiece);
-				numberOfPieces++;
+				numberOfPieces += possiblePiece.countOfWhenToHitInOrder();
 			}
 		}
 	}
 
-	public void addToPiecesCollected(int pieceId) {
-		if(pieceId == puzzlePiecesCollected.Count) {
-			puzzlePiecesCollected.Add(pieceId);
+	public bool addToPiecesCollected(int pieceId) {
+		print ("Runner is at: " + puzzlePieceRunner + " and given piece is: " + pieceId);
+		if(pieceId == puzzlePieceRunner) {
+			puzzlePieceRunner++;
 			print("Correct");
+			return true;
 		} else {
-			puzzlePiecesCollected.Clear();	
+			puzzlePieceRunner = 0;	
 			print("Incorrect");	// make an indication that it's wrong
+			return false;
 		}
 	}
 
 	public override void checkIfSolved() {
-		if(puzzlePiecesCollected.Count == numberOfPieces) {
+		if(puzzlePieceRunner == numberOfPieces) {
 			print("Yay, solved!");	// success (be sure to tag all puzzle pieces)
 			base.checkIfSolved();
 		}

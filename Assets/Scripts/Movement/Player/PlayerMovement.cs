@@ -69,7 +69,7 @@ public class PlayerMovement : CharacterMovementController {
 	}
 
 	private void rearrangeInteractionArea() {
-		float distanceFromPlayer = .25f;
+		float distanceFromPlayer = .30f;
 
 		switch(currentDirection) {
 		case 0:
