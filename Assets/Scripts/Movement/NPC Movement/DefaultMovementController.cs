@@ -87,7 +87,6 @@ public class DefaultMovementController : CharacterMovementController
 				injureViaMovement = true;
 				character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
 			} else {
-				print("testing the stop");
 				character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
 			}
 		}

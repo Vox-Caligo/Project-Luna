@@ -13,9 +13,9 @@ public class BaseMovement : MonoBehaviour
 		if((int)currentPosition.x != (int)newPosition.x) {
 			// check x coordinates
 			if(currentPosition.x < newPosition.x) {
-				return 2; // go right
-			} else {
 				return 0; // go left
+			} else {
+				return 2; // go right
 			}
 		} else if((int)currentPosition.y != (int)newPosition.y) {
 			// check y coordinates

@@ -1,5 +1,16 @@
 To Do:
-	Puzzle pieces
+	Terrain
+		Teleport pads (sibling pads)
+			Awesome puzzle with sliding and teleports
+	Jump Pad Puzzles
+		Puzzle where you hit jump pads and have to navigate the course (somewhat maze like)
+	Placement Puzzles
+		Place things in the correct spot
+		2 types
+			-Place items in holes
+			-Place items down and they move to a location
+	Observation
+		Need to observe the room/level/game for the answer
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
@@ -7,6 +18,19 @@ Future:
 	During polishing, wander should not stray too far from the start point when it begins to move
 		
 Done:
+	3/3
+		-Created terrain script
+		-Slowdown is working
+		-Sliding is working
+		-Fixed so colliders are applied until the object is completely out
+		-Fixed direction issue on player (animator had wrong values)
+
+	3/2
+		-Finished Lever Puzzle(Activate buttons in order)
+		-Finished Lever Puzzle(On/Off Puzzle)
+	3/1
+		-Set up for lever puzzles
+		-Created defaults
 	2/29
 		-Enemies shouldn't have their movements changed unless they are the cause of it
 		-When enemies are below and going for a side attack, maybe they should be at the feet of the enemy?

@@ -5,35 +5,25 @@ public class PlayerMovement : CharacterMovementController {
 	// movement variables
 	private GameObject player;
 	private Animator animator;
-	private int currentDirection = 3;
+	private int currentDirection = 1;
 	private Vector2 speed = new Vector2 (5, 5);
-	private GameObject interactionArea;
+	private TerrainPiece currentTerrain = new TerrainPiece();
 
 	public PlayerMovement (GameObject player) {
 		this.player = player;
 		animator = this.player.GetComponent<Animator>();
-		initiateInteractionBox();
-	}
-
-	private void initiateInteractionBox() {
-		interactionArea = new GameObject();
-		interactionArea.transform.parent = player.transform;
-		interactionArea.transform.position = interactionArea.transform.parent.position;
-		interactionArea.name = "Player Interaction Box";
-
-		BoxCollider2D interactionBox = interactionArea.AddComponent<BoxCollider2D>();
-		interactionBox.isTrigger = true;
-		interactionBox.size = new Vector2(.1f, .1f);
 	}
 
 	public void updatePlayerMovement() {
-		walk();
-		rearrangeInteractionArea();
+		if(!currentTerrain.isSlippery) {
+			walk();
+		} else {
+			slide();
+		}
 	}
 	
 	// used to walk around the map as well as apply the correct animation
 	private void walk() {
-		Vector2 movement = new Vector2(0,0);
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");
 		
@@ -42,7 +32,7 @@ public class PlayerMovement : CharacterMovementController {
 			animator.speed = 1;
 			
 			if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
-				if (inputX > 0) {
+				if (inputX < 0) {
 					animator.SetInteger ("Direction", 0);	// go left
 					currentDirection = 0;
 				} else {
@@ -58,36 +48,49 @@ public class PlayerMovement : CharacterMovementController {
 					currentDirection = 3;
 				}
 			}
-			
-			movement = new Vector2 (speed.x * inputX, speed.y * inputY);
+
+			applyMovement(new Vector2 ((speed.x * inputX), (speed.y * inputY)));
 		} else {
 			animator.speed = 0;
 			animator.SetBool ("Walking", false);
 		}
-		
-		player.GetComponent<Rigidbody2D>().velocity = movement;
 	}
 
-	private void rearrangeInteractionArea() {
-		float distanceFromPlayer = .30f;
+	// has the player slide until out of the terrain
+	private void slide() {
+		int xVelocity = 0, yVelocity = 0;
 
-		switch(currentDirection) {
-		case 0:
-			interactionArea.transform.localPosition = new Vector2(distanceFromPlayer, 0);
-			break;
-		case 1:
-			interactionArea.transform.localPosition = new Vector2(0, distanceFromPlayer);
-			break;
-		case 2:
-			interactionArea.transform.localPosition = new Vector2(-distanceFromPlayer, 0);
-			break;
-		case 3:
-			interactionArea.transform.localPosition = new Vector2(0, -distanceFromPlayer);
-			break;
-		default:
-			print("This isn't a valid direction");
-			break;
+		if(currentDirection == 0) {
+			xVelocity = 1;
+		} else if(currentDirection == 1) {
+			yVelocity = 1;
+		} else if (currentDirection == 2) {
+			xVelocity = -1;
+		} else {
+			yVelocity = -1;
 		}
+
+		applyMovement(new Vector2 ((speed.x * xVelocity), (speed.y * yVelocity)));
+	}
+
+	// applies movement to the player
+	private void applyMovement(Vector2 calculatedMovement) {
+		float terrainModifier = 1;
+
+		if(currentTerrain.isSlowdown) {
+			terrainModifier = currentTerrain.slowdownSpeed;
+		}
+
+		if(currentTerrain.isSpeedup) {
+			terrainModifier = currentTerrain.speedupSpeed;
+		}
+
+
+		player.GetComponent<Rigidbody2D>().velocity = new Vector2 (calculatedMovement.x * terrainModifier, calculatedMovement.y * terrainModifier);
+	}
+
+	public TerrainPiece CurrentTerrain {
+		set {currentTerrain = value;}
 	}
 	
 	public int CurrentDirection {
