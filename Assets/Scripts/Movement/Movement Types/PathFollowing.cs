@@ -2,16 +2,15 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PathFollowing : MonoBehaviour
+public class PathFollowing : BaseMovement
 {
 	private Pursuing pursuingFunctions;
 	private Vector2 previousPoint;
-	private GameObject character;
 	private ArrayList pathPoints;
 	private int currentPoint = 0;
 	private bool repeatable;
 	
-	public PathFollowing(GameObject character, ArrayList pathPoints, bool repeatable) {
+	public PathFollowing(GameObject character, ArrayList pathPoints, bool repeatable) : base(character) {
 		this.pathPoints = pathPoints;
 		pursuingFunctions = new Pursuing(character);
 		this.character = character;
@@ -19,10 +18,10 @@ public class PathFollowing : MonoBehaviour
 		previousPoint = new Vector2();
 	}
 
-	public void followPathPoints(int movementSpeed) {
+	public int followPathPoints(float movementSpeed) {
 		if(previousPoint != character.GetComponent<Rigidbody2D>().position) {
 			previousPoint = character.GetComponent<Rigidbody2D>().position;
-			pursuingFunctions.TargetPoint = (Vector2)pathPoints[currentPoint];
+			return pursuingFunctions.pursuitCheck((Vector2)pathPoints[currentPoint], movementSpeed);
 		} else {
 			if(currentPoint < pathPoints.Count - 1) {
 				currentPoint++;
@@ -32,5 +31,7 @@ public class PathFollowing : MonoBehaviour
 				previousPoint = new Vector2();
 			}
 		}
+
+		return -1;
 	}
 }

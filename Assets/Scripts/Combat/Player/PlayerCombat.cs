@@ -11,6 +11,6 @@ public class PlayerCombat : Combat
 		if(Input.GetKeyDown("space")) {
 			attacking (currentDirection);
 		}
-		base.FixedUpdate ();
+		updateCombat (currentDirection);
 	}
 }

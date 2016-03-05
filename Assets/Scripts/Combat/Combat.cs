@@ -18,6 +18,7 @@ public class Combat : MonoBehaviour {
 	
 	// attack box variables
 	protected GameObject attackArea;
+	protected BoxCollider2D weaponHitbox;
 	protected float attackRange = 2;
 	protected float attackWidth = 1;
 	protected bool longRange = false;
@@ -49,30 +50,16 @@ public class Combat : MonoBehaviour {
 		attackArea.transform.parent = character.transform;
 		attackArea.transform.position = attackArea.transform.parent.position;
 		attackArea.name = characterName + " Attack";
+
+		weaponHitbox = attackArea.AddComponent<BoxCollider2D>();
+		resizeHitbox(new Vector2(0.06f, 0.06f));
+		weaponHitbox.isTrigger = true;
 	}
 	
 	// used for generating the appropriate attack hit box (size, direction, height, width)
-	protected void launchAttack(int currentDirection) {		
-		BoxCollider2D weaponHitbox = attackArea.AddComponent<BoxCollider2D>();
-		weaponHitbox.size = new Vector2(attackWidth, attackRange);
-
-		if(currentDirection <= 1 && !isHorizontal) {
-			isHorizontal = true;
-			attackArea.transform.Rotate(new Vector3(0,0,90));
-		} else if (currentDirection > 1 && isHorizontal) {
-			isHorizontal = false;
-			attackArea.transform.Rotate(new Vector3(0,0,-90));
-		}
-
-		if(currentDirection == 0) { 		
-			weaponHitbox.offset = new Vector2(0, attackRange); 
-		} else if(currentDirection == 1) {	
-			weaponHitbox.offset = new Vector2(0, -attackRange);
-		} else if(currentDirection == 2) { 	
-			weaponHitbox.offset = new Vector2(0, attackRange);
-		} else if(currentDirection == 3) {	
-			weaponHitbox.offset = new Vector2(0, -attackRange);
-		}
+	protected void launchAttack(int currentDirection) {
+		resizeHitbox(new Vector2(attackWidth, attackRange));
+		weaponHitbox.isTrigger = false;
 	}	
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
@@ -89,14 +76,9 @@ public class Combat : MonoBehaviour {
 				}
 			}
 		}
-		//endAttack();
 	}
 
-	protected void OnTriggerEnter2D(Collider2D other) {
-		print("test");
-	}
-
-	protected virtual void FixedUpdate() {
+	protected void updateCombat(int currentDirection) {
 		// have an attack delay after swings
 		// end attack when opponent is hit
 		if (!inAttackDelay) {
@@ -112,12 +94,36 @@ public class Combat : MonoBehaviour {
 				timerTick = maxTimer;
 			}
 		}
+
+		rearrangeAttackHitbox(currentDirection);
+	}
+
+	protected void rearrangeAttackHitbox(int currentDirection) {
+		if(currentDirection % 2 == 0 && !isHorizontal) {
+			isHorizontal = true;
+			attackArea.transform.Rotate(new Vector3(0,0,90));
+		} else if (currentDirection % 2 == 1 && isHorizontal) {
+			isHorizontal = false;
+			attackArea.transform.Rotate(new Vector3(0,0,-90));
+		}
+
+		if(currentDirection == 0 || currentDirection == 1) { 		
+			weaponHitbox.offset = new Vector2(0, attackRange); 
+		} else {	
+			weaponHitbox.offset = new Vector2(0, -attackRange);
+		} 
 	}
 
 	protected void endAttack() {
 		inAttackDelay = true;
 		timerTick = attackDelay;
-		Destroy(character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>());
+		resizeHitbox(new Vector2(0.06f, 0.06f));
+		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
+		//Destroy(character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>());
+	}
+
+	protected void resizeHitbox(Vector2 newWeaponHitboxSize) {
+		weaponHitbox.size = newWeaponHitboxSize;
 	}
 
 	protected bool timerCountdownIsZero() {

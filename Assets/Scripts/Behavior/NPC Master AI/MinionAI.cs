@@ -17,6 +17,7 @@ public class MinionAI : DefaultAI
 		npcMovement.TargetPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
 
 		// pursue the player until close enough, then decide to attack
+
 		if(Vector2.Distance(currentPosition, npcMovement.TargetPoint) > 1.5f/*this.gameObject.GetComponent<BoxCollider2D>().bounds.*/) {
 			npcMovement.CurrentAction = "pursue";
 			npcCombat.CurrentAction = "";
@@ -25,6 +26,8 @@ public class MinionAI : DefaultAI
 			npcCombat.CurrentAction = "attack";
 		}
 
+		npcMovement.CurrentAction = "wander";
+		npcCombat.CurrentAction = "";
 		npcMovement.runScript();
 		npcCombat.runScript(npcMovement.CurrentDirection);
 		base.processDecisions();

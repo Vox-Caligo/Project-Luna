@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FacePlayer : MonoBehaviour
+public class FacePlayer : BaseMovement
 {
-	private GameObject character;
 	private Vector2 targetPoint;
 
-	public FacePlayer (GameObject character) {
-		this.character = character;
-	}
+	public FacePlayer (GameObject character) : base(character) {}
 
 	public void facePlayerCheck(GameObject targetPoint) {
 

@@ -1,0 +1,70 @@
+To Do:
+	Fix bug
+		Player starts north, then looks left before going right
+		Apply friction stop once player has fully entered the area (think it has to do with all boxes entering/exiting again like it was for ice originally)
+			-Check the current points thing and see if it just keeps going up and down or the like
+			-May also be because, the the box being in front it stops as soon as both hit
+				-like how ice only works when both touch, even for a split second
+	Jump Pad Puzzles
+		Puzzle where you hit jump pads and have to navigate the course (somewhat maze like)
+	Placement Puzzles
+		Place things in the correct spot
+		2 types
+			-Place items in holes
+			-Place items down and they move to a location
+	Observation
+		Need to observe the room/level/game for the answer
+	UI
+		Visuals for health
+		Text boxes
+
+Future:
+	During polishing, with the directions have them have a bit of nuance but not 100% correct
+		Replace the int casting for a little bit of range
+	During polishing, wander should not stray too far from the start point when it begins to move
+	Awesome puzzle with sliding and teleports
+		
+Done:
+	3/5
+		-Fixed: Attack collider causing interactions to fire when they shouldn'target
+			-Caused by adding and never subtracting since it never 'exits' and just disappears
+			-Fixed by having attack always be around, just a trigger instead of an attack
+		-Issue where the attack can be used as the interaction box
+
+	3/4
+		-Sliding blocks that don't stop until a friction spot is hit
+		-Teleport pads (sibling pads)
+		-Fixed bugs
+			Ice is not stopping
+		
+	3/3
+		-Created terrain script
+		-Slowdown is working
+		-Sliding is working
+		-Fixed so colliders are applied until the object is completely out
+		-Fixed direction issue on player (animator had wrong values)
+
+	3/2
+		-Finished Lever Puzzle(Activate buttons in order)
+		-Finished Lever Puzzle(On/Off Puzzle)
+	3/1
+		-Set up for lever puzzles
+		-Created defaults
+	2/29
+		-Enemies shouldn't have their movements changed unless they are the cause of it
+		-When enemies are below and going for a side attack, maybe they should be at the feet of the enemy?
+		-Replace wander with a more up to date version (not having it segmented around)
+	2/28
+		-When enemies are near for an attack, make sure they are looking at the player even if their last position says otherwise
+		-Probably should have target point for movement be a passed in variable instead of relying on the change to be made manually
+		-Repair dash
+		-Get rid of dash standalone
+		-Standardize left, right, up, and down for currentDirection variable (Left:0 - Up:1 - Right:2 - Down:3)
+	2/27
+		-Attack delay
+		-End attack when opponent is hit
+		-Weapon database
+		-Have it so if character/weapon doesn't exist then it tells the user
+		-Set currentDirection for NPC to be determined by movement (so if they are moving of their own accord the currentDirection reflects the correct way)
+			allow controller to see so it can pass it on to the combat area
+		-Weapon range + width (in database and implemented)

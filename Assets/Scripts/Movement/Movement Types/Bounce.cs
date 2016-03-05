@@ -1,18 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bounce : MonoBehaviour
+public class Bounce : BaseMovement
 {
-	private GameObject character;
 	private bool currentlyRolling = false;
 	private string verticalDirection;
 	private string horizontalDirection;
 
-	public Bounce (GameObject character) {
-		this.character = character;
-	}
+	public Bounce (GameObject character) : base(character) {}
 
-	public void inBounce(float movementSpeed, float duration, string verticalDirection, string horizontalDirection) {
+	public int inBounce(float movementSpeed, float duration, string verticalDirection, string horizontalDirection) {
 		float xVelocity = 0;
 		float yVelocity = 0;
 
@@ -32,7 +29,11 @@ public class Bounce : MonoBehaviour
 		else
 			xVelocity += movementSpeed;
 
+		Vector2 currentPosition = character.transform.position;
 		character.GetComponent<Rigidbody2D>().velocity = new Vector2(xVelocity,yVelocity);
+		Vector2 newPosition = character.transform.position;
+
+		return calculateDirection(currentPosition, newPosition);
 	}
 
 	public void changeDirection(bool verticalCollision) {
