@@ -4,6 +4,8 @@ using System.Collections;
 public class PlayerMaster : MasterBehavior {
 	private string playerWeapon = "Sword";	// get current weapon
 	private InteractionArea interactableArea;
+
+	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
 
 	// Use this for initialization
@@ -26,7 +28,6 @@ public class PlayerMaster : MasterBehavior {
 		}
 	}
 
-
 	protected void OnTriggerStay2D(Collider2D col) {
 		if(col.gameObject.GetComponent<InteractableItem>() != null && Input.GetKeyDown(KeyCode.E)) {
 			col.gameObject.GetComponent<InteractableItem>().onInteraction();
@@ -34,19 +35,32 @@ public class PlayerMaster : MasterBehavior {
 	}
 
 	private void OnTriggerEnter2D(Collider2D col) {
-		if(col.gameObject.GetComponent<TerrainPiece>() != null) {
+		if(col.gameObject.GetComponent<BaseTerrain>() != null) {
 			collidingPieces++;
-			if(collidingPieces == 2) {
-				((PlayerMovement)characterMovement).CurrentTerrain = col.gameObject.GetComponent<TerrainPiece>();
+			if(collidingPieces == this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length) {
+				((PlayerMovement)characterMovement).interpretCurrentTerrain(col.gameObject.GetComponent<BaseTerrain>());
+				beAwareOfChildColliders = true;
 			}
 		}
 	}
 
 	private void OnTriggerExit2D(Collider2D col) {
-		if(col.gameObject.GetComponent<TerrainPiece>() != null) {
-			collidingPieces--;
-			if(collidingPieces == 0) {
-				((PlayerMovement)characterMovement).CurrentTerrain = new TerrainPiece();
+		beAwareOfChildColliders = false;
+
+		if(col.gameObject.GetComponent<BaseTerrain>() != null) {
+			if(collidingPieces > this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length) {
+				collidingPieces = this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length;
+			} 
+
+			if(collidingPieces > 0) {
+				collidingPieces--;
+			}
+			if(collidingPieces == 0 && (col.gameObject.GetComponent<TerrainPiece>() == null || !col.gameObject.GetComponent<TerrainPiece>().needsFrictionStop)) {
+				if(col.gameObject.GetComponent<Teleporter>() != null && col.gameObject.GetComponent<Teleporter>().receiver) {
+					col.gameObject.GetComponent<Teleporter>().TeleporterOnFreeze = false;
+				}
+
+				((PlayerMovement)characterMovement).interpretCurrentTerrain(new BaseTerrain());
 			}
 		}
 	}

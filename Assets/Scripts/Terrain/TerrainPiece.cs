@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TerrainPiece : MonoBehaviour
+public class TerrainPiece : BaseTerrain
 {
 	public bool isSlippery;
+	public bool needsFrictionStop;
+	public bool isFrictionStop;
 	public bool isSlowdown;
 	public float slowdownSpeed = .5f;
 	public bool isSpeedup;

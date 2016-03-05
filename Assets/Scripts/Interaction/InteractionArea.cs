@@ -30,11 +30,11 @@ public class InteractionArea : MonoBehaviour
 		float distanceFromPlayer = .30f;
 
 		if(currentDirection == 0) {
-			interactionArea.transform.localPosition = new Vector2(distanceFromPlayer, 0);
+			interactionArea.transform.localPosition = new Vector2(-distanceFromPlayer, 0);
 		} else if(currentDirection == 1) {
 			interactionArea.transform.localPosition = new Vector2(0, distanceFromPlayer);
-		} else if(currentDirection == 1) {
-			interactionArea.transform.localPosition = new Vector2(-distanceFromPlayer, 0);
+		} else if(currentDirection == 2) {
+			interactionArea.transform.localPosition = new Vector2(distanceFromPlayer, 0);
 		} else {
 			interactionArea.transform.localPosition = new Vector2(0, -distanceFromPlayer);
 		}

@@ -5,9 +5,10 @@ public class PlayerMovement : CharacterMovementController {
 	// movement variables
 	private GameObject player;
 	private Animator animator;
-	private int currentDirection = 1;
+	private int currentDirection = 2;
 	private Vector2 speed = new Vector2 (5, 5);
 	private TerrainPiece currentTerrain = new TerrainPiece();
+	private bool isSliding = false;
 
 	public PlayerMovement (GameObject player) {
 		this.player = player;
@@ -15,7 +16,11 @@ public class PlayerMovement : CharacterMovementController {
 	}
 
 	public void updatePlayerMovement() {
-		if(!currentTerrain.isSlippery) {
+		if(isSliding != currentTerrain.isSlippery) {
+			isSliding = currentTerrain.isSlippery;
+		}
+
+		if(!isSliding) {
 			walk();
 		} else {
 			slide();
@@ -32,22 +37,20 @@ public class PlayerMovement : CharacterMovementController {
 			animator.speed = 1;
 			
 			if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
-				if (inputX < 0) {
-					animator.SetInteger ("Direction", 0);	// go left
-					currentDirection = 0;
-				} else {
-					animator.SetInteger ("Direction", 2);	// go right
+				if (inputX > 0) {
 					currentDirection = 2;
+				} else {
+					currentDirection = 0;
 				}
 			} else {
 				if (inputY > 0) {
-					animator.SetInteger ("Direction", 1);	// go up
 					currentDirection = 1;
 				} else {
-					animator.SetInteger ("Direction", 3);	// go down
 					currentDirection = 3;
 				}
 			}
+
+			animator.SetInteger ("Direction", currentDirection);
 
 			applyMovement(new Vector2 ((speed.x * inputX), (speed.y * inputY)));
 		} else {
@@ -61,11 +64,11 @@ public class PlayerMovement : CharacterMovementController {
 		int xVelocity = 0, yVelocity = 0;
 
 		if(currentDirection == 0) {
-			xVelocity = 1;
+			xVelocity = -1;
 		} else if(currentDirection == 1) {
 			yVelocity = 1;
 		} else if (currentDirection == 2) {
-			xVelocity = -1;
+			xVelocity = 1;
 		} else {
 			yVelocity = -1;
 		}
@@ -89,10 +92,28 @@ public class PlayerMovement : CharacterMovementController {
 		player.GetComponent<Rigidbody2D>().velocity = new Vector2 (calculatedMovement.x * terrainModifier, calculatedMovement.y * terrainModifier);
 	}
 
-	public TerrainPiece CurrentTerrain {
-		set {currentTerrain = value;}
+	public void interpretCurrentTerrain(BaseTerrain newTerrain) {
+		if(newTerrain.GetType().Name == "TerrainPiece") {
+			currentTerrain = (TerrainPiece)newTerrain;
+
+			if(currentTerrain.isSlippery) {
+				isSliding = true;
+			}
+
+			if(currentTerrain.isFrictionStop) {
+				isSliding = false;
+			}
+		} else if(newTerrain.GetType().Name == "Teleporter") {
+			Teleporter currentTeleport = (Teleporter)newTerrain;
+
+			if(!currentTeleport.TeleporterOnFreeze && currentTeleport.sender && currentTeleport.isSisterAReceiver()) {
+				player.transform.position = currentTeleport.teleportCoordinates();
+			}
+		} else {
+			currentTerrain = new TerrainPiece();
+		}
 	}
-	
+
 	public int CurrentDirection {
 		get {return currentDirection;}
 	}
