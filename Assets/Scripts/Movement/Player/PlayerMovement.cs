@@ -5,25 +5,40 @@ public class PlayerMovement : CharacterMovementController {
 	// movement variables
 	private GameObject player;
 	private Animator animator;
-	private int currentDirection = 2;
+	private int currentDirection = 0;
 	private Vector2 speed = new Vector2 (5, 5);
 	private TerrainPiece currentTerrain = new TerrainPiece();
+	private Teleporter currentTeleporter = new Teleporter();
+	private Collider2D currentCollider = new Collider2D();
 	private bool isSliding = false;
+	private bool isFrictionStopNeeded = false;
+	private PlayerBoundingBox currentBoundingBox;
+	private ColliderBoundingBox currentColliderBoundingBox;
 
 	public PlayerMovement (GameObject player) {
 		this.player = player;
 		animator = this.player.GetComponent<Animator>();
+		currentBoundingBox = new PlayerBoundingBox (this.player);
 	}
 
 	public void updatePlayerMovement() {
-		if(isSliding != currentTerrain.isSlippery) {
-			isSliding = currentTerrain.isSlippery;
+		currentBoundingBox.updatePlayerBoundingBox ();
+
+		if (determineIfCurrentlyColliding ()) {
+			activateTerrainFeature ();
 		}
 
 		if(!isSliding) {
 			walk();
-		} else {
-			slide();
+		} else if(isSliding) {
+			if (currentTerrain.isFrictionStop && determineIfCurrentlyColliding ()) {
+				isSliding = false;
+				isFrictionStopNeeded = false;
+			} else if(!isFrictionStopNeeded && isSliding != currentTerrain.isSlippery) {
+				isSliding = currentTerrain.isSlippery;
+			} else {
+				slide ();
+			}
 		}
 	}
 	
@@ -88,29 +103,57 @@ public class PlayerMovement : CharacterMovementController {
 			terrainModifier = currentTerrain.speedupSpeed;
 		}
 
-
 		player.GetComponent<Rigidbody2D>().velocity = new Vector2 (calculatedMovement.x * terrainModifier, calculatedMovement.y * terrainModifier);
 	}
 
-	public void interpretCurrentTerrain(BaseTerrain newTerrain) {
+	public void interpretCurrentTerrain(Collider2D col, BaseTerrain newTerrain) {
+		currentCollider = col;
+		currentColliderBoundingBox = new ColliderBoundingBox (currentCollider.gameObject);
+
 		if(newTerrain.GetType().Name == "TerrainPiece") {
 			currentTerrain = (TerrainPiece)newTerrain;
-
-			if(currentTerrain.isSlippery) {
-				isSliding = true;
-			}
-
-			if(currentTerrain.isFrictionStop) {
-				isSliding = false;
-			}
+			currentTeleporter = new Teleporter ();
 		} else if(newTerrain.GetType().Name == "Teleporter") {
-			Teleporter currentTeleport = (Teleporter)newTerrain;
-
-			if(!currentTeleport.TeleporterOnFreeze && currentTeleport.sender && currentTeleport.isSisterAReceiver()) {
-				player.transform.position = currentTeleport.teleportCoordinates();
-			}
+			currentTeleporter = (Teleporter)newTerrain;
+			currentTerrain = new TerrainPiece();
 		} else {
 			currentTerrain = new TerrainPiece();
+			currentTeleporter = new Teleporter ();
+		}
+	}
+
+	private bool determineIfCurrentlyColliding() {
+		if (currentCollider != null) {
+			if ((currentDirection == 0 && currentBoundingBox.PlayerLeftBound > currentColliderBoundingBox.ColliderRightBound) ||
+				(currentDirection == 2 && currentBoundingBox.PlayerRightBound > currentColliderBoundingBox.ColliderLeftBound)) {
+			} 
+
+			if(currentTerrain.isSlippery || isFrictionStopNeeded) { 
+				if ((currentDirection == 1 && currentBoundingBox.PlayerBottomBound > currentColliderBoundingBox.ColliderBottomBound) ||
+				    (currentDirection == 3 && currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound)) {
+					return true;
+				}
+			} else if(currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound && 
+				currentBoundingBox.PlayerBottomBound > currentColliderBoundingBox.ColliderBottomBound) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void activateTerrainFeature() {
+		if (currentTerrain.isSlippery) {
+			isSliding = true;
+		}
+
+		if (currentTerrain.needsFrictionStop) {
+			isFrictionStopNeeded = true;
+		}
+
+		if (currentTeleporter.sender) {
+			if (!currentTeleporter.TeleporterOnFreeze && currentTeleporter.isSisterAReceiver ()) {
+				player.transform.position = currentTeleporter.teleportCoordinates ();
+			}
 		}
 	}
 

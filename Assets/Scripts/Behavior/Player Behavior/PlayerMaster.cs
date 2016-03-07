@@ -38,7 +38,7 @@ public class PlayerMaster : MasterBehavior {
 		if(col.gameObject.GetComponent<BaseTerrain>() != null) {
 			collidingPieces++;
 			if(collidingPieces == this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length) {
-				((PlayerMovement)characterMovement).interpretCurrentTerrain(col.gameObject.GetComponent<BaseTerrain>());
+				((PlayerMovement)characterMovement).interpretCurrentTerrain(col, col.gameObject.GetComponent<BaseTerrain>());
 				beAwareOfChildColliders = true;
 			}
 		}
@@ -55,12 +55,12 @@ public class PlayerMaster : MasterBehavior {
 			if(collidingPieces > 0) {
 				collidingPieces--;
 			}
-			if(collidingPieces == 0 && (col.gameObject.GetComponent<TerrainPiece>() == null || !col.gameObject.GetComponent<TerrainPiece>().needsFrictionStop)) {
+			if(collidingPieces == 0) {
 				if(col.gameObject.GetComponent<Teleporter>() != null && col.gameObject.GetComponent<Teleporter>().receiver) {
 					col.gameObject.GetComponent<Teleporter>().TeleporterOnFreeze = false;
 				}
 
-				((PlayerMovement)characterMovement).interpretCurrentTerrain(new BaseTerrain());
+				((PlayerMovement)characterMovement).interpretCurrentTerrain(col, new BaseTerrain());
 			}
 		}
 	}

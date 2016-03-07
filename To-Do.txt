@@ -1,10 +1,9 @@
 To Do:
-	Fix bug
-		Player starts north, then looks left before going right
-		Apply friction stop once player has fully entered the area (think it has to do with all boxes entering/exiting again like it was for ice originally)
-			-Check the current points thing and see if it just keeps going up and down or the like
-			-May also be because, the the box being in front it stops as soon as both hit
-				-like how ice only works when both touch, even for a split second
+	Fix Bug: If you somewhat touch ice and then walk away, the current terrain is stored as ice and it can be used later
+		-Player master has a check for if it needs a friction stop
+		-In Player Movement now, need to be able to save when it gets set (when it is a friction stopper) and when it gets reset
+	Have sliding continue even if it's into a teleport
+	Collision with hard block causes a stop until being moved again
 	Jump Pad Puzzles
 		Puzzle where you hit jump pads and have to navigate the course (somewhat maze like)
 	Placement Puzzles
@@ -25,6 +24,15 @@ Future:
 	Awesome puzzle with sliding and teleports
 		
 Done:
+	3/6
+		-Have collision when going up start with the bottom collider (looks like stepping on ice)
+		-Fixed: Apply friction stop once player has fully entered the area
+			-Caused: Bounds of the player were not entering/exiting
+			-Fixed by checking for the bounds of the player and the collider
+		-Fixed: Player starts north, then looks left before going right
+			-Caused: Player to look right before going another direction
+			-Fixed by changing the animator since it was not like all of the others
+
 	3/5
 		-Fixed: Attack collider causing interactions to fire when they shouldn'target
 			-Caused by adding and never subtracting since it never 'exits' and just disappears
