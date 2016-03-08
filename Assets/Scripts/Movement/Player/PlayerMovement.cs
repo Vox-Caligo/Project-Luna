@@ -9,29 +9,27 @@ public class PlayerMovement : CharacterMovementController {
 	private Vector2 speed = new Vector2 (5, 5);
 	private TerrainPiece currentTerrain = new TerrainPiece();
 	private Teleporter currentTeleporter = new Teleporter();
-	private Collider2D currentCollider = new Collider2D();
 	private bool isSliding = false;
 	private bool isFrictionStopNeeded = false;
-	private PlayerBoundingBox currentBoundingBox;
-	private ColliderBoundingBox currentColliderBoundingBox;
+	private DeterminingCollisionActions determiningCollisions;
 
 	public PlayerMovement (GameObject player) {
 		this.player = player;
 		animator = this.player.GetComponent<Animator>();
-		currentBoundingBox = new PlayerBoundingBox (this.player);
+		determiningCollisions = new DeterminingCollisionActions(this.player);
 	}
 
 	public void updatePlayerMovement() {
-		currentBoundingBox.updatePlayerBoundingBox ();
+		bool terrainIsActivated = determiningCollisions.shouldTerrainColliderActivate(currentDirection, isFrictionStopNeeded);
 
-		if (determineIfCurrentlyColliding ()) {
+		if (terrainIsActivated) {
 			activateTerrainFeature ();
 		}
 
 		if(!isSliding) {
 			walk();
 		} else if(isSliding) {
-			if (currentTerrain.isFrictionStop && determineIfCurrentlyColliding ()) {
+			if (currentTerrain.isFrictionStop && terrainIsActivated) {
 				isSliding = false;
 				isFrictionStopNeeded = false;
 			} else if(!isFrictionStopNeeded && isSliding != currentTerrain.isSlippery) {
@@ -107,8 +105,8 @@ public class PlayerMovement : CharacterMovementController {
 	}
 
 	public void interpretCurrentTerrain(Collider2D col, BaseTerrain newTerrain) {
-		currentCollider = col;
-		currentColliderBoundingBox = new ColliderBoundingBox (currentCollider.gameObject);
+		determiningCollisions.setNewTerrain(newTerrain);
+
 
 		if(newTerrain.GetType().Name == "TerrainPiece") {
 			currentTerrain = (TerrainPiece)newTerrain;
@@ -120,25 +118,6 @@ public class PlayerMovement : CharacterMovementController {
 			currentTerrain = new TerrainPiece();
 			currentTeleporter = new Teleporter ();
 		}
-	}
-
-	private bool determineIfCurrentlyColliding() {
-		if (currentCollider != null) {
-			if ((currentDirection == 0 && currentBoundingBox.PlayerLeftBound > currentColliderBoundingBox.ColliderRightBound) ||
-				(currentDirection == 2 && currentBoundingBox.PlayerRightBound > currentColliderBoundingBox.ColliderLeftBound)) {
-			} 
-
-			if(currentTerrain.isSlippery || isFrictionStopNeeded) { 
-				if ((currentDirection == 1 && currentBoundingBox.PlayerBottomBound > currentColliderBoundingBox.ColliderBottomBound) ||
-				    (currentDirection == 3 && currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound)) {
-					return true;
-				}
-			} else if(currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound && 
-				currentBoundingBox.PlayerBottomBound > currentColliderBoundingBox.ColliderBottomBound) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private void activateTerrainFeature() {
