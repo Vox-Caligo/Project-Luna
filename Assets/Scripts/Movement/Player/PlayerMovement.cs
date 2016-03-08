@@ -105,8 +105,8 @@ public class PlayerMovement : CharacterMovementController {
 	}
 
 	public void interpretCurrentTerrain(Collider2D col, BaseTerrain newTerrain) {
+		print ("hm");
 		determiningCollisions.setNewTerrain(newTerrain);
-
 
 		if(newTerrain.GetType().Name == "TerrainPiece") {
 			currentTerrain = (TerrainPiece)newTerrain;

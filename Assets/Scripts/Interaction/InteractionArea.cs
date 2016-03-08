@@ -4,6 +4,9 @@ using System.Collections;
 public class InteractionArea : MonoBehaviour
 {
 	private GameObject interactionArea;
+	private float boxWidth;
+	private float boxHeight;
+	private BoxCollider2D interactionBox;
 
 	// Use this for initialization
 	public InteractionArea(GameObject player)
@@ -14,8 +17,10 @@ public class InteractionArea : MonoBehaviour
 		interactionArea.name = "Player Interaction Box";
 		interactionArea.AddComponent<InteractableItem>();
 
-		BoxCollider2D interactionBox = interactionArea.AddComponent<BoxCollider2D>();
+		interactionBox = interactionArea.AddComponent<BoxCollider2D>();
 		interactionBox.isTrigger = true;
+		boxWidth = player.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
+		boxHeight = player.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
 		interactionBox.size = new Vector2(.1f, .1f);
 	}
 	
@@ -31,12 +36,16 @@ public class InteractionArea : MonoBehaviour
 
 		if(currentDirection == 0) {
 			interactionArea.transform.localPosition = new Vector2(-distanceFromPlayer, 0);
+			interactionBox.size = new Vector2(.1f, boxHeight);
 		} else if(currentDirection == 1) {
 			interactionArea.transform.localPosition = new Vector2(0, distanceFromPlayer);
+			interactionBox.size = new Vector2(boxWidth, .1f);
 		} else if(currentDirection == 2) {
 			interactionArea.transform.localPosition = new Vector2(distanceFromPlayer, 0);
+			interactionBox.size = new Vector2(.1f, boxHeight);
 		} else {
 			interactionArea.transform.localPosition = new Vector2(0, -distanceFromPlayer);
+			interactionBox.size = new Vector2(boxWidth, .1f);
 		}
 	}
 }

@@ -16,6 +16,7 @@ public class DeterminingCollisionActions : MonoBehaviour
 
 	public bool shouldTerrainColliderActivate(int currentDirection, bool isFrictionStopNeeded) {
 		if(currentTerrain != null) {
+			print (currentTerrain.GetType ().Name);
 			currentBoundingBox.updatePlayerBoundingBox ();
 			return determineIfCurrentlyColliding(currentDirection, isFrictionStopNeeded);
 		} else {
@@ -24,7 +25,7 @@ public class DeterminingCollisionActions : MonoBehaviour
 	}
 
 	private bool determineIfCurrentlyColliding(int currentDirection, bool isFrictionStopNeeded) {
-		if(currentDirection == 0) {
+		if(currentDirection == 0 && feetAreInBounds()) {
 			if(isFrictionStopNeeded) {
 				if(currentBoundingBox.PlayerRightBound < currentColliderBoundingBox.ColliderRightBound) {
 					return true;
@@ -36,7 +37,7 @@ public class DeterminingCollisionActions : MonoBehaviour
 			if(currentBoundingBox.PlayerBottomBound > currentColliderBoundingBox.ColliderBottomBound) {
 				return true;
 			}
-		} else if(currentDirection == 2) {
+		} else if(currentDirection == 2 && feetAreInBounds()) {
 			if(isFrictionStopNeeded) {
 				if(currentBoundingBox.PlayerLeftBound > currentColliderBoundingBox.ColliderLeftBound) {
 					return true;
@@ -44,7 +45,7 @@ public class DeterminingCollisionActions : MonoBehaviour
 			} else if(currentBoundingBox.PlayerRightBound > currentColliderBoundingBox.ColliderLeftBound) {
 				return true;
 			}
-		} else {
+		} else if(currentDirection == 3) {
 			if(isFrictionStopNeeded && currentBoundingBox.PlayerTopBound < currentColliderBoundingBox.ColliderTopBound) {
 				return true;
 			} else if(currentTerrain.isSlippery && currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound) {
@@ -54,9 +55,20 @@ public class DeterminingCollisionActions : MonoBehaviour
 		return false;
 	}
 
+	private bool feetAreInBounds() {
+		if(currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound && 
+			currentBoundingBox.PlayerBottomBound > currentColliderBoundingBox.ColliderBottomBound) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void setNewTerrain(BaseTerrain newTerrain) {
-		currentTerrain = (TerrainPiece)newTerrain;
-		currentColliderBoundingBox = new ColliderBoundingBox (currentTerrain.gameObject);
+		if (newTerrain.GetType ().Name == "TerrainPiece") {
+			currentTerrain = (TerrainPiece)newTerrain;
+			currentColliderBoundingBox = new ColliderBoundingBox (currentTerrain.gameObject);
+		}
 	}
 }
 

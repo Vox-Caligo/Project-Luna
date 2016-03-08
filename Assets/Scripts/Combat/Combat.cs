@@ -23,6 +23,8 @@ public class Combat : MonoBehaviour {
 	protected float attackWidth = 1;
 	protected bool longRange = false;
 	protected bool isHorizontal = false;
+	protected float characterWidth;
+	protected float characterHeight;
 
 	public Combat(string characterName, GameObject character, string characterWeapon) {
 		this.characterName = characterName;
@@ -35,6 +37,10 @@ public class Combat : MonoBehaviour {
 		attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed"));
 		attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");
 		attackRange = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Length");
+
+		characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
+		characterHeight = this.character.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
+		resizeHitbox(true);
 	}
 
 	public void attacking(int currentDirection) {
@@ -52,13 +58,12 @@ public class Combat : MonoBehaviour {
 		attackArea.name = characterName + " Attack";
 
 		weaponHitbox = attackArea.AddComponent<BoxCollider2D>();
-		resizeHitbox(new Vector2(0.06f, 0.06f));
 		weaponHitbox.isTrigger = true;
 	}
 	
 	// used for generating the appropriate attack hit box (size, direction, height, width)
 	protected void launchAttack(int currentDirection) {
-		resizeHitbox(new Vector2(attackWidth, attackRange));
+		resizeHitbox(false, currentDirection, new Vector2(attackWidth, attackRange));
 		weaponHitbox.isTrigger = false;
 	}	
 
@@ -117,13 +122,22 @@ public class Combat : MonoBehaviour {
 	protected void endAttack() {
 		inAttackDelay = true;
 		timerTick = attackDelay;
-		resizeHitbox(new Vector2(0.06f, 0.06f));
+		resizeHitbox(true);
 		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
 		//Destroy(character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>());
 	}
 
-	protected void resizeHitbox(Vector2 newWeaponHitboxSize) {
-		weaponHitbox.size = newWeaponHitboxSize;
+	protected void resizeHitbox(bool reset, int currentDirection = 0, Vector2 newWeaponHitboxSize = new Vector2()) {
+		if (reset) {
+			if (currentDirection == 0 || currentDirection == 2) {
+				weaponHitbox.size = new Vector2 (characterHeight, .06f);
+			} else {
+				weaponHitbox.size = new Vector2(.06f, characterWidth);
+			} 
+
+		} else {
+			weaponHitbox.size = newWeaponHitboxSize;
+		}
 	}
 
 	protected bool timerCountdownIsZero() {
