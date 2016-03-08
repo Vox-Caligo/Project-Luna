@@ -17,8 +17,7 @@ public class Combat : MonoBehaviour {
 	protected float attackDelay = 0f;
 	
 	// attack box variables
-	protected GameObject attackArea;
-	protected BoxCollider2D weaponHitbox;
+	protected AttackArea attackArea;
 	protected float attackRange = 2;
 	protected float attackWidth = 1;
 	protected bool longRange = false;
@@ -30,7 +29,7 @@ public class Combat : MonoBehaviour {
 		this.characterName = characterName;
 		this.character = character;
 		this.characterWeapon = characterWeapon;
-		initiateAttackBox ();
+		attackArea = new AttackArea (this.character, characterName);
 		health = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Health");
 		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
 		damage = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Damage"));
@@ -48,17 +47,6 @@ public class Combat : MonoBehaviour {
 			inAttack = true;
 			launchAttack (currentDirection);
 		}
-	}
-
-	// makes the attack area that the character will send out
-	protected virtual void initiateAttackBox() {
-		attackArea = new GameObject();
-		attackArea.transform.parent = character.transform;
-		attackArea.transform.position = attackArea.transform.parent.position;
-		attackArea.name = characterName + " Attack";
-
-		weaponHitbox = attackArea.AddComponent<BoxCollider2D>();
-		weaponHitbox.isTrigger = true;
 	}
 	
 	// used for generating the appropriate attack hit box (size, direction, height, width)
@@ -103,41 +91,12 @@ public class Combat : MonoBehaviour {
 		rearrangeAttackHitbox(currentDirection);
 	}
 
-	protected void rearrangeAttackHitbox(int currentDirection) {
-		if(currentDirection % 2 == 0 && !isHorizontal) {
-			isHorizontal = true;
-			attackArea.transform.Rotate(new Vector3(0,0,90));
-		} else if (currentDirection % 2 == 1 && isHorizontal) {
-			isHorizontal = false;
-			attackArea.transform.Rotate(new Vector3(0,0,-90));
-		}
-
-		if(currentDirection == 0 || currentDirection == 1) { 		
-			weaponHitbox.offset = new Vector2(0, attackRange); 
-		} else {	
-			weaponHitbox.offset = new Vector2(0, -attackRange);
-		} 
-	}
-
 	protected void endAttack() {
 		inAttackDelay = true;
 		timerTick = attackDelay;
 		resizeHitbox(true);
 		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
 		//Destroy(character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>());
-	}
-
-	protected void resizeHitbox(bool reset, int currentDirection = 0, Vector2 newWeaponHitboxSize = new Vector2()) {
-		if (reset) {
-			if (currentDirection == 0 || currentDirection == 2) {
-				weaponHitbox.size = new Vector2 (characterHeight, .06f);
-			} else {
-				weaponHitbox.size = new Vector2(.06f, characterWidth);
-			} 
-
-		} else {
-			weaponHitbox.size = newWeaponHitboxSize;
-		}
 	}
 
 	protected bool timerCountdownIsZero() {
