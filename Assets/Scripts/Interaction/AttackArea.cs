@@ -3,12 +3,18 @@ using System.Collections;
 
 public class AttackArea : CollisionArea
 {
-	public AttackArea(GameObject collisionDetector, string characterName) : base(collisionDetector)
+	private bool isHorizontal = false;
+	private float attackRange = 2;
+	private float attackWidth = 1;
+
+	public AttackArea(GameObject character, string characterName, float attackWidth, float attackRange) : base(character)
 	{	
 		collisionDetector.name = characterName + " Attack";
+		this.attackWidth = attackWidth;
+		this.attackRange = attackRange;
 	}
 
-	protected void rearrangeAttackHitbox(int currentDirection) {
+	public override void rearrangeCollisionArea(int currentDirection) {
 		if(currentDirection % 2 == 0 && !isHorizontal) {
 			isHorizontal = true;
 			collisionDetector.transform.Rotate(new Vector3(0,0,90));
@@ -24,17 +30,28 @@ public class AttackArea : CollisionArea
 		} 
 	}
 
-	protected void resizeHitbox(bool reset, int currentDirection = 0, Vector2 newWeaponHitboxSize = new Vector2()) {
+	public void resizeHitbox(bool reset, int currentDirection = 0) {
 		if (reset) {
+			collisionDetectionBox.isTrigger = true;
+
 			if (currentDirection == 0 || currentDirection == 2) {
-				collisionDetectionBox.size = new Vector2 (characterHeight, .06f);
+				collisionDetectionBox.size = new Vector2 (boxHeight, .06f);
 			} else {
-				collisionDetectionBox.size = new Vector2(.06f, characterWidth);
+				collisionDetectionBox.size = new Vector2(.06f, boxWidth);
 			} 
 
 		} else {
-			collisionDetectionBox.size = newWeaponHitboxSize;
+			collisionDetectionBox.isTrigger = false;
+			collisionDetectionBox.size = new Vector2(attackWidth, attackRange);
 		}
+	}
+
+	public int AttackRange {
+		set{attackRange = value;}
+	}
+
+	public int AttackWidth {
+		set{attackWidth = value;}
 	}
 }
 

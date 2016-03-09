@@ -8,7 +8,7 @@ public class CollisionArea : MonoBehaviour
 	protected float boxWidth;
 	protected float boxHeight;
 
-	public CollisionArea(GameObject parentCharacter, float boxWidth, float boxHeight) {
+	public CollisionArea(GameObject parentCharacter) {
 		collisionDetector = new GameObject();
 		collisionDetector.transform.parent = parentCharacter.transform;
 		collisionDetector.transform.position = collisionDetector.transform.parent.position;
@@ -22,7 +22,7 @@ public class CollisionArea : MonoBehaviour
 	}
 
 	// moves the box with which the player interacts with things
-	public void rearrangeCollisionArea(int currentDirection) {
+	public virtual void rearrangeCollisionArea(int currentDirection) {
 		float distanceFromPlayer = .30f;
 
 		if(currentDirection == 0) {

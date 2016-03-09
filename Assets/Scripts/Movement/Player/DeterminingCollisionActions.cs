@@ -16,7 +16,6 @@ public class DeterminingCollisionActions : MonoBehaviour
 
 	public bool shouldTerrainColliderActivate(int currentDirection, bool isFrictionStopNeeded) {
 		if(currentTerrain != null) {
-			print (currentTerrain.GetType ().Name);
 			currentBoundingBox.updatePlayerBoundingBox ();
 			return determineIfCurrentlyColliding(currentDirection, isFrictionStopNeeded);
 		} else {

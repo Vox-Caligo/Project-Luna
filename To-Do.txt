@@ -1,7 +1,4 @@
 To Do:
-	Fix Bug: If you somewhat touch ice and then walk away, the current terrain is stored as ice and it can be used later
-		-Player master has a check for if it needs a friction stop
-		-In Player Movement now, need to be able to save when it gets set (when it is a friction stopper) and when it gets reset
 	Have sliding continue even if it's into a teleport
 	Collision with hard block causes a stop until being moved again
 	Jump Pad Puzzles
@@ -24,6 +21,14 @@ Future:
 	Awesome puzzle with sliding and teleports
 		
 Done:
+	3/8
+		-Interaction box and attack box are now under interactions
+
+	3/7
+		-Fixed issue with colliding downwards into a friction block in determineIfCurrentlyColliding by add isFrictionStopNeeded section
+		-Created easier to use collision detector so it can be expanded upon
+		-Fixed Bug: If you somewhat touch ice and then walk away, the current terrain is stored as ice and it can be used later
+
 	3/6
 		-Have collision when going up start with the bottom collider (looks like stepping on ice)
 		-Fixed: Apply friction stop once player has fully entered the area

@@ -18,7 +18,7 @@ public class PlayerMaster : MasterBehavior {
 	// Update is called once per frame
 	protected void FixedUpdate () {
 		((PlayerMovement)characterMovement).updatePlayerMovement();
-		interactableArea.rearrangeInteractionArea(((PlayerMovement)characterMovement).CurrentDirection);
+		interactableArea.rearrangeCollisionArea(((PlayerMovement)characterMovement).CurrentDirection);
 		((PlayerCombat)characterCombat).updatePlayerCombat(((PlayerMovement)characterMovement).CurrentDirection);
 	}
 

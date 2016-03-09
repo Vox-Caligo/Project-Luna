@@ -18,10 +18,7 @@ public class Combat : MonoBehaviour {
 	
 	// attack box variables
 	protected AttackArea attackArea;
-	protected float attackRange = 2;
-	protected float attackWidth = 1;
 	protected bool longRange = false;
-	protected bool isHorizontal = false;
 	protected float characterWidth;
 	protected float characterHeight;
 
@@ -29,17 +26,19 @@ public class Combat : MonoBehaviour {
 		this.characterName = characterName;
 		this.character = character;
 		this.characterWeapon = characterWeapon;
-		attackArea = new AttackArea (this.character, characterName);
+
 		health = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Health");
 		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
 		damage = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Damage"));
 		attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed"));
-		attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");
-		attackRange = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Length");
+
+		float attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");
+		float attackRange = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Length");
+		attackArea = new AttackArea (this.character, characterName, attackWidth, attackRange);
 
 		characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
 		characterHeight = this.character.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
-		resizeHitbox(true);
+		attackArea.resizeHitbox(true);
 	}
 
 	public void attacking(int currentDirection) {
@@ -51,8 +50,7 @@ public class Combat : MonoBehaviour {
 	
 	// used for generating the appropriate attack hit box (size, direction, height, width)
 	protected void launchAttack(int currentDirection) {
-		resizeHitbox(false, currentDirection, new Vector2(attackWidth, attackRange));
-		weaponHitbox.isTrigger = false;
+		attackArea.resizeHitbox(false, currentDirection);
 	}	
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
@@ -88,13 +86,13 @@ public class Combat : MonoBehaviour {
 			}
 		}
 
-		rearrangeAttackHitbox(currentDirection);
+		attackArea.rearrangeCollisionArea(currentDirection);
 	}
 
 	protected void endAttack() {
 		inAttackDelay = true;
 		timerTick = attackDelay;
-		resizeHitbox(true);
+		attackArea.resizeHitbox(true);
 		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
 		//Destroy(character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>());
 	}
