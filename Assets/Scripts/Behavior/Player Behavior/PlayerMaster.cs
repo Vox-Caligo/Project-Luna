@@ -25,6 +25,8 @@ public class PlayerMaster : MasterBehavior {
 	protected override void OnCollisionEnter2D(Collision2D col) {
 		if(((PlayerCombat)characterCombat).InAttack && col.contacts[0].otherCollider.name == "Player Attack") {
 			((PlayerCombat)characterCombat).applyAttackDamage (col.contacts [0].collider.gameObject);
+		} else if(col.gameObject.GetComponent<TerrainPiece>() != null) {
+			((PlayerMovement)characterMovement).interpretCurrentTerrainCollider(col);
 		}
 	}
 
@@ -38,7 +40,7 @@ public class PlayerMaster : MasterBehavior {
 		if(col.gameObject.GetComponent<BaseTerrain>() != null) {
 			collidingPieces++;
 			if(collidingPieces == this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length) {
-				((PlayerMovement)characterMovement).interpretCurrentTerrain(col, col.gameObject.GetComponent<BaseTerrain>());
+				((PlayerMovement)characterMovement).interpretCurrentTerrainTrigger(col, col.gameObject.GetComponent<BaseTerrain>());
 				beAwareOfChildColliders = true;
 			}
 		}
@@ -60,7 +62,7 @@ public class PlayerMaster : MasterBehavior {
 					col.gameObject.GetComponent<Teleporter>().TeleporterOnFreeze = false;
 				}
 
-				((PlayerMovement)characterMovement).interpretCurrentTerrain(col, new BaseTerrain());
+				((PlayerMovement)characterMovement).interpretCurrentTerrainTrigger(col, new BaseTerrain());
 			}
 		}
 	}

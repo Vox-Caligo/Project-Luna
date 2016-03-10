@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerMovement : CharacterMovementController {
 	// movement variables
 	private GameObject player;
-	private Animator animator;
+	private CharacterAnimator characterAnimator;
 	private int currentDirection = 0;
 	private Vector2 speed = new Vector2 (5, 5);
 	private TerrainPiece currentTerrain = new TerrainPiece();
@@ -12,10 +12,11 @@ public class PlayerMovement : CharacterMovementController {
 	private bool isSliding = false;
 	private bool isFrictionStopNeeded = false;
 	private DeterminingCollisionActions determiningCollisions;
+	private bool collidingWithSturdyObject = false;
 
 	public PlayerMovement (GameObject player) {
 		this.player = player;
-		animator = this.player.GetComponent<Animator>();
+		characterAnimator = new CharacterAnimator(this.player);
 		determiningCollisions = new DeterminingCollisionActions(this.player);
 	}
 
@@ -29,13 +30,17 @@ public class PlayerMovement : CharacterMovementController {
 		if(!isSliding) {
 			walk();
 		} else if(isSliding) {
-			if (currentTerrain.isFrictionStop && terrainIsActivated) {
-				isSliding = false;
-				isFrictionStopNeeded = false;
-			} else if(!isFrictionStopNeeded && isSliding != currentTerrain.isSlippery) {
-				isSliding = currentTerrain.isSlippery;
+			if(collidingWithSturdyObject) {
+				checkIfMovingWhileSliding();
 			} else {
-				slide ();
+				if (currentTerrain.isFrictionStop && terrainIsActivated) {
+					isSliding = false;
+					isFrictionStopNeeded = false;
+				} else if(!isFrictionStopNeeded && isSliding != currentTerrain.isSlippery) {
+					isSliding = currentTerrain.isSlippery;
+				} else {
+					slide ();
+				}
 			}
 		}
 	}
@@ -45,10 +50,7 @@ public class PlayerMovement : CharacterMovementController {
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");
 		
-		if((inputX != 0 || inputY != 0) /*&& !attackScript.inAttack*/) {
-			animator.SetBool ("Walking", true);
-			animator.speed = 1;
-			
+		if((inputX != 0 || inputY != 0) /*&& !attackScript.inAttack*/) {			
 			if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
 				if (inputX > 0) {
 					currentDirection = 2;
@@ -62,13 +64,11 @@ public class PlayerMovement : CharacterMovementController {
 					currentDirection = 3;
 				}
 			}
-
-			animator.SetInteger ("Direction", currentDirection);
-
+			
+			characterAnimator.walk(currentDirection);
 			applyMovement(new Vector2 ((speed.x * inputX), (speed.y * inputY)));
 		} else {
-			animator.speed = 0;
-			animator.SetBool ("Walking", false);
+			characterAnimator.stop();
 		}
 	}
 
@@ -89,6 +89,39 @@ public class PlayerMovement : CharacterMovementController {
 		applyMovement(new Vector2 ((speed.x * xVelocity), (speed.y * yVelocity)));
 	}
 
+	private void checkIfMovingWhileSliding() {
+		if(characterAnimator.isInMotion()) {
+			characterAnimator.stop();
+		}
+
+		float inputX = Input.GetAxis ("Horizontal");
+		float inputY = Input.GetAxis ("Vertical");
+		bool givenInput = false;
+
+		if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
+			if (inputX > 0 && currentDirection != 2) {
+				currentDirection = 2;
+				givenInput = true;
+			} else if (inputX < 0 && currentDirection != 0){
+				currentDirection = 0;
+				givenInput = true;
+			}
+		} else {
+			if (inputY > 0 && currentDirection != 1) {
+				currentDirection = 1;
+				givenInput = true;
+			} else if (inputY < 0 && currentDirection != 3){
+				currentDirection = 3;
+				givenInput = true;
+			}
+		}
+
+		if(givenInput) {
+			characterAnimator.walk(currentDirection);
+			collidingWithSturdyObject = false;
+		}
+	}
+
 	// applies movement to the player
 	private void applyMovement(Vector2 calculatedMovement) {
 		float terrainModifier = 1;
@@ -104,8 +137,13 @@ public class PlayerMovement : CharacterMovementController {
 		player.GetComponent<Rigidbody2D>().velocity = new Vector2 (calculatedMovement.x * terrainModifier, calculatedMovement.y * terrainModifier);
 	}
 
-	public void interpretCurrentTerrain(Collider2D col, BaseTerrain newTerrain) {
-		print ("hm");
+	public void interpretCurrentTerrainCollider(Collision2D col) {
+		if(col.gameObject.GetComponent<TerrainPiece>().isSturdy) {
+			collidingWithSturdyObject = true;
+		}
+	}
+
+	public void interpretCurrentTerrainTrigger(Collider2D col, BaseTerrain newTerrain) {
 		determiningCollisions.setNewTerrain(newTerrain);
 
 		if(newTerrain.GetType().Name == "TerrainPiece") {
