@@ -17,24 +17,28 @@ public class Combat : MonoBehaviour {
 	protected float attackDelay = 0f;
 	
 	// attack box variables
-	protected GameObject attackArea;
-	protected BoxCollider2D weaponHitbox;
-	protected float attackRange = 2;
-	protected float attackWidth = 1;
+	protected AttackArea attackArea;
 	protected bool longRange = false;
-	protected bool isHorizontal = false;
+	protected float characterWidth;
+	protected float characterHeight;
 
 	public Combat(string characterName, GameObject character, string characterWeapon) {
 		this.characterName = characterName;
 		this.character = character;
 		this.characterWeapon = characterWeapon;
-		initiateAttackBox ();
+
 		health = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Health");
 		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
 		damage = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Damage"));
 		attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed"));
-		attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");
-		attackRange = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Length");
+
+		float attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");
+		float attackRange = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Length");
+		attackArea = new AttackArea (this.character, characterName, attackWidth, attackRange);
+
+		characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
+		characterHeight = this.character.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
+		attackArea.resizeHitbox(true);
 	}
 
 	public void attacking(int currentDirection) {
@@ -43,23 +47,10 @@ public class Combat : MonoBehaviour {
 			launchAttack (currentDirection);
 		}
 	}
-
-	// makes the attack area that the character will send out
-	protected virtual void initiateAttackBox() {
-		attackArea = new GameObject();
-		attackArea.transform.parent = character.transform;
-		attackArea.transform.position = attackArea.transform.parent.position;
-		attackArea.name = characterName + " Attack";
-
-		weaponHitbox = attackArea.AddComponent<BoxCollider2D>();
-		resizeHitbox(new Vector2(0.06f, 0.06f));
-		weaponHitbox.isTrigger = true;
-	}
 	
 	// used for generating the appropriate attack hit box (size, direction, height, width)
 	protected void launchAttack(int currentDirection) {
-		resizeHitbox(new Vector2(attackWidth, attackRange));
-		weaponHitbox.isTrigger = false;
+		attackArea.resizeHitbox(false, currentDirection);
 	}	
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
@@ -95,35 +86,15 @@ public class Combat : MonoBehaviour {
 			}
 		}
 
-		rearrangeAttackHitbox(currentDirection);
-	}
-
-	protected void rearrangeAttackHitbox(int currentDirection) {
-		if(currentDirection % 2 == 0 && !isHorizontal) {
-			isHorizontal = true;
-			attackArea.transform.Rotate(new Vector3(0,0,90));
-		} else if (currentDirection % 2 == 1 && isHorizontal) {
-			isHorizontal = false;
-			attackArea.transform.Rotate(new Vector3(0,0,-90));
-		}
-
-		if(currentDirection == 0 || currentDirection == 1) { 		
-			weaponHitbox.offset = new Vector2(0, attackRange); 
-		} else {	
-			weaponHitbox.offset = new Vector2(0, -attackRange);
-		} 
+		attackArea.rearrangeCollisionArea(currentDirection);
 	}
 
 	protected void endAttack() {
 		inAttackDelay = true;
 		timerTick = attackDelay;
-		resizeHitbox(new Vector2(0.06f, 0.06f));
+		attackArea.resizeHitbox(true);
 		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
 		//Destroy(character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>());
-	}
-
-	protected void resizeHitbox(Vector2 newWeaponHitboxSize) {
-		weaponHitbox.size = newWeaponHitboxSize;
 	}
 
 	protected bool timerCountdownIsZero() {

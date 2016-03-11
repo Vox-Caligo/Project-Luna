@@ -4,26 +4,40 @@ using System.Collections;
 public class PlayerMovement : CharacterMovementController {
 	// movement variables
 	private GameObject player;
-	private Animator animator;
-	private int currentDirection = 2;
+	private CharacterAnimator characterAnimator;
+
+	private int currentDirection = 0;
 	private Vector2 speed = new Vector2 (5, 5);
+
 	private TerrainPiece currentTerrain = new TerrainPiece();
+	private Teleporter currentTeleporter = new Teleporter();
+
+	private bool terrainIsActivated = false;
 	private bool isSliding = false;
+	private bool isFrictionStopNeeded = false;
+	private bool collidingWithSturdyObject = false;
 
 	public PlayerMovement (GameObject player) {
 		this.player = player;
-		animator = this.player.GetComponent<Animator>();
+		characterAnimator = new CharacterAnimator(this.player);
 	}
 
 	public void updatePlayerMovement() {
-		if(isSliding != currentTerrain.isSlippery) {
-			isSliding = currentTerrain.isSlippery;
-		}
-
 		if(!isSliding) {
 			walk();
-		} else {
-			slide();
+		} else if(isSliding) {
+			if(collidingWithSturdyObject) {
+				checkIfMovingWhileSliding();
+			} else {
+				if (currentTerrain.isFrictionStop && terrainIsActivated) {
+					isSliding = false;
+					isFrictionStopNeeded = false;
+				} else if(!isFrictionStopNeeded && isSliding != currentTerrain.isSlippery) {
+					isSliding = currentTerrain.isSlippery;
+				} else {
+					slide ();
+				}
+			}
 		}
 	}
 	
@@ -32,10 +46,7 @@ public class PlayerMovement : CharacterMovementController {
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");
 		
-		if((inputX != 0 || inputY != 0) /*&& !attackScript.inAttack*/) {
-			animator.SetBool ("Walking", true);
-			animator.speed = 1;
-			
+		if((inputX != 0 || inputY != 0) /*&& !attackScript.inAttack*/) {			
 			if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
 				if (inputX > 0) {
 					currentDirection = 2;
@@ -49,13 +60,11 @@ public class PlayerMovement : CharacterMovementController {
 					currentDirection = 3;
 				}
 			}
-
-			animator.SetInteger ("Direction", currentDirection);
-
+			
+			characterAnimator.walk(currentDirection);
 			applyMovement(new Vector2 ((speed.x * inputX), (speed.y * inputY)));
 		} else {
-			animator.speed = 0;
-			animator.SetBool ("Walking", false);
+			characterAnimator.stop();
 		}
 	}
 
@@ -76,6 +85,39 @@ public class PlayerMovement : CharacterMovementController {
 		applyMovement(new Vector2 ((speed.x * xVelocity), (speed.y * yVelocity)));
 	}
 
+	private void checkIfMovingWhileSliding() {
+		if(characterAnimator.isInMotion()) {
+			characterAnimator.stop();
+		}
+
+		float inputX = Input.GetAxis ("Horizontal");
+		float inputY = Input.GetAxis ("Vertical");
+		bool givenInput = false;
+
+		if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
+			if (inputX > 0 && currentDirection != 2) {
+				currentDirection = 2;
+				givenInput = true;
+			} else if (inputX < 0 && currentDirection != 0){
+				currentDirection = 0;
+				givenInput = true;
+			}
+		} else {
+			if (inputY > 0 && currentDirection != 1) {
+				currentDirection = 1;
+				givenInput = true;
+			} else if (inputY < 0 && currentDirection != 3){
+				currentDirection = 3;
+				givenInput = true;
+			}
+		}
+
+		if(givenInput) {
+			characterAnimator.walk(currentDirection);
+			collidingWithSturdyObject = false;
+		}
+	}
+
 	// applies movement to the player
 	private void applyMovement(Vector2 calculatedMovement) {
 		float terrainModifier = 1;
@@ -88,33 +130,47 @@ public class PlayerMovement : CharacterMovementController {
 			terrainModifier = currentTerrain.speedupSpeed;
 		}
 
-
 		player.GetComponent<Rigidbody2D>().velocity = new Vector2 (calculatedMovement.x * terrainModifier, calculatedMovement.y * terrainModifier);
 	}
 
-	public void interpretCurrentTerrain(BaseTerrain newTerrain) {
-		if(newTerrain.GetType().Name == "TerrainPiece") {
-			currentTerrain = (TerrainPiece)newTerrain;
+	public void teleport() {
+		print("poof");
+		player.transform.position = currentTeleporter.teleportCoordinates ();
+		int newTeleportDirection = currentTeleporter.isSisterADirectional();
 
-			if(currentTerrain.isSlippery) {
-				isSliding = true;
-			}
-
-			if(currentTerrain.isFrictionStop) {
-				isSliding = false;
-			}
-		} else if(newTerrain.GetType().Name == "Teleporter") {
-			Teleporter currentTeleport = (Teleporter)newTerrain;
-
-			if(!currentTeleport.TeleporterOnFreeze && currentTeleport.sender && currentTeleport.isSisterAReceiver()) {
-				player.transform.position = currentTeleport.teleportCoordinates();
-			}
-		} else {
-			currentTerrain = new TerrainPiece();
+		if(newTeleportDirection != -1) {
+			currentDirection = newTeleportDirection;
+			characterAnimator.walk(currentDirection);
 		}
 	}
 
 	public int CurrentDirection {
 		get {return currentDirection;}
+		set {currentDirection = value;}
+	}
+
+	public bool CollidingWithSturdyObject {
+		set {collidingWithSturdyObject = value;}
+	}
+
+	public Teleporter CurrentTeleporter {
+		set {currentTeleporter = value;}
+	}
+
+	public TerrainPiece CurrentTerrain {
+		set {currentTerrain = value;}
+	}
+
+	public bool IsSliding {
+		set {isSliding = value;}
+	}
+
+	public bool TerrainIsActivated {
+		set {terrainIsActivated = value;}
+	}
+
+	public bool IsFrictionStopNeeded {
+		get {return isFrictionStopNeeded;}
+		set {isFrictionStopNeeded = value;}
 	}
 }
