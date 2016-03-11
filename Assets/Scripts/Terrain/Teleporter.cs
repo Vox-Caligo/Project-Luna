@@ -6,14 +6,12 @@ public class Teleporter : BaseTerrain
 	public int teleporterGroup;
 	public bool sender;
 	public bool receiver;
+	public bool isDirectional;
+	public int direction;
 	private Teleporter sisterTeleport;
 	private bool teleporterOnFreeze = false;
 
-	public Teleporter () {	
-		getSisterTeleport();
-	}
-
-	private void getSisterTeleport() {	}
+	public Teleporter () {	}
 
 	public Vector2 teleportCoordinates() {
 		// disable sister return function (if applicable, the player will turn it on again
@@ -38,9 +36,15 @@ public class Teleporter : BaseTerrain
 		return sisterTeleport.receiver;
 	}
 
+	public int isSisterADirectional() {
+		if(sisterTeleport.isDirectional) {
+			return sisterTeleport.direction;
+		} 
+		return -1;
+	}
+
 	public bool TeleporterOnFreeze {
 		get {return teleporterOnFreeze;}
 		set {teleporterOnFreeze = value;}
 	}
 }
-

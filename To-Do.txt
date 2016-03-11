@@ -1,8 +1,4 @@
 To Do:
-	Fix bug: teleporter not allowing back teleport
-		-May be due to being in slide mode
-	Separate collision interpreter from player movement
-	Separate keyboard input from movement (???)
 	Jump Pad Puzzles
 		Puzzle where you hit jump pads and have to navigate the course (somewhat maze like)
 	Placement Puzzles
@@ -20,10 +16,21 @@ Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
 		Replace the int casting for a little bit of range
 	During polishing, wander should not stray too far from the start point when it begins to move
+	May move keyboard inputs into master
+	The Ot Brothers (Little, Middle, Big (Bigot)), Mark robots (Named due to Mark I, Mark II, etc), Breaking fourth wall with text talk
 	Awesome puzzle with sliding and teleports
+	Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
+	Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	3/10
+		-Directional teleportation
+		-Separate collision interpreter from player movement
+		-Fixed: teleporter not working right after being used and sliding
+			-Caused: Only checking if terrain is not null
+			-Fixed by allowing a teleporter to be a valid option
+		
 	3/9
 		-Learned that sliding continues indefinitely so no need to fix
 		-Created CharacterAnimator class

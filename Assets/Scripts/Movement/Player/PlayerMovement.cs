@@ -5,28 +5,24 @@ public class PlayerMovement : CharacterMovementController {
 	// movement variables
 	private GameObject player;
 	private CharacterAnimator characterAnimator;
+
 	private int currentDirection = 0;
 	private Vector2 speed = new Vector2 (5, 5);
+
 	private TerrainPiece currentTerrain = new TerrainPiece();
 	private Teleporter currentTeleporter = new Teleporter();
+
+	private bool terrainIsActivated = false;
 	private bool isSliding = false;
 	private bool isFrictionStopNeeded = false;
-	private DeterminingCollisionActions determiningCollisions;
 	private bool collidingWithSturdyObject = false;
 
 	public PlayerMovement (GameObject player) {
 		this.player = player;
 		characterAnimator = new CharacterAnimator(this.player);
-		determiningCollisions = new DeterminingCollisionActions(this.player);
 	}
 
 	public void updatePlayerMovement() {
-		bool terrainIsActivated = determiningCollisions.shouldTerrainColliderActivate(currentDirection, isFrictionStopNeeded);
-
-		if (terrainIsActivated) {
-			activateTerrainFeature ();
-		}
-
 		if(!isSliding) {
 			walk();
 		} else if(isSliding) {
@@ -137,44 +133,44 @@ public class PlayerMovement : CharacterMovementController {
 		player.GetComponent<Rigidbody2D>().velocity = new Vector2 (calculatedMovement.x * terrainModifier, calculatedMovement.y * terrainModifier);
 	}
 
-	public void interpretCurrentTerrainCollider(Collision2D col) {
-		if(col.gameObject.GetComponent<TerrainPiece>().isSturdy) {
-			collidingWithSturdyObject = true;
-		}
-	}
+	public void teleport() {
+		print("poof");
+		player.transform.position = currentTeleporter.teleportCoordinates ();
+		int newTeleportDirection = currentTeleporter.isSisterADirectional();
 
-	public void interpretCurrentTerrainTrigger(Collider2D col, BaseTerrain newTerrain) {
-		determiningCollisions.setNewTerrain(newTerrain);
-
-		if(newTerrain.GetType().Name == "TerrainPiece") {
-			currentTerrain = (TerrainPiece)newTerrain;
-			currentTeleporter = new Teleporter ();
-		} else if(newTerrain.GetType().Name == "Teleporter") {
-			currentTeleporter = (Teleporter)newTerrain;
-			currentTerrain = new TerrainPiece();
-		} else {
-			currentTerrain = new TerrainPiece();
-			currentTeleporter = new Teleporter ();
-		}
-	}
-
-	private void activateTerrainFeature() {
-		if (currentTerrain.isSlippery) {
-			isSliding = true;
-		}
-
-		if (currentTerrain.needsFrictionStop) {
-			isFrictionStopNeeded = true;
-		}
-
-		if (currentTeleporter.sender) {
-			if (!currentTeleporter.TeleporterOnFreeze && currentTeleporter.isSisterAReceiver ()) {
-				player.transform.position = currentTeleporter.teleportCoordinates ();
-			}
+		if(newTeleportDirection != -1) {
+			currentDirection = newTeleportDirection;
+			characterAnimator.walk(currentDirection);
 		}
 	}
 
 	public int CurrentDirection {
 		get {return currentDirection;}
+		set {currentDirection = value;}
+	}
+
+	public bool CollidingWithSturdyObject {
+		set {collidingWithSturdyObject = value;}
+	}
+
+	public Teleporter CurrentTeleporter {
+		set {currentTeleporter = value;}
+	}
+
+	public TerrainPiece CurrentTerrain {
+		set {currentTerrain = value;}
+	}
+
+	public bool IsSliding {
+		set {isSliding = value;}
+	}
+
+	public bool TerrainIsActivated {
+		set {terrainIsActivated = value;}
+	}
+
+	public bool IsFrictionStopNeeded {
+		get {return isFrictionStopNeeded;}
+		set {isFrictionStopNeeded = value;}
 	}
 }

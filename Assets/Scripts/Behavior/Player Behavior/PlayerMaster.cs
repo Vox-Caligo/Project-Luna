@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerMaster : MasterBehavior {
 	private string playerWeapon = "Sword";	// get current weapon
 	private InteractionArea interactableArea;
+	private DeterminingCollisionActions determiningCollisions;
 
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
@@ -13,10 +14,12 @@ public class PlayerMaster : MasterBehavior {
 		characterMovement = new PlayerMovement(this.gameObject);
 		interactableArea = new InteractionArea(this.gameObject);
 		characterCombat = new PlayerCombat("Player", this.gameObject, playerWeapon);
+		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
 	}
 
 	// Update is called once per frame
 	protected void FixedUpdate () {
+		determiningCollisions.checkIfActiveTerrain();
 		((PlayerMovement)characterMovement).updatePlayerMovement();
 		interactableArea.rearrangeCollisionArea(((PlayerMovement)characterMovement).CurrentDirection);
 		((PlayerCombat)characterCombat).updatePlayerCombat(((PlayerMovement)characterMovement).CurrentDirection);
@@ -26,7 +29,7 @@ public class PlayerMaster : MasterBehavior {
 		if(((PlayerCombat)characterCombat).InAttack && col.contacts[0].otherCollider.name == "Player Attack") {
 			((PlayerCombat)characterCombat).applyAttackDamage (col.contacts [0].collider.gameObject);
 		} else if(col.gameObject.GetComponent<TerrainPiece>() != null) {
-			((PlayerMovement)characterMovement).interpretCurrentTerrainCollider(col);
+			determiningCollisions.interpretCurrentTerrainCollider(col);
 		}
 	}
 
@@ -40,7 +43,7 @@ public class PlayerMaster : MasterBehavior {
 		if(col.gameObject.GetComponent<BaseTerrain>() != null) {
 			collidingPieces++;
 			if(collidingPieces == this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length) {
-				((PlayerMovement)characterMovement).interpretCurrentTerrainTrigger(col, col.gameObject.GetComponent<BaseTerrain>());
+				determiningCollisions.interpretEnteringCurrentTerrainTrigger(col, col.gameObject.GetComponent<BaseTerrain>());
 				beAwareOfChildColliders = true;
 			}
 		}
@@ -62,7 +65,7 @@ public class PlayerMaster : MasterBehavior {
 					col.gameObject.GetComponent<Teleporter>().TeleporterOnFreeze = false;
 				}
 
-				((PlayerMovement)characterMovement).interpretCurrentTerrainTrigger(col, new BaseTerrain());
+				determiningCollisions.interpretExitingCurrentTerrainTrigger(col, col.gameObject.GetComponent<BaseTerrain>());
 			}
 		}
 	}
