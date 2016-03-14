@@ -8,7 +8,6 @@ public class DeterminingCollisionActions : MonoBehaviour
 	private PlayerBoundingBox currentBoundingBox;
 
 	private TerrainPiece currentTerrain;
-	private Teleporter currentTeleporter;
 	private ColliderBoundingBox currentColliderBoundingBox;
 
 	public DeterminingCollisionActions(GameObject player, PlayerMovement playerMovement) {
@@ -18,7 +17,7 @@ public class DeterminingCollisionActions : MonoBehaviour
 	}
 
 	public void checkIfActiveTerrain() {
-		if(currentTerrain != null || currentTeleporter != null) {
+		if(currentTerrain != null) {
 			currentBoundingBox.updatePlayerBoundingBox ();
 
 			if(determineIfCurrentlyColliding()) {
@@ -54,7 +53,8 @@ public class DeterminingCollisionActions : MonoBehaviour
 		} else if(playerMovement.CurrentDirection == 3) {
 			if(playerMovement.IsFrictionStopNeeded && currentBoundingBox.PlayerTopBound < currentColliderBoundingBox.ColliderTopBound) {
 				return true;
-			} else if(((currentTerrain != null && currentTerrain.isSlippery) || currentTeleporter != null) && currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound) {
+			} else if(((currentTerrain != null && currentTerrain.isSlippery) || (currentTerrain.sender || currentTerrain.receiver)) && 
+						currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound) {
 				return true;
 			}
 		}
@@ -66,7 +66,6 @@ public class DeterminingCollisionActions : MonoBehaviour
 			currentBoundingBox.PlayerBottomBound > currentColliderBoundingBox.ColliderBottomBound) {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -79,40 +78,28 @@ public class DeterminingCollisionActions : MonoBehaviour
 			if (currentTerrain.needsFrictionStop) {
 				playerMovement.IsFrictionStopNeeded = true;
 			}
-		} else if(currentTeleporter != null) {
-			print("hm");
-			if (currentTeleporter.sender) {
-				if (!currentTeleporter.TeleporterOnFreeze && currentTeleporter.isSisterAReceiver()) {
+
+			if (currentTerrain.sender) {
+				if (!currentTerrain.TeleporterOnFreeze && currentTerrain.isSisterAReceiver()) {
 					playerMovement.teleport();
 				}
 			}
-		}
+
+			if(currentTerrain.climable) {
+				playerMovement.IsClimbing = true;
+			}
+		} 
 	}
 
-	public void interpretEnteringCurrentTerrainTrigger(Collider2D col, BaseTerrain newTerrain) {
-		if (newTerrain.GetType ().Name == "TerrainPiece") {
-			currentTerrain = (TerrainPiece)newTerrain;
-			playerMovement.CurrentTerrain = currentTerrain;
-			currentTeleporter = null;
-			currentColliderBoundingBox = new ColliderBoundingBox (currentTerrain.gameObject);
-		} else if(newTerrain.GetType().Name == "Teleporter") {
-			currentTeleporter = (Teleporter)newTerrain;
-			playerMovement.CurrentTeleporter = currentTeleporter;
-			currentTerrain = null;
-			currentColliderBoundingBox = new ColliderBoundingBox (currentTeleporter.gameObject);
-		} else {
-			currentTeleporter = null;
-			currentTerrain = null;
-			playerMovement.CurrentTerrain = new TerrainPiece();
-			playerMovement.CurrentTeleporter = new Teleporter();
-		}
+	public void interpretEnteringCurrentTerrainTrigger(Collider2D col, TerrainPiece newTerrain) {
+		currentTerrain = newTerrain;
+		playerMovement.CurrentTerrain = currentTerrain;
+		currentColliderBoundingBox = new ColliderBoundingBox (currentTerrain.gameObject);
 	}
 
-	public void interpretExitingCurrentTerrainTrigger(Collider2D col, BaseTerrain newTerrain) {
-		currentTeleporter = null;
+	public void interpretExitingCurrentTerrainTrigger(Collider2D col, TerrainPiece newTerrain) {
 		currentTerrain = null;
 		playerMovement.CurrentTerrain = new TerrainPiece();
-		playerMovement.CurrentTeleporter = new Teleporter();
 	}
 
 	public void interpretCurrentTerrainCollider(Collision2D col) {

@@ -26,7 +26,7 @@ public class MinionAI : DefaultAI
 			npcCombat.CurrentAction = "attack";
 		}
 
-		npcMovement.CurrentAction = "wander";
+		npcMovement.CurrentAction = "halt";
 		npcCombat.CurrentAction = "";
 		npcMovement.runScript();
 		npcCombat.runScript(npcMovement.CurrentDirection);

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using PixelCrushers.DialogueSystem;
 
 public class TitleScript : MonoBehaviour {
 	private SaveWorld worldSaver;
@@ -11,7 +10,7 @@ public class TitleScript : MonoBehaviour {
 	public Button quitBtn;
 	
 	private SoundInterpreter mySounds;
-	
+	/*
 	// Use this for initialization
 	void Start () {
 		worldSaver = new SaveWorld();
@@ -41,4 +40,5 @@ public class TitleScript : MonoBehaviour {
 		Application.Quit();
 		//UnityEditor.EditorApplication.isPlaying = false;
 	}
+	*/
 }
