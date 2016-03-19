@@ -11,7 +11,7 @@ public class TalkingNpc : InteractableItem
 
 	public override void onInteraction () {	
 		if(dialogueController == null) {
-			dialogueController = GameObject.Find("Dialogue").GetComponent<DialogueController>();
+			dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueController>();
 		}
 
 		if(!dialogueController.InConversation) {

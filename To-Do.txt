@@ -3,11 +3,13 @@ To Do:
 		Place items in holes (Inventory check)	
 	UI
 		Visuals for health
-		Text boxes
+		Visuals for dialogue
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
 	Dialogue System
-		-Have options for the player
+		Have options for the player
+		Better detection for entering a conversation
+		Ability to skip through a conversation
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 	Health/Mana 
@@ -24,6 +26,12 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	3/15
+		-Dialogue system places text out on piece at a time
+	
+	3/14
+		-Started dialogue system
+	
 	3/13
 		-Moveable objects (pick up and drop)
 		-Slideable objects (slides when pushed)
