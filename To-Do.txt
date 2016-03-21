@@ -8,8 +8,8 @@ To Do:
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
 	Dialogue System
 		Have options for the player
-		Better detection for entering a conversation
-		Ability to skip through a conversation
+		Better detection for engaging in conversation
+		
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 	Health/Mana 
@@ -28,6 +28,9 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 	3/15
 		-Dialogue system places text out on piece at a time
+		-Ability to skip through a conversation
+		-Store the section to repeat/continue from in the talking class
+		-Have images for those talking
 	
 	3/14
 		-Started dialogue system
