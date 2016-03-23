@@ -8,6 +8,7 @@ public class DialogueController : MonoBehaviour
 	// Dialogue UI
 	private Text dialogueText;
 	private CanvasGroup dialogueGroup;
+	private CanvasGroup playerChoices;
 	private GameObject dialogueOptionOne;
 	private GameObject dialogueOptionTwo;
 	private Image currentSpeaker;
@@ -21,9 +22,7 @@ public class DialogueController : MonoBehaviour
 
 	// Current Conversation
 	protected TalkingNpc conversationNpc;
-	protected Dictionary<int, string> npcDialogue;
-	protected Dictionary<int, ArrayList> playerDialogue;
-	protected ArrayList involvedActors;
+	protected Dictionary<int, TalkingCharacterInformation> conversationDialogue;
 
 	// Timer Properties
 	private float timerTick = 0;
@@ -32,11 +31,20 @@ public class DialogueController : MonoBehaviour
 
 	void Start() {
 		dialogueGroup = GameObject.FindGameObjectWithTag("Dialogue Text").GetComponent<CanvasGroup>();
-		dialogueText = GameObject.FindGameObjectWithTag("Dialogue Text").GetComponentInChildren<Text>();
-		dialogueOptionOne = GameObject.Find ("Option One");
-		dialogueOptionTwo = GameObject.Find ("Option Two");
+		dialogueText = dialogueGroup.GetComponentInChildren<Text>();
+		playerChoices = GameObject.Find("Player Choices").GetComponent<CanvasGroup>();
 		currentSpeaker = GameObject.Find ("Speaker").GetComponent<Image>();
 		speakerDatabase = GameObject.Find ("Databases").GetComponent<SpeakerDB> ();
+
+		// set buttons
+		dialogueOptionOne = GameObject.Find ("Option One");
+		dialogueOptionTwo = GameObject.Find ("Option Two");
+		dialogueOptionOne.GetComponent<Button> ().onClick.AddListener (() => {
+			selectedChoice (0);
+		});
+		dialogueOptionTwo.GetComponent<Button> ().onClick.AddListener (() => {
+			selectedChoice (2);
+		});
 	}
 
 	// Update is called once per frame
@@ -67,31 +75,30 @@ public class DialogueController : MonoBehaviour
 
 	public void enterConversation(TalkingNpc conversationNpc) {
 		this.conversationNpc = conversationNpc;
-		this.npcDialogue = conversationNpc.NpcDialogue;
-		this.playerDialogue = conversationNpc.PlayerDialogue;
-		this.involvedActors = conversationNpc.InvolvedActors;
+		this.conversationDialogue = conversationNpc.ConversationDialogue;
 		dialogueGroup.alpha = 1;
 		inConversation = true;
 		haveConversation(false);
 	}
 
 	private void endConversation() {
-		this.npcDialogue = null;
-		this.playerDialogue = null;
+		this.conversationDialogue = null;
 		dialogueGroup.alpha = 0;
 		inConversation = false;
 		conversationNpc.endConversation ();
 	}
 
 	private void haveConversation(bool skipDialogue) {
-		if (npcDialogue.ContainsKey (conversationNpc.CurrentDialogueSection) || playerDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
-			currentSpeaker.sprite = Resources.Load (speakerDatabase.getSpeaker (involvedActors [conversationNpc.CurrentDialogueSection].ToString()), typeof(Sprite)) as Sprite;
+		if (conversationDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
+			currentSpeaker.sprite = Resources.Load (speakerDatabase.getSpeaker (conversationNpc.getCurrentActor()), typeof(Sprite)) as Sprite;
 
-			if (npcDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
-				completedTalkingPoint = updateDialogue (npcDialogue [conversationNpc.CurrentDialogueSection], skipDialogue);
-			} else if (playerDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
-				completedTalkingPoint = updateDialogue (playerDialogue [conversationNpc.CurrentDialogueSection] [0].ToString (), skipDialogue);
-			}
+			if (conversationDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
+				if (conversationNpc.getCurrentOptions() == null) {
+					completedTalkingPoint = updateDialogue (conversationNpc.getCurrentDialogue(), skipDialogue);
+				} else {
+					multiplePlayerOptions (conversationNpc.getCurrentOptions());
+				}
+			} 
 		} else {
 			endConversation ();
 		}
@@ -119,6 +126,18 @@ public class DialogueController : MonoBehaviour
 			}
 		}
 		return true;
+	}
+
+	private void multiplePlayerOptions(ArrayList dialoguePieces) {
+		playerChoices.alpha = 1;
+		dialogueOptionOne.GetComponentInChildren<Text> ().text = dialoguePieces [0].ToString();
+		dialogueOptionTwo.GetComponentInChildren<Text> ().text = dialoguePieces [2].ToString();
+	}
+
+	private void selectedChoice(int buttonPressed) {
+		playerChoices.alpha = 0;
+		conversationNpc.CurrentDialogueSection = (int)conversationNpc.getCurrentOptions () [buttonPressed + 1];
+		haveConversation (false);
 	}
 
 	protected bool timerCountdownIsZero() {
