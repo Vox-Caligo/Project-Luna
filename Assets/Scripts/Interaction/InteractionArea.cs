@@ -8,11 +8,5 @@ public class InteractionArea : CollisionArea
 	{
 		collisionDetector.name = "Player Interaction Box";
 	}
-	
-	protected void OnTriggerStay2D(Collider2D col) {
-		if(col.gameObject.GetComponent<InteractableItem>() != null && Input.GetKeyDown(KeyCode.E)) {
-			col.gameObject.GetComponent<InteractableItem>().onInteraction();
-		}
-	}
 }
 

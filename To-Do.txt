@@ -1,16 +1,19 @@
 To Do:
-	Jump Pad Puzzles
-		Puzzle where you hit jump pads and have to navigate the course (somewhat maze like)
 	Placement Puzzles
-		Place things in the correct spot
-		2 types
-			-Place items in holes
-			-Place items down and they move to a location
-	Observation
-		Need to observe the room/level/game for the answer
+		Place items in holes (Inventory check)	
 	UI
 		Visuals for health
-		Text boxes
+		Visuals for dialogue
+	Inventory
+		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
+	Dialogue System
+		Have options for the player
+		Better detection for engaging in conversation
+	Cutscenes
+	Karma
+		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
+	Health/Mana 
+		Auto regenerate
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
@@ -19,17 +22,50 @@ Future:
 	May move keyboard inputs into master
 	The Ot Brothers (Little, Middle, Big (Bigot)), Mark robots (Named due to Mark I, Mark II, etc), Breaking fourth wall with text talk
 	Awesome puzzle with sliding and teleports
-	Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
-	Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
+	Observation Puzzles: Need to observe the room/level/game for the answer
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	3/22
+		-Player has choices in dialogue
+		-Dialogue has ability to loop
+		-Cleaned up dialogue creation so it can be declared in half the lines
+	
+	3/21
+		-Have images for those talking
+		-Store the section to repeat/continue from in the talking class
+	
+	3/15
+		-Dialogue system places text out on piece at a time
+		-Ability to skip through a conversation
+		
+	3/14
+		-Started dialogue system
+	
+	3/13
+		-Moveable objects (pick up and drop)
+		-Slideable objects (slides when pushed)
+		-Buttons and Button Controller to respond to moveable/slideable objects
+		-Dialogue Controller/Dialogues have been started and can have a minor conversation
+	
+	3/12
+		-Combine teleporter into terrain piece
+		-Got rid of jump pads (too similar to use as teleports)
+		-Able to climb by facing forward
+	
+	3/11
+		-Removed PixelCrushers items for my own
+	
 	3/10
 		-Directional teleportation
 		-Separate collision interpreter from player movement
 		-Fixed: teleporter not working right after being used and sliding
 			-Caused: Only checking if terrain is not null
 			-Fixed by allowing a teleporter to be a valid option
+		-Security for project
+			-Private repo ($7 a month)
+			-2 Step Verification
+			-Access token
 		
 	3/9
 		-Learned that sliding continues indefinitely so no need to fix

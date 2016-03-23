@@ -10,12 +10,17 @@ public class PlayerMovement : CharacterMovementController {
 	private Vector2 speed = new Vector2 (5, 5);
 
 	private TerrainPiece currentTerrain = new TerrainPiece();
-	private Teleporter currentTeleporter = new Teleporter();
 
+	// terrain attributed movement
 	private bool terrainIsActivated = false;
+
+	// ice/sliding
 	private bool isSliding = false;
 	private bool isFrictionStopNeeded = false;
 	private bool collidingWithSturdyObject = false;
+
+	// climbing
+	private bool isClimbing = false;
 
 	public PlayerMovement (GameObject player) {
 		this.player = player;
@@ -23,9 +28,7 @@ public class PlayerMovement : CharacterMovementController {
 	}
 
 	public void updatePlayerMovement() {
-		if(!isSliding) {
-			walk();
-		} else if(isSliding) {
+		if(isSliding) {
 			if(collidingWithSturdyObject) {
 				checkIfMovingWhileSliding();
 			} else {
@@ -38,6 +41,10 @@ public class PlayerMovement : CharacterMovementController {
 					slide ();
 				}
 			}
+		} else if(isClimbing != currentTerrain.climable) {
+			isClimbing = currentTerrain.climable;
+		} else {
+			walk();
 		}
 	}
 	
@@ -60,8 +67,13 @@ public class PlayerMovement : CharacterMovementController {
 					currentDirection = 3;
 				}
 			}
-			
-			characterAnimator.walk(currentDirection);
+
+			if(!isClimbing) {
+				characterAnimator.walk(currentDirection);
+			} else {
+				characterAnimator.walk(1);
+			}
+
 			applyMovement(new Vector2 ((speed.x * inputX), (speed.y * inputY)));
 		} else {
 			characterAnimator.stop();
@@ -134,9 +146,8 @@ public class PlayerMovement : CharacterMovementController {
 	}
 
 	public void teleport() {
-		print("poof");
-		player.transform.position = currentTeleporter.teleportCoordinates ();
-		int newTeleportDirection = currentTeleporter.isSisterADirectional();
+		player.transform.position = currentTerrain.teleportCoordinates ();
+		int newTeleportDirection = currentTerrain.isSisterADirectional();
 
 		if(newTeleportDirection != -1) {
 			currentDirection = newTeleportDirection;
@@ -153,16 +164,16 @@ public class PlayerMovement : CharacterMovementController {
 		set {collidingWithSturdyObject = value;}
 	}
 
-	public Teleporter CurrentTeleporter {
-		set {currentTeleporter = value;}
-	}
-
 	public TerrainPiece CurrentTerrain {
 		set {currentTerrain = value;}
 	}
 
 	public bool IsSliding {
 		set {isSliding = value;}
+	}
+
+	public bool IsClimbing {
+		set {isClimbing = value;}
 	}
 
 	public bool TerrainIsActivated {

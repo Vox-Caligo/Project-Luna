@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using PixelCrushers.DialogueSystem;
 
 public class SaveWorld : MonoBehaviour {
+/*
 	public void continueGame() {
 		pullStats();
 	}
@@ -132,4 +132,5 @@ public class SaveWorld : MonoBehaviour {
 		
 		PlayerPrefs.SetString("Inventory", "");
 	}
+	*/
 }

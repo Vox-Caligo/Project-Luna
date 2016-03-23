@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using PixelCrushers.DialogueSystem;
 
 public class CharacterProperties : MonoBehaviour
 {
@@ -9,6 +8,7 @@ public class CharacterProperties : MonoBehaviour
 	private int mana;
 	private bool redoHUD = false;
 
+	/*
 	// Use this for initialization
 	void Start ()
 	{
@@ -23,4 +23,5 @@ public class CharacterProperties : MonoBehaviour
 			redoHUD = true;
 		}
 	}
+	*/
 }

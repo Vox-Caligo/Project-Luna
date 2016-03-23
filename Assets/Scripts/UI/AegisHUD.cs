@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using PixelCrushers.DialogueSystem;
 
 public class AegisHUD : MonoBehaviour {
 	// hud components
@@ -10,7 +9,7 @@ public class AegisHUD : MonoBehaviour {
 	private GameObject[] potions;
 	
 	public bool isShown = false;
-	
+	/*
 	// sets the starting health and mana that the player will have
 	void Start() {
 		setUp();
@@ -108,4 +107,5 @@ public class AegisHUD : MonoBehaviour {
 			isShown = false;
 		}
 	}
+	*/
 }

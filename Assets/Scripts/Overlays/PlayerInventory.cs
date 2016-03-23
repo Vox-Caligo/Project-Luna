@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using PixelCrushers.DialogueSystem;
 
 // holds some standard information about the item and where it's located
 class Inventory {
@@ -51,7 +50,7 @@ public class PlayerInventory : MonoBehaviour {
 	public bool isShown = false;
 	
 	//public ItemEffects myItemEffects;	// creates item effects or puts on armor/weapons
-	
+	/*
 	void Start() {
 		Lua.RegisterFunction("checkInventory", this, typeof(PlayerInventory).GetMethod("checkInventory"));
 		
@@ -236,4 +235,5 @@ public class PlayerInventory : MonoBehaviour {
 			isShown = false;
 		}
 	}
+	*/
 }

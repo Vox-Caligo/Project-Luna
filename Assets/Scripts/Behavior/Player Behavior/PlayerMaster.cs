@@ -30,20 +30,26 @@ public class PlayerMaster : MasterBehavior {
 			((PlayerCombat)characterCombat).applyAttackDamage (col.contacts [0].collider.gameObject);
 		} else if(col.gameObject.GetComponent<TerrainPiece>() != null) {
 			determiningCollisions.interpretCurrentTerrainCollider(col);
+		} else if(col.gameObject.GetComponent<MoveableBlock>() != null) {
+			col.gameObject.GetComponent<MoveableBlock>().collidedWithCharacter(((PlayerMovement)characterMovement).CurrentDirection);
 		}
 	}
 
 	protected void OnTriggerStay2D(Collider2D col) {
-		if(col.gameObject.GetComponent<InteractableItem>() != null && Input.GetKeyDown(KeyCode.E)) {
-			col.gameObject.GetComponent<InteractableItem>().onInteraction();
+		if(Input.GetKeyDown(KeyCode.E)) {
+			if(col.gameObject.GetComponent<MoveableBlock>() != null) {
+				col.gameObject.GetComponent<MoveableBlock>().onInteractionWithMovable(((PlayerMovement)characterMovement));
+			} else if(col.gameObject.GetComponent<InteractableItem>() != null) {
+				col.gameObject.GetComponent<InteractableItem>().onInteraction();
+			}
 		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D col) {
-		if(col.gameObject.GetComponent<BaseTerrain>() != null) {
+		if(col.gameObject.GetComponent<TerrainPiece>() != null) {
 			collidingPieces++;
 			if(collidingPieces == this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length) {
-				determiningCollisions.interpretEnteringCurrentTerrainTrigger(col, col.gameObject.GetComponent<BaseTerrain>());
+				determiningCollisions.interpretEnteringCurrentTerrainTrigger(col, col.gameObject.GetComponent<TerrainPiece>());
 				beAwareOfChildColliders = true;
 			}
 		}
@@ -52,7 +58,7 @@ public class PlayerMaster : MasterBehavior {
 	private void OnTriggerExit2D(Collider2D col) {
 		beAwareOfChildColliders = false;
 
-		if(col.gameObject.GetComponent<BaseTerrain>() != null) {
+		if(col.gameObject.GetComponent<TerrainPiece>() != null) {
 			if(collidingPieces > this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length) {
 				collidingPieces = this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length;
 			} 
@@ -61,11 +67,13 @@ public class PlayerMaster : MasterBehavior {
 				collidingPieces--;
 			}
 			if(collidingPieces == 0) {
-				if(col.gameObject.GetComponent<Teleporter>() != null && col.gameObject.GetComponent<Teleporter>().receiver) {
-					col.gameObject.GetComponent<Teleporter>().TeleporterOnFreeze = false;
+				TerrainPiece currentTerrain = col.gameObject.GetComponent<TerrainPiece>();
+
+				if(currentTerrain != null && currentTerrain.receiver) {
+					currentTerrain.TeleporterOnFreeze = false;
 				}
 
-				determiningCollisions.interpretExitingCurrentTerrainTrigger(col, col.gameObject.GetComponent<BaseTerrain>());
+				determiningCollisions.interpretExitingCurrentTerrainTrigger(col, col.gameObject.GetComponent<TerrainPiece>());
 			}
 		}
 	}

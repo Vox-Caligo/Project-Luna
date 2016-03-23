@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CollisionArea : MonoBehaviour
 {
+	protected int currentDirection;
 	protected GameObject collisionDetector;
 	protected BoxCollider2D collisionDetectionBox;
 	protected float boxWidth;
@@ -23,6 +24,7 @@ public class CollisionArea : MonoBehaviour
 
 	// moves the box with which the player interacts with things
 	public virtual void rearrangeCollisionArea(int currentDirection) {
+		this.currentDirection = currentDirection;
 		float distanceFromPlayer = .30f;
 
 		if(currentDirection == 0) {
@@ -38,6 +40,10 @@ public class CollisionArea : MonoBehaviour
 			collisionDetector.transform.localPosition = new Vector2(0, -distanceFromPlayer);
 			collisionDetectionBox.size = new Vector2(boxWidth, .1f);
 		}
+	}
+
+	public int CurrentDirection {
+		get {return currentDirection;}
 	}
 }
 
