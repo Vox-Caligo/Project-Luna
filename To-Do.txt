@@ -7,7 +7,6 @@ To Do:
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
 	Dialogue System
-		Have options for the player
 		Better detection for engaging in conversation
 	Cutscenes
 	Karma
@@ -26,7 +25,11 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	3/23
+		-Started work on keyboard watcher to detect key inputs/outputs better
+	
 	3/22
+		-Have options for the player
 		-Player has choices in dialogue
 		-Dialogue has ability to loop
 		-Cleaned up dialogue creation so it can be declared in half the lines

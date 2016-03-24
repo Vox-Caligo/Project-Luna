@@ -5,6 +5,7 @@ public class PlayerMaster : MasterBehavior {
 	private string playerWeapon = "Sword";	// get current weapon
 	private InteractionArea interactableArea;
 	private DeterminingCollisionActions determiningCollisions;
+	private KeyboardInput keyChecker;
 
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
@@ -15,6 +16,7 @@ public class PlayerMaster : MasterBehavior {
 		interactableArea = new InteractionArea(this.gameObject);
 		characterCombat = new PlayerCombat("Player", this.gameObject, playerWeapon);
 		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
+		keyChecker = new KeyboardInput ();
 	}
 
 	// Update is called once per frame
@@ -36,7 +38,7 @@ public class PlayerMaster : MasterBehavior {
 	}
 
 	protected void OnTriggerStay2D(Collider2D col) {
-		if(Input.GetKeyDown(KeyCode.E)) {
+		if(keyChecker.useKey(KeyCode.E)) {
 			if(col.gameObject.GetComponent<MoveableBlock>() != null) {
 				col.gameObject.GetComponent<MoveableBlock>().onInteractionWithMovable(((PlayerMovement)characterMovement));
 			} else if(col.gameObject.GetComponent<InteractableItem>() != null) {

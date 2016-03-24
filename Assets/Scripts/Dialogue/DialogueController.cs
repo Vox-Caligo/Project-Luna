@@ -17,8 +17,8 @@ public class DialogueController : MonoBehaviour
 	private int newDialogueRunner = 0;
 	private bool inConversation = false;
 	private bool completedTalkingPoint = false;
-	private bool interactButtonPressed = false;
 	private SpeakerDB speakerDatabase;
+	private KeyboardInput keyChecker;
 
 	// Current Conversation
 	protected TalkingNpc conversationNpc;
@@ -35,6 +35,7 @@ public class DialogueController : MonoBehaviour
 		playerChoices = GameObject.Find("Player Choices").GetComponent<CanvasGroup>();
 		currentSpeaker = GameObject.Find ("Speaker").GetComponent<Image>();
 		speakerDatabase = GameObject.Find ("Databases").GetComponent<SpeakerDB> ();
+		keyChecker = new KeyboardInput ();
 
 		// set buttons
 		dialogueOptionOne = GameObject.Find ("Option One");
@@ -49,27 +50,23 @@ public class DialogueController : MonoBehaviour
 
 	// Update is called once per frame
 	private void FixedUpdate () {
+		keyChecker.checkKeys ();
+
 		if(inConversation) {
 			if (!completedTalkingPoint) {
-				if (Input.GetKeyDown (KeyCode.E) && !interactButtonPressed) {
-					interactButtonPressed = true;
+				if (keyChecker.useKey(KeyCode.E)) {
 					haveConversation (true);
 				} else {
 					haveConversation (false);
 				}
 			} else {
-				if(Input.GetKeyDown (KeyCode.E) && !interactButtonPressed) {
-					interactButtonPressed = true;
+				if(keyChecker.useKey(KeyCode.E)) {
 					conversationNpc.CurrentDialogueSection = conversationNpc.CurrentDialogueSection + 1;
 					newDialogueRunner = 0;
 					dialogueText.text = "";
 					completedTalkingPoint = false;
 				}
 			}
-		}
-
-		if (Input.GetKeyUp (KeyCode.E) && interactButtonPressed) {
-			interactButtonPressed = false;
 		}
 	}
 
