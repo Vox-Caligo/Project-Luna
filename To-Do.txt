@@ -1,18 +1,22 @@
 To Do:
+	Health/Mana 
+		Auto regenerate
+		Visuals for health
 	Placement Puzzles
 		Place items in holes (Inventory check)	
-	UI
-		Visuals for health
-		Visuals for dialogue
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
-	Dialogue System
-		Better detection for engaging in conversation
 	Cutscenes
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
-	Health/Mana 
-		Auto regenerate
+		Create variables on NPCs to respond to different karma (or not being there at all)
+		
+	R2:
+		Improved AI
+		Killable land terrain
+		Health restoring land terrain
+		Ability to receive and give items to NPCs
+		Follower NPCs?
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
@@ -25,8 +29,13 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	3/24
+		-Finished dialogue responding correctly (Update instead of FixedUpdate)
+		-Created KeyboardInputs to keep track of used buttons and whether they are active or not
+	
 	3/23
 		-Started work on keyboard watcher to detect key inputs/outputs better
+		-UI: Visuals for dialogue
 	
 	3/22
 		-Have options for the player
