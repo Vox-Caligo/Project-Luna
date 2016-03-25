@@ -30,11 +30,6 @@ public class KeyboardInput : MonoBehaviour
 
 	public bool useKey(KeyCode pressedKey) {
 		PlayerKeys checkingKeyProperties = usedKeys [pressedKey];
-		if (checkingKeyProperties.Pressed) {
-			print (!checkingKeyProperties.Used);
-		} else {
-			print ("Fuck off");
-		}
 		if (checkingKeyProperties.Pressed && !checkingKeyProperties.Used) {
 			usedKeys [pressedKey] = new PlayerKeys (checkingKeyProperties.Pressed, true);
 			return true;
@@ -42,7 +37,7 @@ public class KeyboardInput : MonoBehaviour
 		return false;
 	}
 
-	public void checkKeys () {
+	void Update () {
 		ArrayList modifiedButtons = new ArrayList ();
 
 		foreach(KeyValuePair<KeyCode, PlayerKeys> entry in usedKeys) {

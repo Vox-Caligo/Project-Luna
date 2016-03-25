@@ -16,7 +16,7 @@ public class PlayerMaster : MasterBehavior {
 		interactableArea = new InteractionArea(this.gameObject);
 		characterCombat = new PlayerCombat("Player", this.gameObject, playerWeapon);
 		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
-		keyChecker = new KeyboardInput ();
+		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
 	}
 
 	// Update is called once per frame
