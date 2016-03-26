@@ -48,11 +48,17 @@ public class PlayerMaster : MasterBehavior {
 	}
 
 	private void OnTriggerEnter2D(Collider2D col) {
-		if(col.gameObject.GetComponent<TerrainPiece>() != null) {
+		if (col.gameObject.GetComponent<TerrainPiece> () != null) {
 			collidingPieces++;
-			if(collidingPieces == this.gameObject.GetComponentsInChildren<BoxCollider2D>().Length) {
-				determiningCollisions.interpretEnteringCurrentTerrainTrigger(col, col.gameObject.GetComponent<TerrainPiece>());
+			if (collidingPieces == this.gameObject.GetComponentsInChildren<BoxCollider2D> ().Length) {
+				determiningCollisions.interpretEnteringCurrentTerrainTrigger (col, col.gameObject.GetComponent<TerrainPiece> ());
 				beAwareOfChildColliders = true;
+			}
+		} else if (col.gameObject.GetComponent<CutsceneTrigger> () != null) {
+			CutsceneTrigger triggeredScene = col.gameObject.GetComponent<CutsceneTrigger> ();
+
+			if (!triggeredScene.CutsceneActivated) {
+				triggeredScene.startCutscene ();
 			}
 		}
 	}

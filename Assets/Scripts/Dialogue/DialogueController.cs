@@ -16,6 +16,7 @@ public class DialogueController : MonoBehaviour
 	// Utilities
 	private int newDialogueRunner = 0;
 	private bool inConversation = false;
+	private bool inCutscene = false;
 	private bool completedTalkingPoint = false;
 	private SpeakerDB speakerDatabase;
 	private KeyboardInput keyChecker;
@@ -23,6 +24,7 @@ public class DialogueController : MonoBehaviour
 	// Current Conversation
 	protected TalkingNpc conversationNpc;
 	protected Dictionary<int, TalkingCharacterInformation> conversationDialogue;
+	private TalkingCharacterInformation currentCutsceneDialogue;
 
 	// Timer Properties
 	private float timerTick = 0;
@@ -50,22 +52,39 @@ public class DialogueController : MonoBehaviour
 
 	// Update is called once per frame
 	private void FixedUpdate () {
-		if(inConversation) {
+		if (inConversation) {
 			if (!completedTalkingPoint) {
-				if (keyChecker.useKey(KeyCode.E)) {
+				if (keyChecker.useKey (KeyCode.E)) {
 					haveConversation (true);
 				} else {
 					haveConversation (false);
 				}
 			} else {
-				if(keyChecker.useKey(KeyCode.E)) {
+				if (keyChecker.useKey (KeyCode.E)) {
 					conversationNpc.CurrentDialogueSection = conversationNpc.CurrentDialogueSection + 1;
 					newDialogueRunner = 0;
 					dialogueText.text = "";
 					completedTalkingPoint = false;
 				}
 			}
+		} else if (inCutscene) {
+			updateDialogue (currentCutsceneDialogue.CharacterChat, keyChecker.useKey (KeyCode.E));
 		}
+	}
+
+	// Used for displaying dialogue within a cutscene, not standard npc interactions
+	public void displayCutsceneDialogue(TalkingCharacterInformation currentCutsceneDialogue) {
+		this.currentCutsceneDialogue = currentCutsceneDialogue;
+		dialogueGroup.alpha = 1;
+		inCutscene = true;
+		currentSpeaker.sprite = Resources.Load (speakerDatabase.getSpeaker (currentCutsceneDialogue.Character), typeof(Sprite)) as Sprite;
+	}
+
+	private void endCutsceneDialogue() {
+		this.conversationDialogue = null;
+		dialogueGroup.alpha = 0;
+		inCutscene = false;
+		conversationNpc.endConversation ();
 	}
 
 	public void enterConversation(TalkingNpc conversationNpc) {
