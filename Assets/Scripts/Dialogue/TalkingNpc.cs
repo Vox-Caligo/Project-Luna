@@ -20,7 +20,7 @@ public class TalkingCharacterInformation {
 
 public class TalkingNpc : InteractableItem
 {
-	protected DialogueController dialogueController;
+	protected DialogueControllerInGame dialogueController;
 	protected Dictionary<int, TalkingCharacterInformation> conversationDialogue;
 	protected ArrayList playerOptions;
 	protected string playerChoice;
@@ -30,7 +30,7 @@ public class TalkingNpc : InteractableItem
 
 	public override void onInteraction () {	
 		if(dialogueController == null) {
-			dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueController>();
+			dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueControllerInGame>();
 		}
 
 		if(!dialogueController.InConversation) {

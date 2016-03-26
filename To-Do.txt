@@ -7,6 +7,7 @@ To Do:
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
 	Cutscenes
+		-Work on getting DialogueControllerCutscene working more
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 		Create variables on NPCs to respond to different karma (or not being there at all)
@@ -29,6 +30,11 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	3/25
+		-Began working on making cutscenes work (first version was working)
+		-Refactored dialogue controller into 3 classes (DialogueController, DialogueControllerCutscene, DialogueControllerInGame)
+		-Fix DialogueControllerInGame to display text right
+	
 	3/24
 		-Finished dialogue responding correctly (Update instead of FixedUpdate)
 		-Created KeyboardInputs to keep track of used buttons and whether they are active or not

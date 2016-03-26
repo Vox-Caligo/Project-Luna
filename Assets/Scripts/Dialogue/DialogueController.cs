@@ -6,32 +6,24 @@ using System.Collections.Generic;
 public class DialogueController : MonoBehaviour
 {
 	// Dialogue UI
-	private Text dialogueText;
-	private CanvasGroup dialogueGroup;
-	private CanvasGroup playerChoices;
-	private GameObject dialogueOptionOne;
-	private GameObject dialogueOptionTwo;
-	private Image currentSpeaker;
+	protected Text dialogueText;
+	protected CanvasGroup dialogueGroup;
+	protected CanvasGroup playerChoices;
+	protected GameObject dialogueOptionOne;
+	protected GameObject dialogueOptionTwo;
+	protected Image currentSpeaker;
 
 	// Utilities
-	private int newDialogueRunner = 0;
-	private bool inConversation = false;
-	private bool inCutscene = false;
-	private bool completedTalkingPoint = false;
-	private SpeakerDB speakerDatabase;
-	private KeyboardInput keyChecker;
-
-	// Current Conversation
-	protected TalkingNpc conversationNpc;
-	protected Dictionary<int, TalkingCharacterInformation> conversationDialogue;
-	private TalkingCharacterInformation currentCutsceneDialogue;
+	protected int newDialogueRunner = 0;
+	protected SpeakerDB speakerDatabase;
+	protected KeyboardInput keyChecker;
 
 	// Timer Properties
-	private float timerTick = 0;
-	private float maxTimer = .05f;
-	private bool dialogueTyperDelay = false;
+	protected float timerTick = 0;
+	protected float maxTimer = .05f;
+	protected bool dialogueTyperDelay = false;
 
-	void Start() {
+	protected virtual void Start() {
 		dialogueGroup = GameObject.FindGameObjectWithTag("Dialogue Text").GetComponent<CanvasGroup>();
 		dialogueText = dialogueGroup.GetComponentInChildren<Text>();
 		playerChoices = GameObject.Find("Player Choices").GetComponent<CanvasGroup>();
@@ -50,75 +42,7 @@ public class DialogueController : MonoBehaviour
 		});
 	}
 
-	// Update is called once per frame
-	private void FixedUpdate () {
-		if (inConversation) {
-			if (!completedTalkingPoint) {
-				if (keyChecker.useKey (KeyCode.E)) {
-					haveConversation (true);
-				} else {
-					haveConversation (false);
-				}
-			} else {
-				if (keyChecker.useKey (KeyCode.E)) {
-					conversationNpc.CurrentDialogueSection = conversationNpc.CurrentDialogueSection + 1;
-					newDialogueRunner = 0;
-					dialogueText.text = "";
-					completedTalkingPoint = false;
-				}
-			}
-		} else if (inCutscene) {
-			updateDialogue (currentCutsceneDialogue.CharacterChat, keyChecker.useKey (KeyCode.E));
-		}
-	}
-
-	// Used for displaying dialogue within a cutscene, not standard npc interactions
-	public void displayCutsceneDialogue(TalkingCharacterInformation currentCutsceneDialogue) {
-		this.currentCutsceneDialogue = currentCutsceneDialogue;
-		dialogueGroup.alpha = 1;
-		inCutscene = true;
-		currentSpeaker.sprite = Resources.Load (speakerDatabase.getSpeaker (currentCutsceneDialogue.Character), typeof(Sprite)) as Sprite;
-	}
-
-	private void endCutsceneDialogue() {
-		this.conversationDialogue = null;
-		dialogueGroup.alpha = 0;
-		inCutscene = false;
-		conversationNpc.endConversation ();
-	}
-
-	public void enterConversation(TalkingNpc conversationNpc) {
-		this.conversationNpc = conversationNpc;
-		this.conversationDialogue = conversationNpc.ConversationDialogue;
-		dialogueGroup.alpha = 1;
-		inConversation = true;
-		haveConversation(false);
-	}
-
-	private void endConversation() {
-		this.conversationDialogue = null;
-		dialogueGroup.alpha = 0;
-		inConversation = false;
-		conversationNpc.endConversation ();
-	}
-
-	private void haveConversation(bool skipDialogue) {
-		if (conversationDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
-			currentSpeaker.sprite = Resources.Load (speakerDatabase.getSpeaker (conversationNpc.getCurrentActor()), typeof(Sprite)) as Sprite;
-
-			if (conversationDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
-				if (conversationNpc.getCurrentOptions() == null) {
-					completedTalkingPoint = updateDialogue (conversationNpc.getCurrentDialogue(), skipDialogue);
-				} else {
-					multiplePlayerOptions (conversationNpc.getCurrentOptions());
-				}
-			} 
-		} else {
-			endConversation ();
-		}
-	}
-
-	private bool updateDialogue(string newDialoguePiece, bool skipDialogue) {
+	protected virtual bool updateDialogue(string newDialoguePiece, bool skipDialogue) {
 		if(newDialogueRunner < newDialoguePiece.Length) {
 			if (skipDialogue) {
 				for (int i = newDialogueRunner; i < newDialoguePiece.Length; i++) {
@@ -142,17 +66,13 @@ public class DialogueController : MonoBehaviour
 		return true;
 	}
 
-	private void multiplePlayerOptions(ArrayList dialoguePieces) {
+	protected virtual void multiplePlayerOptions(ArrayList dialoguePieces) {
 		playerChoices.alpha = 1;
 		dialogueOptionOne.GetComponentInChildren<Text> ().text = dialoguePieces [0].ToString();
 		dialogueOptionTwo.GetComponentInChildren<Text> ().text = dialoguePieces [2].ToString();
 	}
 
-	private void selectedChoice(int buttonPressed) {
-		playerChoices.alpha = 0;
-		conversationNpc.CurrentDialogueSection = (int)conversationNpc.getCurrentOptions () [buttonPressed + 1];
-		haveConversation (false);
-	}
+	protected virtual void selectedChoice(int buttonPressed) {}
 
 	protected bool timerCountdownIsZero() {
 		if(timerTick > 0) {
@@ -161,10 +81,5 @@ public class DialogueController : MonoBehaviour
 		} else {
 			return true;
 		}
-	}
-
-	public bool InConversation {
-		get {return inConversation; }
-		set {inConversation = value; }
 	}
 }

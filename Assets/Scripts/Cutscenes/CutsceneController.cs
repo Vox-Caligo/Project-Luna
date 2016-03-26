@@ -3,13 +3,13 @@ using System.Collections;
 
 public class CutsceneController : MonoBehaviour
 {
-	private DialogueController dialogueController;
+	private DialogueControllerCutscene dialogueController;
 	private CutsceneTrigger currentCutscene;
 	private ArrayList currentScript;
 	private int scriptRunner;
 
 	void Start() {
-		dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueController>();
+		dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueControllerCutscene>();
 	}
 
 	public void initializeScript(CutsceneTrigger currentCutscene) {
