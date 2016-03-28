@@ -13,6 +13,10 @@ public class CutsceneController : MonoBehaviour
 	private bool inDialogue = false;
 	private bool inAction = false;
 
+	private Vector2 newLocation;
+
+	private GameObject currentActor;
+
 	void Start() {
 		dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueControllerCutscene>();
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
@@ -29,7 +33,12 @@ public class CutsceneController : MonoBehaviour
 	{
 		if(currentCutscene != null) {
 			if(inMovement) {
-				
+				currentActor.transform.position = Vector2.MoveTowards(currentActor.transform.position, newLocation, .02f);
+
+				if(Vector2.Distance(currentActor.transform.position, newLocation) < .02) {
+					inMovement = false;
+				}
+
 			} else if(inDialogue) {
 				if(dialogueController.CompletedTalkingPoint && keyChecker.useKey (KeyCode.E)) {
 					inDialogue = false;
@@ -48,10 +57,11 @@ public class CutsceneController : MonoBehaviour
 					dialogueController.endCutsceneDialogue();
 					inAction = true;
 					characterSpecialAction (nextLine);
-				} else if (nextLine.Action == "Moving") {
+				} else if (nextLine.Action == "Move") {
+					currentActor = GameObject.Find(nextLine.Character);
 					dialogueController.endCutsceneDialogue();
 					inMovement = true;
-					characterMoving (nextLine);
+					newLocation = nextLine.NewLocation;
 				}
 			}
 		}
@@ -60,11 +70,6 @@ public class CutsceneController : MonoBehaviour
 	// used to have a character have dialogue
 	private void characterTalking(ScriptLine currentLine) {
 		dialogueController.displayCutsceneDialogue(new TalkingCharacterInformation (currentLine.Character, currentLine.LineOrAct));
-	}
-
-	// used to move a character from place to place in a certain time
-	private void characterMoving(ScriptLine currentLine) {
-
 	}
 
 	// used for things like pointing a weapon or disappearing

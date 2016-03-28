@@ -1,20 +1,24 @@
 To Do:
+	Cutscenes
+		-Work on getting DialogueControllerCutscene working 
+			-Special
+			-Talking errors while skipping
+			
 	Health/Mana 
 		Auto regenerate
 		Visuals for health
-	Placement Puzzles
-		Place items in holes (Inventory check)	
+		
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
-	Cutscenes
-		-Work on getting DialogueControllerCutscene working 
-			-Moving
-			-Special
+	
+	Placement Puzzles
+		Place items in holes (Inventory check)	
+		
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 		Create variables on NPCs to respond to different karma (or not being there at all)
 		
-	R2:
+	Round Two:
 		Improved AI
 		Killable land terrain
 		Health restoring land terrain
@@ -34,6 +38,7 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 	3/27
 		-Talking in cutscenes work
+		-Moving in cutscenes work
 		-Starting of specials is working (ending the scene for example)
 		
 	3/25
