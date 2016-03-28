@@ -7,7 +7,6 @@ public class DialogueControllerInGame : DialogueController
 {
 	// Utilities
 	private bool inConversation = false;
-	private bool completedTalkingPoint = false;
 
 	// Current Conversation
 	protected TalkingNpc conversationNpc;

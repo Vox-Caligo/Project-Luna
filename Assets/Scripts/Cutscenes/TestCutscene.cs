@@ -16,6 +16,9 @@ public class TestCutscene : CutsceneTrigger
 	protected override void setCutsceneScript() { 
 		cutsceneScript = new ArrayList ();
 		cutsceneScript.Add (new ScriptLine ("Aegis", "Talk", "It's me!"));
+		cutsceneScript.Add (new ScriptLine ("Aegis", "Talk", "I like to disco!"));
+		cutsceneScript.Add (new ScriptLine ("Minion", "Talk", "What was that?"));
+		cutsceneScript.Add (new ScriptLine ("Aegis", "Talk", "Um...nothing..."));
 		cutsceneScript.Add (new ScriptLine("Aegis", "Special", "End"));
 	}
 }

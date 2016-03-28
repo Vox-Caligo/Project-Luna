@@ -23,6 +23,8 @@ public class DialogueController : MonoBehaviour
 	protected float maxTimer = .05f;
 	protected bool dialogueTyperDelay = false;
 
+	protected bool completedTalkingPoint = false;
+
 	protected virtual void Start() {
 		dialogueGroup = GameObject.FindGameObjectWithTag("Dialogue Text").GetComponent<CanvasGroup>();
 		dialogueText = dialogueGroup.GetComponentInChildren<Text>();
@@ -48,7 +50,6 @@ public class DialogueController : MonoBehaviour
 				for (int i = newDialogueRunner; i < newDialoguePiece.Length; i++) {
 					dialogueText.text += newDialoguePiece [i];
 				}
-				return true;
 			} else {
 				if (!dialogueTyperDelay) {
 					dialogueText.text += newDialoguePiece [newDialogueRunner];
@@ -81,5 +82,9 @@ public class DialogueController : MonoBehaviour
 		} else {
 			return true;
 		}
+	}
+
+	public bool CompletedTalkingPoint {
+		get { return completedTalkingPoint; }
 	}
 }

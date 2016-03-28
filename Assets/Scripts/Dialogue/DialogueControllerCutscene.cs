@@ -18,7 +18,15 @@ public class DialogueControllerCutscene : DialogueController
 	// Update is called once per frame
 	private void FixedUpdate () {
 		if (inCutscene) {
-			updateDialogue (currentCutsceneDialogue.CharacterChat, keyChecker.useKey (KeyCode.E));
+			if(!completedTalkingPoint) {
+				completedTalkingPoint = updateDialogue (currentCutsceneDialogue.CharacterChat, keyChecker.useKey (KeyCode.E));
+			} else {
+				if (keyChecker.useKey (KeyCode.E)) {
+					newDialogueRunner = 0;
+					dialogueText.text = "";
+					completedTalkingPoint = false;
+				}
+			}
 		}
 	}
 
@@ -30,11 +38,16 @@ public class DialogueControllerCutscene : DialogueController
 		currentSpeaker.sprite = Resources.Load (speakerDatabase.getSpeaker (currentCutsceneDialogue.Character), typeof(Sprite)) as Sprite;
 	}
 
-	private void endCutsceneDialogue() {
+	public void endCurrentDialogue() {
+		newDialogueRunner = 0;
+		dialogueText.text = "";
+		completedTalkingPoint = false;
+	}
+
+	public void endCutsceneDialogue() {
 		this.currentCutsceneDialogue = null;
 		dialogueGroup.alpha = 0;
 		inCutscene = false;
-		//conversationNpc.endConversation ();
 	}
 
 	protected override void multiplePlayerOptions(ArrayList dialoguePieces) {
