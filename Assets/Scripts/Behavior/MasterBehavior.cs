@@ -5,6 +5,7 @@ public class MasterBehavior : MonoBehaviour
 {
 	protected string characterName;
 	protected Combat characterCombat;
+	protected CutsceneController cutsceneController;
 	protected CharacterMovementController characterMovement;
 	protected DefaultMovementController npcMovement;
 	protected DefaultCombatController npcCombat;
@@ -15,6 +16,7 @@ public class MasterBehavior : MonoBehaviour
 
 	// Use this for initialization
 	protected virtual void Start() {
+		cutsceneController = GameObject.Find ("Databases").GetComponent<CutsceneController> ();
 	}
 
 	protected virtual void OnCollisionEnter2D (Collision2D col) { }

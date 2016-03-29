@@ -3,6 +3,7 @@ To Do:
 		-Work on getting DialogueControllerCutscene working 
 			-Special
 			-Talking errors while skipping
+			-Movement: facing certain directions
 			
 	Health/Mana 
 		Auto regenerate
@@ -12,7 +13,7 @@ To Do:
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
 	
 	Placement Puzzles
-		Place items in holes (Inventory check)	
+		Place items in holes (Inventory check)
 		
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)

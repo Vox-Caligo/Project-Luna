@@ -33,12 +33,7 @@ public class CutsceneController : MonoBehaviour
 	{
 		if(currentCutscene != null) {
 			if(inMovement) {
-				currentActor.transform.position = Vector2.MoveTowards(currentActor.transform.position, newLocation, .02f);
-
-				if(Vector2.Distance(currentActor.transform.position, newLocation) < .02) {
-					inMovement = false;
-				}
-
+				characterMoving ();
 			} else if(inDialogue) {
 				if(dialogueController.CompletedTalkingPoint && keyChecker.useKey (KeyCode.E)) {
 					inDialogue = false;
@@ -53,15 +48,15 @@ public class CutsceneController : MonoBehaviour
 				if (nextLine.Action == "Talk") {
 					inDialogue = true;
 					characterTalking (nextLine);
-				} else if (nextLine.Action == "Special") {
-					dialogueController.endCutsceneDialogue();
-					inAction = true;
-					characterSpecialAction (nextLine);
 				} else if (nextLine.Action == "Move") {
-					currentActor = GameObject.Find(nextLine.Character);
-					dialogueController.endCutsceneDialogue();
-					inMovement = true;
+					currentActor = GameObject.Find (nextLine.Character);
+					dialogueController.endCutsceneDialogue ();
 					newLocation = nextLine.NewLocation;
+					characterMoving ();
+					inMovement = true;
+				} else if (nextLine.Action == "End") {
+					endCutscene();
+				} else {
 				}
 			}
 		}
@@ -72,11 +67,34 @@ public class CutsceneController : MonoBehaviour
 		dialogueController.displayCutsceneDialogue(new TalkingCharacterInformation (currentLine.Character, currentLine.LineOrAct));
 	}
 
-	// used for things like pointing a weapon or disappearing
-	private void characterSpecialAction(ScriptLine currentLine) {
-		if (currentLine.LineOrAct == "End") {
-			Destroy (currentCutscene);
+	// used to have a character move
+	private void characterMoving() {
+		if (currentActor.GetComponent<DefaultMovementController> () != null && !inMovement) {
+			DefaultMovementController currentActorMovement = currentActor.GetComponent<DefaultMovementController> ();
+			currentActorMovement.TargetPoint = newLocation;
+			currentActorMovement.CurrentAction = "pursue";
+			print ("Assumptions are made this works...need to really animation test this...");
+		} else {
+			print ("This is for the player");
+			currentActor.transform.position = Vector2.MoveTowards (currentActor.transform.position, newLocation, .02f);
 		}
+
+		if (Vector2.Distance (currentActor.transform.position, newLocation) < .02) {
+			inMovement = false;
+		}
+	}
+
+	private void endCutscene() {
+		inMovement = false;
+		inDialogue = false;
+		inAction = false;
+		currentCutscene = null;
+		dialogueController.endCutsceneDialogue ();
+		Destroy (currentCutscene);
+	}
+
+	public bool isCurrentlyInCutscene() {
+		return (inMovement || inAction || inDialogue);
 	}
 }
 

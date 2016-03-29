@@ -32,7 +32,7 @@ public class TalkingNpc : InteractableItem
 		if(dialogueController == null) {
 			dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueControllerInGame>();
 		}
-		print(dialogueController);
+
 		if(!dialogueController.InConversation) {
 			setupConversation ();
 			dialogueController.enterConversation(this);

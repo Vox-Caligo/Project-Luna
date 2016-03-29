@@ -12,6 +12,7 @@ public class PlayerMaster : MasterBehavior {
 
 	// Use this for initialization
 	protected override void Start() {
+		base.Start ();
 		characterMovement = new PlayerMovement(this.gameObject);
 		interactableArea = new InteractionArea(this.gameObject);
 		characterCombat = new PlayerCombat("Player", this.gameObject, playerWeapon);
@@ -21,10 +22,12 @@ public class PlayerMaster : MasterBehavior {
 
 	// Update is called once per frame
 	protected void FixedUpdate () {
-		determiningCollisions.checkIfActiveTerrain();
-		((PlayerMovement)characterMovement).updatePlayerMovement();
-		interactableArea.rearrangeCollisionArea(((PlayerMovement)characterMovement).CurrentDirection);
-		((PlayerCombat)characterCombat).updatePlayerCombat(((PlayerMovement)characterMovement).CurrentDirection);
+		if (!cutsceneController.isCurrentlyInCutscene()) {
+			determiningCollisions.checkIfActiveTerrain ();
+			((PlayerMovement)characterMovement).updatePlayerMovement ();
+			interactableArea.rearrangeCollisionArea (((PlayerMovement)characterMovement).CurrentDirection);
+			((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection);
+		}
 	}
 
 	protected override void OnCollisionEnter2D(Collision2D col) {

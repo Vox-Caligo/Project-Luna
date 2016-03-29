@@ -7,6 +7,10 @@ public class ScriptLine {
 	public string LineOrAct { get; set; }
 	public Vector2 NewLocation { get; set; }
 
+	public ScriptLine(string action) {
+		this.Action = action;
+	}
+
 	public ScriptLine(string character, string action, string lineOrAct) {
 		this.Character = character;
 		this.Action = action;
