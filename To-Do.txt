@@ -1,9 +1,9 @@
 To Do:
 	Cutscenes
 		-Work on getting DialogueControllerCutscene working 
-			-Special
-			-Talking errors while skipping
+			-Animation
 			-Movement: facing certain directions
+				-Working for Player
 			
 	Health/Mana 
 		Auto regenerate
@@ -22,7 +22,7 @@ To Do:
 	Round Two:
 		Improved AI
 		Killable land terrain
-		Health restoring land terrain
+		Health restoring/depleting land terrain
 		Ability to receive and give items to NPCs
 		Follower NPCs?
 
@@ -30,13 +30,23 @@ Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
 		Replace the int casting for a little bit of range
 	During polishing, wander should not stray too far from the start point when it begins to move
-	May move keyboard inputs into master
+	Cutscene errors when skipping too fast
 	The Ot Brothers (Little, Middle, Big (Bigot)), Mark robots (Named due to Mark I, Mark II, etc), Breaking fourth wall with text talk
 	Awesome puzzle with sliding and teleports
 	Observation Puzzles: Need to observe the room/level/game for the answer
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	3/29
+		-Located reason npc isn't moving is because when it processes decisions it overrides
+			-Have plan to deal with it
+		-Movement in cutscenes is working for NPCs
+	
+	3/28
+		-Separated special into what could be special
+		-Created movement class that should be used to manipulate characters in cutscenes
+		-Stopped player from movement in cutscenes
+	
 	3/27
 		-Talking in cutscenes work
 		-Moving in cutscenes work

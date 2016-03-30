@@ -69,11 +69,14 @@ public class CutsceneController : MonoBehaviour
 
 	// used to have a character move
 	private void characterMoving() {
-		if (currentActor.GetComponent<DefaultMovementController> () != null && !inMovement) {
-			DefaultMovementController currentActorMovement = currentActor.GetComponent<DefaultMovementController> ();
-			currentActorMovement.TargetPoint = newLocation;
-			currentActorMovement.CurrentAction = "pursue";
-			print ("Assumptions are made this works...need to really animation test this...");
+		DefaultAI aiCharacter = currentActor.GetComponent<DefaultAI> ();
+		//print("Check: " + currentActor.GetComponent(currentActor.GetComponent<MasterBehavior> ().GetType()));
+		if (aiCharacter != null) {
+			if(!inMovement) {
+				aiCharacter.NpcMovement.TargetPoint = newLocation;
+				aiCharacter.NpcMovement.CurrentAction = "pursue";
+				aiCharacter.InCutscene = true;
+			}
 		} else {
 			print ("This is for the player");
 			currentActor.transform.position = Vector2.MoveTowards (currentActor.transform.position, newLocation, .02f);
@@ -81,6 +84,10 @@ public class CutsceneController : MonoBehaviour
 
 		if (Vector2.Distance (currentActor.transform.position, newLocation) < .02) {
 			inMovement = false;
+
+			if (aiCharacter != null) {
+				aiCharacter.InCutscene = false;
+			}
 		}
 	}
 

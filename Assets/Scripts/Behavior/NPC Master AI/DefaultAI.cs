@@ -5,6 +5,7 @@ public class DefaultAI : MasterBehavior
 {
 	protected Vector2 currentPosition;
 	protected Collision2D lastCollision;
+	protected bool inCutscene = false;
 
 	// Use this for initialization
 	protected override void Start() {
@@ -26,6 +27,7 @@ public class DefaultAI : MasterBehavior
 				npcCombat.applyAiAttackDamage(lastCollision.gameObject);
 			}
 		}
+
 	}
 
 	protected virtual void OnCollisionEnter2D (Collision2D col) {
@@ -40,7 +42,12 @@ public class DefaultAI : MasterBehavior
 	// Update is called once per frame
 	protected virtual void FixedUpdate ()
 	{
-		processDecisions();
+		if(!inCutscene) {
+			processDecisions();
+		}
+
+		npcMovement.runScript();
+		npcCombat.runScript(npcMovement.CurrentDirection);
 	}
 
 	public override int characterHealth(int newHealthValue = -1) {
@@ -50,6 +57,15 @@ public class DefaultAI : MasterBehavior
 			npcCombat.characterHealth(newHealthValue);
 			return -1;
 		}
+	}
+
+	public DefaultMovementController NpcMovement {
+		get {return npcMovement;}
+	}
+
+	public bool InCutscene {
+		get {return inCutscene;}
+		set {inCutscene = value;}
 	}
 }
 
