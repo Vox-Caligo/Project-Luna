@@ -70,7 +70,8 @@ public class CutsceneController : MonoBehaviour
 	// used to have a character move
 	private void characterMoving() {
 		DefaultAI aiCharacter = currentActor.GetComponent<DefaultAI> ();
-		//print("Check: " + currentActor.GetComponent(currentActor.GetComponent<MasterBehavior> ().GetType()));
+
+		// checks if it is an npc otherwise it's the player
 		if (aiCharacter != null) {
 			if(!inMovement) {
 				aiCharacter.NpcMovement.TargetPoint = newLocation;
@@ -78,7 +79,6 @@ public class CutsceneController : MonoBehaviour
 				aiCharacter.InCutscene = true;
 			}
 		} else {
-			print ("This is for the player");
 			PlayerMovement playerMovement = currentActor.GetComponent<PlayerMaster>().currentCharacterMovement();
 			int newWalkingDirection;
 
@@ -90,9 +90,9 @@ public class CutsceneController : MonoBehaviour
 				}
 			} else {
 				if(currentActor.transform.position.y < newLocation.y) {
-					newWalkingDirection = 3;
-				} else {
 					newWalkingDirection = 1;
+				} else {
+					newWalkingDirection = 3;
 				}
 			}
 

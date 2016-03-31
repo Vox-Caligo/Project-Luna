@@ -1,11 +1,4 @@
 To Do:
-	Cutscenes
-		-Work on getting DialogueControllerCutscene working 
-			-Animation
-			-Movement: facing certain directions
-				-Working for Player
-					-Check if its less than or greater for the horz/vert scale and change current direction by that
-			
 	Health/Mana 
 		Auto regenerate
 		Visuals for health
@@ -38,9 +31,16 @@ Future:
 	Awesome puzzle with sliding and teleports
 		Means that objects also have to be able to slide around on ice
 	Observation Puzzles: Need to observe the room/level/game for the answer
+	Cutscene animation testing more
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	3/30
+		-Animation (access to)
+		-Movement: facing certain directions
+			-Working for Player
+				-Check if its less than or greater for the horz/vert scale and change current direction by that
+	
 	3/29
 		-Located reason npc isn't moving is because when it processes decisions it overrides
 			-Have plan to deal with it
