@@ -184,4 +184,8 @@ public class PlayerMovement : CharacterMovementController {
 		get {return isFrictionStopNeeded;}
 		set {isFrictionStopNeeded = value;}
 	}
+
+	public CharacterAnimator CharacterAnimator {
+		get {return characterAnimator;}
+	}
 }

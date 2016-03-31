@@ -22,6 +22,7 @@ public class TestCutscene : CutsceneTrigger
 		cutsceneScript.Add (new ScriptLine ("Minion", "Talk", "Riiiight."));
 		cutsceneScript.Add (new ScriptLine ("Minion", "Move", new Vector2(115.5f, 5.68f)));
 		cutsceneScript.Add (new ScriptLine ("Aegis", "Talk", "...come back"));
+		cutsceneScript.Add (new ScriptLine ("Aegis", "Move", new Vector2(114.67f, 5.716f)));
 		cutsceneScript.Add (new ScriptLine("End"));
 	}
 }

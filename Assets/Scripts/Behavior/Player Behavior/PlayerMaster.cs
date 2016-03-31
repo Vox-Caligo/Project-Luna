@@ -22,12 +22,10 @@ public class PlayerMaster : MasterBehavior {
 
 	// Update is called once per frame
 	protected void FixedUpdate () {
-		if (!cutsceneController.isCurrentlyInCutscene()) {
-			determiningCollisions.checkIfActiveTerrain ();
-			((PlayerMovement)characterMovement).updatePlayerMovement ();
-			interactableArea.rearrangeCollisionArea (((PlayerMovement)characterMovement).CurrentDirection);
-			((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection);
-		}
+		determiningCollisions.checkIfActiveTerrain ();
+		((PlayerMovement)characterMovement).updatePlayerMovement ();
+		interactableArea.rearrangeCollisionArea (((PlayerMovement)characterMovement).CurrentDirection);
+		((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection);
 	}
 
 	protected override void OnCollisionEnter2D(Collision2D col) {
@@ -87,5 +85,9 @@ public class PlayerMaster : MasterBehavior {
 				determiningCollisions.interpretExitingCurrentTerrainTrigger(col, col.gameObject.GetComponent<TerrainPiece>());
 			}
 		}
+	}
+
+	public PlayerMovement currentCharacterMovement() {
+		return ((PlayerMovement)characterMovement);
 	}
 }

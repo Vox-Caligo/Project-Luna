@@ -79,6 +79,24 @@ public class CutsceneController : MonoBehaviour
 			}
 		} else {
 			print ("This is for the player");
+			PlayerMovement playerMovement = currentActor.GetComponent<PlayerMaster>().currentCharacterMovement();
+			int newWalkingDirection;
+
+			if(currentActor.transform.position.x != newLocation.x) {
+				if(currentActor.transform.position.x < newLocation.x) {
+					newWalkingDirection = 2;
+				} else {
+					newWalkingDirection = 0;
+				}
+			} else {
+				if(currentActor.transform.position.y < newLocation.y) {
+					newWalkingDirection = 3;
+				} else {
+					newWalkingDirection = 1;
+				}
+			}
+
+			playerMovement.CharacterAnimator.walk(newWalkingDirection);
 			currentActor.transform.position = Vector2.MoveTowards (currentActor.transform.position, newLocation, .02f);
 		}
 

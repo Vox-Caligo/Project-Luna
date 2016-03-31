@@ -4,6 +4,7 @@ To Do:
 			-Animation
 			-Movement: facing certain directions
 				-Working for Player
+					-Check if its less than or greater for the horz/vert scale and change current direction by that
 			
 	Health/Mana 
 		Auto regenerate
@@ -25,14 +26,17 @@ To Do:
 		Health restoring/depleting land terrain
 		Ability to receive and give items to NPCs
 		Follower NPCs?
+		Objects slide on ice
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
-		Replace the int casting for a little bit of range
+		Replace the int casting for a little bit of range (like a float?)
 	During polishing, wander should not stray too far from the start point when it begins to move
+		Should also be a bit less random
 	Cutscene errors when skipping too fast
 	The Ot Brothers (Little, Middle, Big (Bigot)), Mark robots (Named due to Mark I, Mark II, etc), Breaking fourth wall with text talk
 	Awesome puzzle with sliding and teleports
+		Means that objects also have to be able to slide around on ice
 	Observation Puzzles: Need to observe the room/level/game for the answer
 ------------------------------------------------------------------------------------------------------------------------------
 
