@@ -83,17 +83,9 @@ public class CutsceneController : MonoBehaviour
 			int newWalkingDirection;
 
 			if(currentActor.transform.position.x != newLocation.x) {
-				if(currentActor.transform.position.x < newLocation.x) {
-					newWalkingDirection = 2;
-				} else {
-					newWalkingDirection = 0;
-				}
+				newWalkingDirection = currentActor.transform.position.x < newLocation.x ? 2 : 0;
 			} else {
-				if(currentActor.transform.position.y < newLocation.y) {
-					newWalkingDirection = 1;
-				} else {
-					newWalkingDirection = 3;
-				}
+				newWalkingDirection = currentActor.transform.position.y < newLocation.y ? 1 : 3;
 			}
 
 			playerMovement.CharacterAnimator.walk(newWalkingDirection);
