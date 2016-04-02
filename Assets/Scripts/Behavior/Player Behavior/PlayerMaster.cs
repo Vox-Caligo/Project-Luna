@@ -25,7 +25,10 @@ public class PlayerMaster : MasterBehavior {
 		determiningCollisions.checkIfActiveTerrain ();
 		((PlayerMovement)characterMovement).updatePlayerMovement ();
 		interactableArea.rearrangeCollisionArea (((PlayerMovement)characterMovement).CurrentDirection);
-		((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection);
+
+		if (!((PlayerMovement)characterMovement).InCutscene) {
+			((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection);
+		}
 	}
 
 	protected override void OnCollisionEnter2D(Collision2D col) {

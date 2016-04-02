@@ -15,14 +15,19 @@ public class CutsceneController : MonoBehaviour
 
 	private Vector2 newLocation;
 
+	// the player
+	PlayerMovement playerMovement;
+
 	private GameObject currentActor;
 
 	void Start() {
 		dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueControllerCutscene>();
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
+		playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().currentCharacterMovement();
 	}
 
 	public void initializeScript(CutsceneTrigger currentCutscene) {
+		playerMovement.InCutscene = true;
 		this.currentCutscene = currentCutscene;
 		this.currentScript = this.currentCutscene.CutsceneScript;
 		scriptRunner = 0;
@@ -79,8 +84,8 @@ public class CutsceneController : MonoBehaviour
 				aiCharacter.InCutscene = true;
 			}
 		} else {
-			PlayerMovement playerMovement = currentActor.GetComponent<PlayerMaster>().currentCharacterMovement();
 			int newWalkingDirection;
+			playerMovement.InCutscene = true;
 
 			if(currentActor.transform.position.x != newLocation.x) {
 				newWalkingDirection = currentActor.transform.position.x < newLocation.x ? 2 : 0;
@@ -107,6 +112,7 @@ public class CutsceneController : MonoBehaviour
 		inAction = false;
 		currentCutscene = null;
 		dialogueController.endCutsceneDialogue ();
+		playerMovement.InCutscene = false;
 		Destroy (currentCutscene);
 	}
 

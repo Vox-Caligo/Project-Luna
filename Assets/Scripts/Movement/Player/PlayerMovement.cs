@@ -22,29 +22,33 @@ public class PlayerMovement : CharacterMovementController {
 	// climbing
 	private bool isClimbing = false;
 
+	private bool inCutscene = false;
+
 	public PlayerMovement (GameObject player) {
 		this.player = player;
 		characterAnimator = new CharacterAnimator(this.player);
 	}
 
 	public void updatePlayerMovement() {
-		if(isSliding) {
-			if(collidingWithSturdyObject) {
-				checkIfMovingWhileSliding();
-			} else {
-				if (currentTerrain.isFrictionStop && terrainIsActivated) {
-					isSliding = false;
-					isFrictionStopNeeded = false;
-				} else if(!isFrictionStopNeeded && isSliding != currentTerrain.isSlippery) {
-					isSliding = currentTerrain.isSlippery;
+		if(!inCutscene) {
+			if(isSliding) {
+				if(collidingWithSturdyObject) {
+					checkIfMovingWhileSliding();
 				} else {
-					slide ();
+					if (currentTerrain.isFrictionStop && terrainIsActivated) {
+						isSliding = false;
+						isFrictionStopNeeded = false;
+					} else if(!isFrictionStopNeeded && isSliding != currentTerrain.isSlippery) {
+						isSliding = currentTerrain.isSlippery;
+					} else {
+						slide ();
+					}
 				}
+			} else if(isClimbing != currentTerrain.climable) {
+				isClimbing = currentTerrain.climable;
+			} else {
+				walk();
 			}
-		} else if(isClimbing != currentTerrain.climable) {
-			isClimbing = currentTerrain.climable;
-		} else {
-			walk();
 		}
 	}
 	
@@ -187,5 +191,10 @@ public class PlayerMovement : CharacterMovementController {
 
 	public CharacterAnimator CharacterAnimator {
 		get {return characterAnimator;}
+	}
+
+	public bool InCutscene {
+		get { return inCutscene; }
+		set { inCutscene = value; }
 	}
 }
