@@ -1,6 +1,6 @@
 To Do:
 	Health/Mana 
-		Auto regenerate
+		Auto regenerate (place in combat for all users - can have different healing rates)
 		Visuals for health
 		
 	Inventory
@@ -15,11 +15,17 @@ To Do:
 		
 	Round Two:
 		Improved AI
+			Teleporting
 		Killable land terrain
 		Health restoring/depleting land terrain
 		Ability to receive and give items to NPCs
 		Follower NPCs?
 		Objects slide on ice
+		Reavers: modified humans and animals that listen to Vox and his subordinates
+			When a Reaver attack hits it places the user under the Reaver Effect
+				While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
+					Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
+		Quest log
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
@@ -35,6 +41,9 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/2
+		-Health/Mana regenerates for the player
+		
 	3/30
 		-Animation (access to)
 		-Movement: facing certain directions

@@ -10,6 +10,11 @@ public class PlayerCombat : Combat
 		if(Input.GetKeyDown("space")) {
 			attacking (currentDirection);
 		}
-		updateCombat (currentDirection);
+
+		if(inCombat) {
+			inCombatTimerCountdown();
+		} else {
+			regenerationTimer();
+		}
 	}
 }

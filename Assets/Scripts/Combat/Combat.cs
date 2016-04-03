@@ -6,6 +6,9 @@ public class Combat : MonoBehaviour {
 	protected string characterName;
 	protected string characterWeapon;
 	protected int health;
+	protected int maxHealth;
+	protected int mana;
+	protected int maxMana;
 	protected int damage;
 	protected int defense;
 
@@ -22,12 +25,27 @@ public class Combat : MonoBehaviour {
 	protected float characterWidth;
 	protected float characterHeight;
 
+	// timer to tell if the player has been out of combat long enough to regenerate health
+	protected bool inCombat = false;
+	public float inCombatTimerTick = 1.5f;
+	protected float inCombatMaxTimer = 1.5f;
+
+	// timer to tell if the player has been out of combat long enough to regenerate health
+	public float regenerationTimerTick = 1.5f;
+	protected float regenerationMaxTimer = 1.5f;
+
+	// UI above NPC characaters
+	protected NpcCombatUI npcCombatUi;
+
 	public Combat(string characterName, GameObject character, string characterWeapon) {
 		this.characterName = characterName;
 		this.character = character;
 		this.characterWeapon = characterWeapon;
 
 		health = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Health");
+		maxHealth = health;
+		mana = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Mana");
+		maxMana = mana;
 		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
 		damage = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Damage"));
 		attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed"));
@@ -39,9 +57,13 @@ public class Combat : MonoBehaviour {
 		characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
 		characterHeight = this.character.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
 		attackArea.resizeHitbox(true);
+
+		npcCombatUi = new NpcCombatUI(this.character, health, mana);
 	}
 
 	public void attacking(int currentDirection) {
+		setInCombat();
+
 		if (!inAttack) {
 			inAttack = true;
 			launchAttack (currentDirection);
@@ -50,6 +72,7 @@ public class Combat : MonoBehaviour {
 	
 	// used for generating the appropriate attack hit box (size, direction, height, width)
 	protected void launchAttack(int currentDirection) {
+		setInCombat();
 		attackArea.resizeHitbox(false, currentDirection);
 	}	
 
@@ -58,6 +81,7 @@ public class Combat : MonoBehaviour {
 		if(target.GetComponent<MasterBehavior>() != null) {
 			print("Hitting " + target.name + " with health " + target.GetComponent<MasterBehavior>().characterHealth());
 			target.GetComponent<MasterBehavior>().characterHealth(target.GetComponent<MasterBehavior>().characterHealth() - damage);
+			target.GetComponent<MasterBehavior>().characterInCombat();
 
 			if(target.GetComponent<MasterBehavior>().characterHealth() <= 0) {
 				if(target.tag == "Player") {
@@ -70,7 +94,6 @@ public class Combat : MonoBehaviour {
 	}
 
 	protected void updateCombat(int currentDirection) {
-		// have an attack delay after swings
 		// end attack when opponent is hit
 		if (!inAttackDelay) {
 			if(inAttack) {
@@ -86,7 +109,14 @@ public class Combat : MonoBehaviour {
 			}
 		}
 
+		if(inCombat) {
+			inCombatTimerCountdown();
+		} else {
+			regenerationTimer();
+		}
+
 		attackArea.rearrangeCollisionArea(currentDirection);
+		npcCombatUi.updateUI(health, mana);
 	}
 
 	protected void endAttack() {
@@ -94,7 +124,6 @@ public class Combat : MonoBehaviour {
 		timerTick = attackDelay;
 		attackArea.resizeHitbox(true);
 		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
-		//Destroy(character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>());
 	}
 
 	protected bool timerCountdownIsZero() {
@@ -103,6 +132,39 @@ public class Combat : MonoBehaviour {
 			return false;
 		} else {
 			return true;
+		}
+	}
+
+	// sets the timer for combat so regeneration cannot occur until it is zero
+	public void setInCombat() {
+		inCombat = true;
+		inCombatTimerTick = inCombatMaxTimer;
+	}
+
+	protected void regenerationTimer() {
+		if(regenerationTimerTick > 0) {
+			regenerationTimerTick -= Time.deltaTime;
+		} else {
+			regeneration();
+			regenerationTimerTick = regenerationMaxTimer;
+		}
+	}
+
+	protected void regeneration() {
+		if(mana < maxMana) {
+			mana++;
+		}
+
+		if(health < maxHealth / 2 || (health > maxHealth / 2 && health < maxHealth)) {
+			health++;
+		}
+	}
+
+	protected void inCombatTimerCountdown() {
+		if(inCombatTimerTick > 0) {
+			inCombatTimerTick -= Time.deltaTime;
+		} else {
+			inCombat = false;
 		}
 	}
 
@@ -123,5 +185,10 @@ public class Combat : MonoBehaviour {
 	public int Defense {	
 		get {	return defense;	} 
 		set {	defense = value;}
+	}
+
+	public bool InCombat {
+		get { return inCombat; }
+		set { inCombat = value; }
 	}
 }
