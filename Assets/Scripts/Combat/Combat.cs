@@ -85,11 +85,13 @@ public class Combat : MonoBehaviour {
 
 	protected void updateCombat(int currentDirection) {
 		// end attack when opponent is hit
-		if(timerCountdownIsZero()) {
-			inAttack = false;
-			inAttackDelay = false;
-			timerTick = maxTimer;
-			endAttack();
+		if (inAttack) {
+			if (timerCountdownIsZero ()) {
+				inAttack = false;
+				inAttackDelay = false;
+				timerTick = maxTimer;
+				endAttack ();
+			}
 		}
 
 		if(inCombat) {
