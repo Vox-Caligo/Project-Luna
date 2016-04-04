@@ -25,7 +25,8 @@ public class KeyboardInput : MonoBehaviour
 		{KeyCode.UpArrow, new PlayerKeys(false, false)},
 		{KeyCode.LeftArrow, new PlayerKeys(false, false)},
 		{KeyCode.DownArrow, new PlayerKeys(false, false)},
-		{KeyCode.RightArrow, new PlayerKeys(false, false)}
+		{KeyCode.RightArrow, new PlayerKeys(false, false)},
+		{KeyCode.Space, new PlayerKeys(false, false)}
 	};
 
 	public bool useKey(KeyCode pressedKey) {

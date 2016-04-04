@@ -34,9 +34,6 @@ public class Combat : MonoBehaviour {
 	public float regenerationTimerTick = 1.5f;
 	protected float regenerationMaxTimer = 1.5f;
 
-	// UI above NPC characaters
-	protected NpcCombatUI npcCombatUi;
-
 	public Combat(string characterName, GameObject character, string characterWeapon) {
 		this.characterName = characterName;
 		this.character = character;
@@ -56,9 +53,6 @@ public class Combat : MonoBehaviour {
 
 		characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
 		characterHeight = this.character.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
-		attackArea.resizeHitbox(true);
-
-		npcCombatUi = new NpcCombatUI(this.character, health, mana);
 	}
 
 	public void attacking(int currentDirection) {
@@ -66,15 +60,11 @@ public class Combat : MonoBehaviour {
 
 		if (!inAttack) {
 			inAttack = true;
-			launchAttack (currentDirection);
+
+			// used for generating the appropriate attack hit box (size, direction, height, width)
+			attackArea.manipulateAttackArea(true, currentDirection);
 		}
 	}
-	
-	// used for generating the appropriate attack hit box (size, direction, height, width)
-	protected void launchAttack(int currentDirection) {
-		setInCombat();
-		attackArea.resizeHitbox(false, currentDirection);
-	}	
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
 	public void applyAttackDamage(GameObject target) {
@@ -116,13 +106,12 @@ public class Combat : MonoBehaviour {
 		}
 
 		attackArea.rearrangeCollisionArea(currentDirection);
-		npcCombatUi.updateUI(health, mana);
 	}
 
 	protected void endAttack() {
 		inAttackDelay = true;
 		timerTick = attackDelay;
-		attackArea.resizeHitbox(true);
+		attackArea.manipulateAttackArea(false);
 		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
 	}
 

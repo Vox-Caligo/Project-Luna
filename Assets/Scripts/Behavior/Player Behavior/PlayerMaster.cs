@@ -27,7 +27,7 @@ public class PlayerMaster : MasterBehavior {
 		interactableArea.rearrangeCollisionArea (((PlayerMovement)characterMovement).CurrentDirection);
 
 		if (!((PlayerMovement)characterMovement).InCutscene) {
-			((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection);
+			((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection, keyChecker.useKey(KeyCode.Space));
 		}
 	}
 

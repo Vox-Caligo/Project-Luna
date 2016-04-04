@@ -1,7 +1,12 @@
 To Do:
+	BUG FIX:
+		Player attack doesn't launch correctly!
+			-Think it's in manipulateAttackArea or rearrangeCollisionArea (might be a need to combine into one)
+			-Check that the fix doesn't mess up NPCs
+			-Check if it was a recent change
+
 	Health/Mana 
-		Auto regenerate (place in combat for all users - can have different healing rates)
-		Visuals for health
+		Visuals for health/mana (player)
 		
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
@@ -38,9 +43,15 @@ Future:
 		Means that objects also have to be able to slide around on ice
 	Observation Puzzles: Need to observe the room/level/game for the answer
 	Cutscene animation testing more
+	Magic that drains health instead of mana
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/3
+		-Health/Mana auto regenerates for all
+		-NPC Health (and presumably Mana) have a visual display so when they are attacked/used then it depeletes
+			-Also shows regeneration
+	
 	4/2
 		-Health/Mana regenerates for the player
 		

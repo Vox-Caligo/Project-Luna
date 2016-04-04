@@ -3,11 +3,10 @@ using System.Collections;
 
 public class PlayerCombat : Combat
 {	
-	public PlayerCombat(string characterName, GameObject character, string characterWeapon) : base(characterName, character, characterWeapon) {
-	}
+	public PlayerCombat(string characterName, GameObject character, string characterWeapon) : base(characterName, character, characterWeapon) {}
 
-	public void updatePlayerCombat(int currentDirection) {
-		if(Input.GetKeyDown("space")) {
+	public void updatePlayerCombat(int currentDirection, bool attackKeyPressed) {
+		if(attackKeyPressed) {
 			attacking (currentDirection);
 		}
 
