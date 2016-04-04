@@ -85,18 +85,11 @@ public class Combat : MonoBehaviour {
 
 	protected void updateCombat(int currentDirection) {
 		// end attack when opponent is hit
-		if (!inAttackDelay) {
-			if(inAttack) {
-				if(timerCountdownIsZero()) {
-					endAttack();
-				}
-			} 
-		} else {
-			if(timerCountdownIsZero()) {
-				inAttack = false;
-				inAttackDelay = false;
-				timerTick = maxTimer;
-			}
+		if(timerCountdownIsZero()) {
+			inAttack = false;
+			inAttackDelay = false;
+			timerTick = maxTimer;
+			endAttack();
 		}
 
 		if(inCombat) {
@@ -104,8 +97,6 @@ public class Combat : MonoBehaviour {
 		} else {
 			regenerationTimer();
 		}
-
-		attackArea.rearrangeCollisionArea(currentDirection);
 	}
 
 	protected void endAttack() {
@@ -117,9 +108,11 @@ public class Combat : MonoBehaviour {
 
 	protected bool timerCountdownIsZero() {
 		if(timerTick > 0) {
+			print (timerTick);
 			timerTick -= Time.deltaTime;
 			return false;
 		} else {
+			timerTick = maxTimer;
 			return true;
 		}
 	}
