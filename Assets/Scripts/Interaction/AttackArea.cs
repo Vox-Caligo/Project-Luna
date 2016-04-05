@@ -37,6 +37,8 @@ public class AttackArea : CollisionArea
 			rearrangeCollisionArea (currentDirection);
 		} else {
 			collisionDetectionBox.isTrigger = true;
+			collisionDetectionBox.size = new Vector2 (.01f, .01f);
+			collisionDetectionBox.offset = new Vector2(0, 0); 
 		}
 	}
 

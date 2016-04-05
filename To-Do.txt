@@ -2,8 +2,7 @@ To Do:
 	BUG FIX:
 		Combat
 			Npc attack box doesn't set to trigger (never ends)
-			Have to do a charging attack to do damage again
-
+			
 	Health/Mana 
 		Visuals for health/mana (player)
 		
@@ -49,6 +48,8 @@ Future:
 	4/4
 		-Player attack launches and ends correctly
 		-When NPC dies his health bar disappears with him
+		-Fixed: Have to do a charging attack to do damage again 
+				-Fix: Collider Enter wasn't going because it wasn't being entered and was already there
 	
 	4/3
 		-Health/Mana auto regenerates for all

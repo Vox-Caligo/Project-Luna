@@ -56,9 +56,8 @@ public class Combat : MonoBehaviour {
 	}
 
 	public void attacking(int currentDirection) {
-		setInCombat();
-
 		if (!inAttack) {
+			setInCombat();
 			inAttack = true;
 
 			// used for generating the appropriate attack hit box (size, direction, height, width)
@@ -97,6 +96,7 @@ public class Combat : MonoBehaviour {
 		inAttackDelay = true;
 		timerTick = attackDelay;
 		attackArea.manipulateAttackArea(false);
+		print (character.transform.position);
 		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
 	}
 
