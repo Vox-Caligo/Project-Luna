@@ -32,7 +32,7 @@ public class PlayerMaster : MasterBehavior {
 	}
 
 	protected override void OnCollisionEnter2D(Collision2D col) {
-		if(((PlayerCombat)characterCombat).InAttack && col.contacts[0].otherCollider.name == "Player Attack") {
+		if(col.contacts[0].otherCollider.name == "Player Attack") {
 			((PlayerCombat)characterCombat).applyAttackDamage (col.contacts [0].collider.gameObject);
 		} else if(col.gameObject.GetComponent<TerrainPiece>() != null) {
 			determiningCollisions.interpretCurrentTerrainCollider(col);

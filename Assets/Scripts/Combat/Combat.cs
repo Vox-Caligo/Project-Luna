@@ -72,14 +72,6 @@ public class Combat : MonoBehaviour {
 			print("Hitting " + target.name + " with health " + target.GetComponent<MasterBehavior>().characterHealth());
 			target.GetComponent<MasterBehavior>().characterHealth(target.GetComponent<MasterBehavior>().characterHealth() - damage);
 			target.GetComponent<MasterBehavior>().characterInCombat();
-
-			if(target.GetComponent<MasterBehavior>().characterHealth() <= 0) {
-				if(target.tag == "Player") {
-					print("The Player has died!");
-				} else {
-					Destroy(target);
-				}
-			}
 		}
 	}
 
@@ -110,7 +102,6 @@ public class Combat : MonoBehaviour {
 
 	protected bool timerCountdownIsZero() {
 		if(timerTick > 0) {
-			print (timerTick);
 			timerTick -= Time.deltaTime;
 			return false;
 		} else {

@@ -1,9 +1,8 @@
 To Do:
 	BUG FIX:
-		Player attack doesn't launch correctly!
-			-Think it's in manipulateAttackArea or rearrangeCollisionArea (might be a need to combine into one)
-			-Check that the fix doesn't mess up NPCs
-			-Check if it was a recent change
+		Combat
+			Npc attack box doesn't set to trigger (never ends)
+			Have to do a charging attack to do damage again
 
 	Health/Mana 
 		Visuals for health/mana (player)
@@ -47,6 +46,10 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/4
+		-Player attack launches and ends correctly
+		-When NPC dies his health bar disappears with him
+	
 	4/3
 		-Health/Mana auto regenerates for all
 		-NPC Health (and presumably Mana) have a visual display so when they are attacked/used then it depeletes

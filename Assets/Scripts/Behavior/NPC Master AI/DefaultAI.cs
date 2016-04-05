@@ -40,7 +40,7 @@ public class DefaultAI : MasterBehavior
 	}
 
 	// Update is called once per frame
-	protected virtual void FixedUpdate ()
+	protected virtual void Update ()
 	{
 		if(!inCutscene) {
 			processDecisions();

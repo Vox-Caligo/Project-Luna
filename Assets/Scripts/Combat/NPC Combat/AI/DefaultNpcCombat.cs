@@ -11,8 +11,13 @@ public class DefaultNpcCombat : Combat
 	}
 
 	public void updateNpcCombat(int currentDirection) {
-		updateCombat (currentDirection);
-		npcCombatUi.updateUI(health, mana);
+		if (this.health <= 0) {
+			npcCombatUi.destroyUi ();
+			Destroy (character);
+		} else {
+			updateCombat (currentDirection);
+			npcCombatUi.updateUI(health, mana);
+		}
 	}
 }
 

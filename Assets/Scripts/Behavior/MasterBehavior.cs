@@ -33,6 +33,6 @@ public class MasterBehavior : MonoBehaviour
 
 	// setting combatants to inAttack
 	public virtual void characterInCombat() {
-		characterCombat.setInCombat();
+		//characterCombat.setInCombat();
 	}
 }

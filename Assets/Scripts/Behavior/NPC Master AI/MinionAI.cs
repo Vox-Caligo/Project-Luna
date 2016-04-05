@@ -26,8 +26,8 @@ public class MinionAI : DefaultAI
 			npcCombat.CurrentAction = "attack";
 		}
 
-		npcMovement.CurrentAction = "halt";
-		npcCombat.CurrentAction = "";
+		//npcMovement.CurrentAction = "halt";
+		//npcCombat.CurrentAction = "";
 
 		base.processDecisions();
 	}

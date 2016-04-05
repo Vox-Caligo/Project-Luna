@@ -36,5 +36,9 @@ public class NpcCombatUI : MonoBehaviour
 		combatUI.transform.position = new Vector3(characterParent.transform.position.x, 
 													characterParent.transform.position.y + characterHeight);
 	}
+
+	public void destroyUi() {
+		Destroy (combatUI);
+	}
 }
 

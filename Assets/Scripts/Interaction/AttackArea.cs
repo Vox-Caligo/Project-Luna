@@ -32,15 +32,9 @@ public class AttackArea : CollisionArea
 
 	public void manipulateAttackArea(bool active, int currentDirection = 0) {
 		if (active) {
-			rearrangeCollisionArea (currentDirection);
-
 			collisionDetectionBox.isTrigger = false;
-
-			if (currentDirection == 0 || currentDirection == 2) {
-				collisionDetectionBox.size = new Vector2 (boxHeight, .06f);
-			} else {
-				collisionDetectionBox.size = new Vector2(.06f, boxWidth);
-			} 
+			collisionDetectionBox.size = new Vector2 (attackWidth, attackRange);
+			rearrangeCollisionArea (currentDirection);
 		} else {
 			collisionDetectionBox.isTrigger = true;
 		}

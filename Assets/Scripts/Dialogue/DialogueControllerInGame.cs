@@ -74,9 +74,11 @@ public class DialogueControllerInGame : DialogueController
 	}
 
 	protected override void selectedChoice(int buttonPressed) {
-		playerChoices.alpha = 0;
-		conversationNpc.CurrentDialogueSection = (int)conversationNpc.getCurrentOptions () [buttonPressed + 1];
-		haveConversation (false);
+		if (playerChoices.alpha == 1) {
+			playerChoices.alpha = 0;
+			conversationNpc.CurrentDialogueSection = (int)conversationNpc.getCurrentOptions () [buttonPressed + 1];
+			haveConversation (false);
+		}
 	}
 
 	public bool InConversation {
