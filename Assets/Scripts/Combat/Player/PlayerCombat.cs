@@ -11,15 +11,18 @@ public class PlayerCombat : Combat
 		} else {
 			if(attackKeyPressed) {
 				attacking (currentDirection);
-				inAttack = true;
 			}
 
 			updateCombat (currentDirection);
 
 			if(inCombat) {
-				inCombatTimerCountdown();
+				if(!combatCooldownTimer.runningTimerCountdown()) {
+					inCombat = false;
+				}
 			} else {
-				regenerationTimer();
+				if(!regenerationTimer.runningTimerCountdown()) {
+					regeneration();
+				}
 			}
 		}
 	}

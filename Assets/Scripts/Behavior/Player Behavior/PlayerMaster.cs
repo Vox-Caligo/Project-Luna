@@ -6,6 +6,7 @@ public class PlayerMaster : MasterBehavior {
 	private InteractionArea interactableArea;
 	private DeterminingCollisionActions determiningCollisions;
 	private KeyboardInput keyChecker;
+	private PlayerHUD playerHud;
 
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
@@ -18,6 +19,7 @@ public class PlayerMaster : MasterBehavior {
 		characterCombat = new PlayerCombat("Player", this.gameObject, playerWeapon);
 		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
+		playerHud = new PlayerHUD();
 	}
 
 	// Update is called once per frame
@@ -29,6 +31,8 @@ public class PlayerMaster : MasterBehavior {
 		if (!((PlayerMovement)characterMovement).InCutscene) {
 			((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection, keyChecker.useKey(KeyCode.Space));
 		}
+
+		playerHud.hudUpdate(((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
 	}
 
 	protected override void OnCollisionEnter2D(Collision2D col) {

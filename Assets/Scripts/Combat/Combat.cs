@@ -14,8 +14,6 @@ public class Combat : MonoBehaviour {
 
 	// attack timer
 	protected bool inAttack = false;
-	public float timerTick = 1.5f;
-	protected float maxTimer = 1.5f;
 	protected bool inAttackDelay = false;
 	protected float attackDelay = 0f;
 	
@@ -27,12 +25,11 @@ public class Combat : MonoBehaviour {
 
 	// timer to tell if the player has been out of combat long enough to regenerate health
 	protected bool inCombat = false;
-	public float inCombatTimerTick = 1.5f;
-	protected float inCombatMaxTimer = 1.5f;
 
-	// timer to tell if the player has been out of combat long enough to regenerate health
-	public float regenerationTimerTick = 1.5f;
-	protected float regenerationMaxTimer = 1.5f;
+	protected UtilTimer attackTimer;
+	protected UtilTimer attackDelayTimer;
+	protected UtilTimer combatCooldownTimer;
+	protected UtilTimer regenerationTimer;
 
 	public Combat(string characterName, GameObject character, string characterWeapon) {
 		this.characterName = characterName;
@@ -53,15 +50,18 @@ public class Combat : MonoBehaviour {
 
 		characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
 		characterHeight = this.character.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
+
+		attackTimer = new UtilTimer(1.5f, 1.5f);
+		attackDelayTimer = new UtilTimer(1.5f, 1.5f);	// use attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed")); 
+		combatCooldownTimer = new UtilTimer(1.5f, 1.5f);
+		regenerationTimer = new UtilTimer(1.5f, 1.5f);
 	}
 
 	public void attacking(int currentDirection) {
-		if (!inAttack) {
-			setInCombat();
+		if (!inAttack && !inAttackDelay) {
+			inCombat = true;
 			inAttack = true;
-
-			// used for generating the appropriate attack hit box (size, direction, height, width)
-			attackArea.manipulateAttackArea(true, currentDirection);
+			attackArea.manipulateAttackArea(true, currentDirection); // used for generating the appropriate attack hit box (size, direction, height, width)
 		}
 	}
 
@@ -76,52 +76,27 @@ public class Combat : MonoBehaviour {
 
 	protected void updateCombat(int currentDirection) {
 		// end attack when opponent is hit
+
 		if (inAttack) {
-			if (timerCountdownIsZero ()) {
+			if (!attackTimer.runningTimerCountdown ()) {
 				inAttack = false;
+				inAttackDelay = true;
+				attackArea.manipulateAttackArea(false);
+			}
+		} else if(inAttackDelay) {
+			if (!attackDelayTimer.runningTimerCountdown ()) {
 				inAttackDelay = false;
-				timerTick = maxTimer;
-				endAttack ();
 			}
 		}
 
 		if(inCombat) {
-			inCombatTimerCountdown();
+			if(!combatCooldownTimer.runningTimerCountdown()) {
+				inCombat = false;
+			}
 		} else {
-			regenerationTimer();
-		}
-	}
-
-	protected void endAttack() {
-		inAttackDelay = true;
-		timerTick = attackDelay;
-		attackArea.manipulateAttackArea(false);
-		print (character.transform.position);
-		character.transform.FindChild(characterName + " Attack").GetComponent<BoxCollider2D>().isTrigger = true;
-	}
-
-	protected bool timerCountdownIsZero() {
-		if(timerTick > 0) {
-			timerTick -= Time.deltaTime;
-			return false;
-		} else {
-			timerTick = maxTimer;
-			return true;
-		}
-	}
-
-	// sets the timer for combat so regeneration cannot occur until it is zero
-	public void setInCombat() {
-		inCombat = true;
-		inCombatTimerTick = inCombatMaxTimer;
-	}
-
-	protected void regenerationTimer() {
-		if(regenerationTimerTick > 0) {
-			regenerationTimerTick -= Time.deltaTime;
-		} else {
-			regeneration();
-			regenerationTimerTick = regenerationMaxTimer;
+			if(!regenerationTimer.runningTimerCountdown()) {
+				regeneration();
+			}
 		}
 	}
 
@@ -135,14 +110,6 @@ public class Combat : MonoBehaviour {
 		}
 	}
 
-	protected void inCombatTimerCountdown() {
-		if(inCombatTimerTick > 0) {
-			inCombatTimerTick -= Time.deltaTime;
-		} else {
-			inCombat = false;
-		}
-	}
-
 	public bool InAttack {
 		get {	return inAttack; }
 	}
@@ -150,6 +117,11 @@ public class Combat : MonoBehaviour {
 	public int Health {	
 		get {	return health;	} 
 		set {	health = value;	}
+	}
+
+	public int Mana {	
+		get {	return mana;	} 
+		set {	mana = value;	}
 	}
 
 	public int Damage {	

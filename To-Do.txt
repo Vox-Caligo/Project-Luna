@@ -1,10 +1,7 @@
-To Do:
-	BUG FIX:
-		Combat
-			Npc attack box doesn't set to trigger (never ends)
-			
+To Do:			
 	Health/Mana 
 		Visuals for health/mana (player)
+			Position/Scale correctly
 		
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
@@ -41,10 +38,16 @@ Future:
 		Means that objects also have to be able to slide around on ice
 	Observation Puzzles: Need to observe the room/level/game for the answer
 	Cutscene animation testing more
-	Magic that drains health instead of mana
+	Magic that drains health instead of mana (blood magic)
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/5
+		-Fixed: Npc attack box doesn't set to trigger (never ends) - Combat
+			-Made better combat scenario
+		-Created Util Timer class
+		-Player health bar first round is done but not positioned/scaled correctly
+	
 	4/4
 		-Player attack launches and ends correctly
 		-When NPC dies his health bar disappears with him
