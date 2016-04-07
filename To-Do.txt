@@ -1,8 +1,4 @@
-To Do:			
-	Health/Mana 
-		Visuals for health/mana (player)
-			Position/Scale correctly
-		
+To Do:		
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
 	
@@ -16,6 +12,7 @@ To Do:
 	Round Two:
 		Improved AI
 			Teleporting
+			Pouncing
 		Killable land terrain
 		Health restoring/depleting land terrain
 		Ability to receive and give items to NPCs
@@ -26,6 +23,7 @@ To Do:
 				While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
 					Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
 		Quest log
+		UI: growing as the player gains more health
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
@@ -42,6 +40,11 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/6
+		-Health/Mana for player scales and positioned (somewhat)
+			-Grows larger as the player gets more health and mana
+		-Player profile up in the corner now calls an appropriate picture
+	
 	4/5
 		-Fixed: Npc attack box doesn't set to trigger (never ends) - Combat
 			-Made better combat scenario

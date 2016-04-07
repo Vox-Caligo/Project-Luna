@@ -19,7 +19,7 @@ public class PlayerMaster : MasterBehavior {
 		characterCombat = new PlayerCombat("Player", this.gameObject, playerWeapon);
 		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
-		playerHud = new PlayerHUD();
+		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
 	}
 
 	// Update is called once per frame

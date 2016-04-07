@@ -58,8 +58,9 @@ public class Combat : MonoBehaviour {
 	}
 
 	public void attacking(int currentDirection) {
+		inCombat = true;
+
 		if (!inAttack && !inAttackDelay) {
-			inCombat = true;
 			inAttack = true;
 			attackArea.manipulateAttackArea(true, currentDirection); // used for generating the appropriate attack hit box (size, direction, height, width)
 		}
