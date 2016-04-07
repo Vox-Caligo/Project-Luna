@@ -1,6 +1,7 @@
 To Do:		
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
+		Inventory images coming through DB, could be in InventoryUI
 	
 	Placement Puzzles
 		Place items in holes (Inventory check)
