@@ -73,4 +73,16 @@ public class Inventory : MonoBehaviour
 			inventoryRunner = -1;
 		}
 	}
+
+	public void visibility() {
+		invUI.Invisible = !invUI.Invisible;
+
+		if (invUI.Invisible) {
+			print("Made invisible");
+			// show stuff
+		} else {
+			print("Made visible");
+			// hide stuff
+		}
+	}
 }
