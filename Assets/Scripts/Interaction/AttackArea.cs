@@ -23,26 +23,22 @@ public class AttackArea : CollisionArea
 			collisionDetector.transform.Rotate(new Vector3(0,0,-90));
 		}
 
-		if(currentDirection == 0 || currentDirection == 1) { 		
+		if(currentDirection == 0 || currentDirection == 1) { 	
 			collisionDetectionBox.offset = new Vector2(0, attackRange); 
 		} else {	
 			collisionDetectionBox.offset = new Vector2(0, -attackRange);
 		} 
 	}
 
-	public void resizeHitbox(bool reset, int currentDirection = 0) {
-		if (reset) {
-			collisionDetectionBox.isTrigger = true;
-
-			if (currentDirection == 0 || currentDirection == 2) {
-				collisionDetectionBox.size = new Vector2 (boxHeight, .06f);
-			} else {
-				collisionDetectionBox.size = new Vector2(.06f, boxWidth);
-			} 
-
-		} else {
+	public void manipulateAttackArea(bool active, int currentDirection = 0) {
+		if (active) {
 			collisionDetectionBox.isTrigger = false;
-			collisionDetectionBox.size = new Vector2(attackWidth, attackRange);
+			collisionDetectionBox.size = new Vector2 (attackWidth, attackRange);
+			rearrangeCollisionArea (currentDirection);
+		} else {
+			collisionDetectionBox.isTrigger = true;
+			collisionDetectionBox.size = new Vector2 (.01f, .01f);
+			collisionDetectionBox.offset = new Vector2(0, 0); 
 		}
 	}
 

@@ -33,7 +33,7 @@ public class DefaultCombatController : MonoBehaviour
 		default:
 			break;
 		}
-
+			
 		npcCombat.updateNpcCombat(currentDirection);
 	}
 
