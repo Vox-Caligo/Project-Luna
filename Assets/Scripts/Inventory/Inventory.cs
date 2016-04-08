@@ -25,11 +25,28 @@ public class Inventory : MonoBehaviour
 	private InventoryUI inventoryUIScript;
 	private CanvasGroup inventoryUIGroup;
 	private int inventoryRunner = 0;
+	private bool mouseDown = false;
 
 	public Inventory() {
 		GameObject inventoryUI = Instantiate(Resources.Load("UI/Inventory")) as GameObject;
 		inventoryUIGroup = inventoryUI.GetComponent<CanvasGroup>();
 		inventoryUIScript = inventoryUI.GetComponent<InventoryUI>();
+	}
+
+	public void inventoryUpdate() {
+		if(!mouseDown && Input.GetMouseButtonDown(0)) {
+			mouseDown = true;
+
+			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Collider2D itemCollided = Physics2D.OverlapPoint(mousePosition);
+			print("Mouse");
+			if(itemCollided != null) {
+				print("Ahhh");
+			}
+
+		} else if(Input.GetMouseButtonUp(0)) {
+			mouseDown = false;
+		}
 	}
 
 	// adds an item to the players inventory
@@ -89,5 +106,9 @@ public class Inventory : MonoBehaviour
 			print("Made visible");
 			inventoryUIGroup.alpha = 1;
 		}
+	}
+
+	public bool inventoryIsInvisible() {
+		return inventoryUIScript.Invisible;
 	}
 }

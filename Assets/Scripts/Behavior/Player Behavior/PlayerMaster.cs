@@ -38,6 +38,15 @@ public class PlayerMaster : MasterBehavior {
 			if(keyChecker.useKey(KeyCode.Q)) {
 				playerInventory.visibility();
 			}
+
+			if(!playerInventory.inventoryIsInvisible()) {
+				playerInventory.inventoryUpdate();
+			}
+
+		} else {
+			if(!playerInventory.inventoryIsInvisible()) {
+				playerInventory.visibility();
+			}
 		}
 
 		if(keyChecker.useKey(KeyCode.O)) {
