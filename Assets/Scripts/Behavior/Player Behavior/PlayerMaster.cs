@@ -7,6 +7,7 @@ public class PlayerMaster : MasterBehavior {
 	private DeterminingCollisionActions determiningCollisions;
 	private KeyboardInput keyChecker;
 	private PlayerHUD playerHud;
+	private Inventory playerInventory;
 
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
@@ -20,6 +21,7 @@ public class PlayerMaster : MasterBehavior {
 		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
 		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
+		playerInventory = new Inventory();
 	}
 
 	// Update is called once per frame
@@ -30,9 +32,31 @@ public class PlayerMaster : MasterBehavior {
 
 		if (!((PlayerMovement)characterMovement).InCutscene) {
 			((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection, keyChecker.useKey(KeyCode.Space));
+
+			playerHud.hudUpdate(((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
+
+			if(keyChecker.useKey(KeyCode.Q)) {
+				playerInventory.visibility();
+			}
+
+			if(!playerInventory.inventoryIsInvisible()) {
+				playerInventory.inventoryUpdate();
+			}
+
+		} else {
+			if(!playerInventory.inventoryIsInvisible()) {
+				playerInventory.visibility();
+			}
 		}
 
-		playerHud.hudUpdate(((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
+		if(keyChecker.useKey(KeyCode.O)) {
+			playerInventory.addItemFromInventory("Sword", "Weapon");
+			playerInventory.addItemFromInventory("Axe", "Weapon");
+		}
+
+		if(keyChecker.useKey(KeyCode.P)) {
+			playerInventory.removeItemFromInventory("Axe");
+		}
 	}
 
 	protected override void OnCollisionEnter2D(Collision2D col) {
@@ -96,5 +120,9 @@ public class PlayerMaster : MasterBehavior {
 
 	public PlayerMovement currentCharacterMovement() {
 		return ((PlayerMovement)characterMovement);
+	}
+
+	public Inventory PlayerInventory {
+		get { return playerInventory; }
 	}
 }

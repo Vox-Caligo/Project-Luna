@@ -4,13 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 // holds some standard information about the item and where it's located
-class Inventory {
+class OldInventory {
 	string name;
 	string type;
 	
 	int slotNum;
 	
-	public Inventory(string n, int s) {
+	public OldInventory(string n, int s) {
 		name = n;
 		slotNum = s;
 	}
