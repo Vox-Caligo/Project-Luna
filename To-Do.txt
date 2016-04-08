@@ -10,9 +10,6 @@ To Do:
 	Placement Puzzles
 		Place items in holes (Inventory check)
 		
-	UI Bug
-		Starting health isn't working unless attacked first
-		
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 		Create variables on NPCs to respond to different karma (or not being there at all)
@@ -53,6 +50,7 @@ Future:
 		-Inventory images coming through DB, could be in InventoryUI
 		-Items are added/removed by name and earliest slot
 		-Set up for descriptions/effects to be added
+		-Fixed UI Bug: Starting health isn't working unless attacked first
 	
 	4/6
 		-Health/Mana for player scales and positioned (somewhat)

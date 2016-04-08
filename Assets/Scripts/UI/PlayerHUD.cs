@@ -31,8 +31,7 @@ public class PlayerHUD : MonoBehaviour {
 		manabar = standardHud.transform.Find ("ManaMask/Mana").gameObject;
 
 		float healthbarSize = (maxHealth * .2f) / 20f;
-		healthbarMask.transform.localScale = new Vector3 (healthbarSize, 1); ;
-		healthbar.transform.localScale = new Vector3 (healthbarSize, 1); 
+		healthbarMask.transform.localScale = new Vector3 (healthbarSize, 1);
 
 		float manabarSize = 0;
 		if(maxMana > 0) {
@@ -40,7 +39,6 @@ public class PlayerHUD : MonoBehaviour {
 		} 
 
 		manabarMask.transform.localScale = new Vector3 (manabarSize, 1); 
-		manabar.transform.localScale = new Vector3 (manabarSize, 1); 
 
 		playerProfile = standardHud.transform.Find("CharacterProfile").GetComponent<Image>();
 		playerProfile.sprite = Resources.Load (GameObject.Find ("Databases").GetComponent<SpeakerDB> ().getProfile (currentProtagonist), typeof(Sprite)) as Sprite;
