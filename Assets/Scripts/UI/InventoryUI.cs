@@ -8,6 +8,10 @@ public class InventoryUI : MonoBehaviour
 	public Image[] inventorySpots = new Image[10];
 	private InventoryImageDB imageDB;
 
+	public Text inventoryItemName;
+	public Text inventoryItemDescription;
+	public Text inventoryItemEffects;
+
 	void Start() {
 		imageDB = GameObject.Find ("Databases").GetComponent<InventoryImageDB> ();
 	}

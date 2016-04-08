@@ -1,7 +1,11 @@
 To Do:		
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
-		Click selects an item, highlights the spot, and gives a description with stats if appropriate
+		Click selects an item 
+			-Highlights the spot (blue)
+			-Gives a description when clicked
+			-Gives stats when clicked
+			-Double clicking equips/uses the item
 	
 	Placement Puzzles
 		Place items in holes (Inventory check)
@@ -45,6 +49,7 @@ Future:
 	4/7
 		-Inventory images coming through DB, could be in InventoryUI
 		-Items are added/removed by name and earliest slot
+		-Set up for descriptions/effects to be added
 	
 	4/6
 		-Health/Mana for player scales and positioned (somewhat)
