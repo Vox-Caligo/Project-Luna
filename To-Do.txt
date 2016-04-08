@@ -1,7 +1,7 @@
 To Do:		
 	Inventory
 		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
-		Inventory images coming through DB, could be in InventoryUI
+		Click selects an item, highlights the spot, and gives a description with stats if appropriate
 	
 	Placement Puzzles
 		Place items in holes (Inventory check)
@@ -25,6 +25,7 @@ To Do:
 					Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
 		Quest log
 		UI: growing as the player gains more health
+		UI: clean it up and tighten
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
@@ -41,6 +42,10 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/7
+		-Inventory images coming through DB, could be in InventoryUI
+		-Items are added/removed by name and earliest slot
+	
 	4/6
 		-Health/Mana for player scales and positioned (somewhat)
 			-Grows larger as the player gets more health and mana

@@ -30,17 +30,20 @@ public class PlayerHUD : MonoBehaviour {
 		manabarMask = standardHud.transform.Find ("ManaMask").gameObject;
 		manabar = standardHud.transform.Find ("ManaMask/Mana").gameObject;
 
-		Vector2 healthbarSize = new Vector2(maxHealth * 1.5f, healthbar.GetComponent<RectTransform>().sizeDelta.y);
-		healthbarMask.GetComponent<RectTransform>().sizeDelta = healthbarSize;
-		healthbar.GetComponent<RectTransform>().sizeDelta = healthbarSize;
+		float healthbarSize = (maxHealth * .2f) / 20f;
+		healthbarMask.transform.localScale = new Vector3 (healthbarSize, 1); ;
+		healthbar.transform.localScale = new Vector3 (healthbarSize, 1); 
 
-		Vector2 manabarSize = new Vector2(maxMana * 1.5f, healthbar.GetComponent<RectTransform>().sizeDelta.y);
-		manabarMask.GetComponent<RectTransform>().sizeDelta = manabarSize;
-		manabar.GetComponent<RectTransform>().sizeDelta = manabarSize;
+		float manabarSize = 0;
+		if(maxMana > 0) {
+			manabarSize = 1 - (maxMana * .05f);
+		} 
+
+		manabarMask.transform.localScale = new Vector3 (manabarSize, 1); 
+		manabar.transform.localScale = new Vector3 (manabarSize, 1); 
 
 		playerProfile = standardHud.transform.Find("CharacterProfile").GetComponent<Image>();
 		playerProfile.sprite = Resources.Load (GameObject.Find ("Databases").GetComponent<SpeakerDB> ().getProfile (currentProtagonist), typeof(Sprite)) as Sprite;
-		print("CH: " + maxHealth);
 	}
 
 	// updates the hud with the current amount of mana and health

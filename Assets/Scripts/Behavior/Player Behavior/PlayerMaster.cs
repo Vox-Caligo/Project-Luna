@@ -39,6 +39,15 @@ public class PlayerMaster : MasterBehavior {
 				playerInventory.visibility();
 			}
 		}
+
+		if(keyChecker.useKey(KeyCode.O)) {
+			playerInventory.addItemFromInventory("Sword", "Weapon");
+			playerInventory.addItemFromInventory("Axe", "Weapon");
+		}
+
+		if(keyChecker.useKey(KeyCode.P)) {
+			playerInventory.removeItemFromInventory("Axe");
+		}
 	}
 
 	protected override void OnCollisionEnter2D(Collision2D col) {

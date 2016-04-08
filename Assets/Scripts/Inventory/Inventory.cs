@@ -22,19 +22,23 @@ class InventoryItem {
 public class Inventory : MonoBehaviour
 {
 	private InventoryItem[] personalInventory = new InventoryItem[10];
+	private InventoryUI inventoryUIScript;
+	private CanvasGroup inventoryUIGroup;
 	private int inventoryRunner = 0;
-	private InventoryUI invUI;
 
 	public Inventory() {
-		invUI = new InventoryUI();
+		GameObject inventoryUI = Instantiate(Resources.Load("UI/Inventory")) as GameObject;
+		inventoryUIGroup = inventoryUI.GetComponent<CanvasGroup>();
+		inventoryUIScript = inventoryUI.GetComponent<InventoryUI>();
 	}
 
 	// adds an item to the players inventory
 	public bool addItemFromInventory(string itemName, string itemType) {
 		if(inventoryRunner >= 0 && inventoryRunner < personalInventory.Length) {
 			personalInventory[inventoryRunner] = new InventoryItem(itemName, itemType);
-			invUI.addItem(inventoryRunner);
+			inventoryUIScript.addItem(inventoryRunner, itemName);
 			findNearestEmptyItemSlot();
+			print("Added " + itemName + " to inventory");
 			return true;
 		}
 
@@ -45,10 +49,11 @@ public class Inventory : MonoBehaviour
 	// removes an item from the players inventory
 	public bool removeItemFromInventory(string itemName) {
 		for(int i = 0; i < personalInventory.Length; i++) {
-			if(personalInventory[i].Name == itemName) {
+			if(personalInventory[i] != null && personalInventory[i].Name == itemName) {
 				personalInventory[i] = null;
-				invUI.removeItem(i);
+				inventoryUIScript.removeItem(i);
 				findNearestEmptyItemSlot();
+				print("Removed " + itemName + " from inventory");
 				return true;
 			}
 		}
@@ -75,14 +80,14 @@ public class Inventory : MonoBehaviour
 	}
 
 	public void visibility() {
-		invUI.Invisible = !invUI.Invisible;
+		inventoryUIScript.Invisible = !inventoryUIScript.Invisible;
 
-		if (invUI.Invisible) {
+		if (inventoryUIScript.Invisible) {
 			print("Made invisible");
-			// show stuff
+			inventoryUIGroup.alpha = 0;
 		} else {
 			print("Made visible");
-			// hide stuff
+			inventoryUIGroup.alpha = 1;
 		}
 	}
 }
