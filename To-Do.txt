@@ -1,18 +1,12 @@
 To Do:		
-	Inventory
-		Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
-		Click selects an item 
-			-Highlights the spot (blue)
-			-Gives a description when clicked
-			-Gives stats when clicked
-			-Double clicking equips/uses the item
-	
 	Placement Puzzles
 		Place items in holes (Inventory check)
 		
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 		Create variables on NPCs to respond to different karma (or not being there at all)
+	
+	Comment
 		
 	Round Two:
 		Improved AI
@@ -30,8 +24,10 @@ To Do:
 		Quest log
 		UI: growing as the player gains more health
 		UI: clean it up and tighten
+		Inventory: Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes)
 
 Future:
+	Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
 		Replace the int casting for a little bit of range (like a float?)
 	During polishing, wander should not stray too far from the start point when it begins to move
@@ -46,6 +42,16 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/10
+		Inventory:
+			-Click selects an item
+			-Highlights the spot (blue)
+			-Gives a description when clicked
+			-Gives stats when clicked
+			-Double clicking equips/uses the item and deselects the others of the same class
+			-Have it modify the player with database information (Pipeline is set up, works with combat)
+			-Have it modify the player with database information (Pipeline is set up, works with combat)
+	
 	4/7
 		-Inventory images coming through DB, could be in InventoryUI
 		-Items are added/removed by name and earliest slot

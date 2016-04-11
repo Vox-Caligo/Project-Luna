@@ -15,8 +15,8 @@ public class WeaponDB : MonoBehaviour {
 
 	void Start() {
 		allWeapons = new Dictionary<string, WeaponStats> ();
-		allWeapons.Add ("Sword", new WeaponStats { Speed = 1, Damage = 5, Length = .5f, Width = .2f});
-		allWeapons.Add ("Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .2f, Width = .5f});
+		allWeapons.Add ("Starter Sword", new WeaponStats { Speed = 1, Damage = 5, Length = .5f, Width = .2f});
+		allWeapons.Add ("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .2f, Width = .5f});
 	}
 
 	public float getValue(string weapon, string soughtValue) {

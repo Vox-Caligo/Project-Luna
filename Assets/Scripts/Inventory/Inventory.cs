@@ -17,36 +17,31 @@ class InventoryItem {
 		get { return name; }
 		set { name = value;}
 	}
+
+	public string Type {
+		get { return type; }
+		set { type = value;}
+	}
 }
 
 public class Inventory : MonoBehaviour
 {
+	private PlayerMaster currentPlayer;
 	private InventoryItem[] personalInventory = new InventoryItem[10];
 	private InventoryUI inventoryUIScript;
 	private CanvasGroup inventoryUIGroup;
 	private int inventoryRunner = 0;
 	private bool mouseDown = false;
+	private WeaponDB weaponData;
 
 	public Inventory() {
 		GameObject inventoryUI = Instantiate(Resources.Load("UI/Inventory")) as GameObject;
 		inventoryUIGroup = inventoryUI.GetComponent<CanvasGroup>();
 		inventoryUIScript = inventoryUI.GetComponent<InventoryUI>();
-	}
+		inventoryUIScript.ParentInventory = this;
+		weaponData = GameObject.Find ("Databases").GetComponent<WeaponDB> ();
 
-	public void inventoryUpdate() {
-		if(!mouseDown && Input.GetMouseButtonDown(0)) {
-			mouseDown = true;
-
-			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			Collider2D itemCollided = Physics2D.OverlapPoint(mousePosition);
-			print("Mouse");
-			if(itemCollided != null) {
-				print("Ahhh");
-			}
-
-		} else if(Input.GetMouseButtonUp(0)) {
-			mouseDown = false;
-		}
+		currentPlayer = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster> ();
 	}
 
 	// adds an item to the players inventory
@@ -55,7 +50,6 @@ public class Inventory : MonoBehaviour
 			personalInventory[inventoryRunner] = new InventoryItem(itemName, itemType);
 			inventoryUIScript.addItem(inventoryRunner, itemName);
 			findNearestEmptyItemSlot();
-			print("Added " + itemName + " to inventory");
 			return true;
 		}
 
@@ -105,6 +99,27 @@ public class Inventory : MonoBehaviour
 		} else {
 			print("Made visible");
 			inventoryUIGroup.alpha = 1;
+		}
+	}
+
+	public void equipOrUseItem(int itemLocation) {
+		//personalInventory [itemLocation];
+		print (personalInventory [itemLocation].Name + " was equipped or used");
+
+		// call databases for what item it is/what it does and apply it to the player
+		if (personalInventory [itemLocation].Type == "Weapon") {
+			print ("Previous Damage: " + currentPlayer.currentCharacterCombat().Damage);
+			print ("Previous Speed: " + currentPlayer.currentCharacterCombat().AttackDelay);
+			print ("Previous Range: " + currentPlayer.currentCharacterCombat().AttackRange);
+			print ("Previous Width: " + currentPlayer.currentCharacterCombat().AttackWidth);
+			currentPlayer.currentCharacterCombat().Damage = (int)weaponData.getValue (personalInventory [itemLocation].Name, "Damage");
+			currentPlayer.currentCharacterCombat().AttackDelay = weaponData.getValue (personalInventory [itemLocation].Name, "Speed");
+			currentPlayer.currentCharacterCombat().AttackRange = weaponData.getValue (personalInventory [itemLocation].Name, "Length");
+			currentPlayer.currentCharacterCombat().AttackWidth = weaponData.getValue (personalInventory [itemLocation].Name, "Width");
+			print ("Current Damage: " + currentPlayer.currentCharacterCombat().Damage);
+			print ("Current Speed: " + currentPlayer.currentCharacterCombat().AttackDelay);
+			print ("Current Range: " + currentPlayer.currentCharacterCombat().AttackRange);
+			print ("Current Width: " + currentPlayer.currentCharacterCombat().AttackWidth);
 		}
 	}
 

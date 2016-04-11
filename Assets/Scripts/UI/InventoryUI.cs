@@ -10,7 +10,10 @@ public class InventoryUI : MonoBehaviour
 	private Image[] backgroundImages = new Image[10];
 	private Button[] inventoryButtons = new Button[10];
 	private string[] itemNames = new string[10];
+	private bool[] equippedItems = new bool[10];
+
 	private InventoryItemsDB itemDB;
+	private Inventory parentInventory;
 
 	// selected buttons variables
 	private int previouslySelectedButton = -1;
@@ -18,6 +21,11 @@ public class InventoryUI : MonoBehaviour
 	public Text inventoryItemName;
 	public Text inventoryItemDescription;
 	public Text inventoryItemEffects;
+
+	// used colors for highlighting purposes
+	private Color32 backgroundGrey = new Color32 (94, 94, 94, 255);
+	private Color32 backgroundBlue = new Color32 (48, 70, 121, 255);
+	private Color32 backgroundYellow = new Color32 (165, 162, 81, 255);
 
 	void Start() {
 		itemDB = GameObject.Find ("Databases").GetComponent<InventoryItemsDB> ();
@@ -36,14 +44,30 @@ public class InventoryUI : MonoBehaviour
 
 	private void itemSlotSelected(int selectedButton) {
 		if (inventoryImages [selectedButton].color.a == 1) {
-			print (previouslySelectedButton);
 			if (previouslySelectedButton != selectedButton) {
+				if (previouslySelectedButton >= 0 && !equippedItems[previouslySelectedButton]) {
+					backgroundImages [previouslySelectedButton].color = backgroundGrey;
+				}
+
 				previouslySelectedButton = selectedButton;
+				inventoryItemName.text = itemDB.getValue (itemNames [selectedButton], "Name");
 				inventoryItemDescription.text = itemDB.getValue (itemNames [selectedButton], "Description");
 				inventoryItemEffects.text = itemDB.getValue (itemNames [selectedButton], "Effects");
-				print ("Selected Button");
+				backgroundImages [selectedButton].color = backgroundBlue;
 			} else {
+				for (int i = equippedItems.Length - 1; i >= 0; i--) {
+					if (equippedItems [i]) {
+						if (itemDB.getValue (itemNames [i], "Type") == itemDB.getValue (itemNames [selectedButton], "Type")) {
+							backgroundImages [i].color = backgroundGrey;
+							equippedItems [i] = false;
+						}
+					}
+				}
+
 				print ("Equipped " + inventorySpots[selectedButton].name);
+				equippedItems[selectedButton]= true;
+				backgroundImages [selectedButton].color = backgroundYellow;
+				parentInventory.equipOrUseItem (selectedButton);
 			}
 		}
 	}
@@ -51,7 +75,6 @@ public class InventoryUI : MonoBehaviour
 	public void addItem(int itemSlot, string itemName) {
 		inventoryImages[itemSlot].color = changeVisibility(inventoryImages[itemSlot].color, true);
 		inventoryImages[itemSlot].sprite = Resources.Load (itemDB.getValue(itemName, "Image"), typeof(Sprite)) as Sprite;
-		print (inventoryImages [itemSlot]);
 		itemNames [itemSlot] = itemName;
 	}
 
@@ -76,5 +99,8 @@ public class InventoryUI : MonoBehaviour
 		get { return invisible; }
 		set { invisible = value; }
 	}
-}
 
+	public Inventory ParentInventory {
+		set { parentInventory = value; }
+	}
+}

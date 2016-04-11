@@ -11,6 +11,8 @@ public class Combat : MonoBehaviour {
 	protected int maxMana;
 	protected int damage;
 	protected int defense;
+	protected float attackWidth;
+	protected float attackRange;
 
 	// attack timer
 	protected bool inAttack = false;
@@ -44,8 +46,8 @@ public class Combat : MonoBehaviour {
 		damage = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Damage"));
 		attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed"));
 
-		float attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");
-		float attackRange = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Length");
+		attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");
+		attackRange = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Length");
 		attackArea = new AttackArea (this.character, characterName, attackWidth, attackRange);
 
 		characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
@@ -133,6 +135,21 @@ public class Combat : MonoBehaviour {
 	public int Defense {	
 		get {	return defense;	} 
 		set {	defense = value;}
+	}
+
+	public float AttackDelay {
+		get {	return attackDelay;	} 
+		set {	attackDelay = value;}
+	}
+
+	public float AttackWidth {
+		get {	return attackWidth;	} 
+		set {	attackWidth = value;}
+	}
+
+	public float AttackRange {
+		get {	return attackRange;	} 
+		set {	attackRange = value;}
 	}
 
 	public bool InCombat {

@@ -39,10 +39,6 @@ public class PlayerMaster : MasterBehavior {
 				playerInventory.visibility();
 			}
 
-			if(!playerInventory.inventoryIsInvisible()) {
-				playerInventory.inventoryUpdate();
-			}
-
 		} else {
 			if(!playerInventory.inventoryIsInvisible()) {
 				playerInventory.visibility();
@@ -50,8 +46,8 @@ public class PlayerMaster : MasterBehavior {
 		}
 
 		if(keyChecker.useKey(KeyCode.O)) {
-			playerInventory.addItemFromInventory("Sword", "Weapon");
-			playerInventory.addItemFromInventory("Axe", "Weapon");
+			playerInventory.addItemFromInventory("Starter Sword", "Weapon");
+			playerInventory.addItemFromInventory("Starter Axe", "Weapon");
 		}
 
 		if(keyChecker.useKey(KeyCode.P)) {
@@ -120,6 +116,10 @@ public class PlayerMaster : MasterBehavior {
 
 	public PlayerMovement currentCharacterMovement() {
 		return ((PlayerMovement)characterMovement);
+	}
+
+	public PlayerCombat currentCharacterCombat() {
+		return ((PlayerCombat)characterCombat);
 	}
 
 	public Inventory PlayerInventory {
