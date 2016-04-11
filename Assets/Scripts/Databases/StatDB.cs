@@ -25,9 +25,9 @@ public class StatDB : MonoBehaviour {
 			case "Defense":
 				return allCharacters[character].Defense;
 			}
-		} else {
-			print("Character does not exist in Character Database");
 		}
+
+		print("Character does not exist in Character Database");
 		return -1;
 	}
 }
