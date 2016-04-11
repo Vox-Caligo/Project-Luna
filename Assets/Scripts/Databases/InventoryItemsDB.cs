@@ -26,14 +26,14 @@ public class InventoryItemsDB : MonoBehaviour {
 	}
 
 	public string getValue(string inventoryItem, string soughtValue) {
-		if(allInventoryImages.ContainsKey(soughtValue)) {
+		if(allInventoryImages.ContainsKey(inventoryItem)) {
 			switch (soughtValue) {
 			case "Image":
-				return allInventoryImages[soughtValue].ImagePath;
+				return allInventoryImages[inventoryItem].ImagePath;
 			case "Description":
-				return allInventoryImages[soughtValue].Description;
+				return allInventoryImages[inventoryItem].Description;
 			case "Effects":
-				return allInventoryImages[soughtValue].Effects;
+				return allInventoryImages[inventoryItem].Effects;
 			}
 		} 
 

@@ -51,6 +51,7 @@ public class InventoryUI : MonoBehaviour
 	public void addItem(int itemSlot, string itemName) {
 		inventoryImages[itemSlot].color = changeVisibility(inventoryImages[itemSlot].color, true);
 		inventoryImages[itemSlot].sprite = Resources.Load (itemDB.getValue(itemName, "Image"), typeof(Sprite)) as Sprite;
+		print (inventoryImages [itemSlot]);
 		itemNames [itemSlot] = itemName;
 	}
 
