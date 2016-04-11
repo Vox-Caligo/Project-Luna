@@ -4,6 +4,7 @@ using System.Collections;
 public class WeightedButton : MonoBehaviour
 {
 	public int buttonGroup;
+	public bool buttonRequiresSpecificItem = false;
 	private bool isWeightedDown;
 	private ArrayList objectsCurrentlyOn = new ArrayList();
 	private WeightedButtonController buttonController;
@@ -29,15 +30,42 @@ public class WeightedButton : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	protected void FixedUpdate () {
-		if(objectsCurrentlyOn.Count > 0) {
-			if(!isWeightedDown) {
-				isWeightedDown = true;
-				buttonController.buttonHasBeenManipulated(true);
+	protected void Update () {
+		if(!isWeightedDown) {
+			if(objectsCurrentlyOn.Count > 0) {
+				if(!buttonRequiresSpecificItem) {
+					isWeightedDown = true;
+					buttonController.buttonHasBeenManipulated(true);
+				} else {
+					foreach(GameObject objectCurrentlyOn in objectsCurrentlyOn) {
+						MoveableBlock blocks = objectCurrentlyOn.GetComponent<MoveableBlock>();
+						if(blocks != null && blocks.buttonGroup == buttonGroup) {
+							isWeightedDown = true;
+							buttonController.buttonHasBeenManipulated(true);
+							break;
+						}
+					}
+				}
 			}
-		} else if(isWeightedDown) {
-			isWeightedDown = false;
-			buttonController.buttonHasBeenManipulated(false);
+		} else {
+			if(!buttonRequiresSpecificItem) {
+				isWeightedDown = false;
+				buttonController.buttonHasBeenManipulated(false);
+			} else {
+				bool correctObjectStillOn = false;
+
+				foreach(GameObject objectCurrentlyOn in objectsCurrentlyOn) {
+					MoveableBlock blocks = objectCurrentlyOn.GetComponent<MoveableBlock>();
+					if(blocks != null && blocks.buttonGroup == buttonGroup) {
+						correctObjectStillOn = true;
+					}
+				}
+
+				if(!correctObjectStillOn) {
+					isWeightedDown = false;
+					buttonController.buttonHasBeenManipulated(false);
+				}
+			}
 		}
 	}
 

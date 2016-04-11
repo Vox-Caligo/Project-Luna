@@ -5,6 +5,7 @@ public class MoveableBlock : InteractableItem
 {
 	public bool slideable;
 	public bool pickupable;
+	public int buttonGroup;
 
 	private bool beingCarried = false;
 	private BoxCollider2D myCollider;

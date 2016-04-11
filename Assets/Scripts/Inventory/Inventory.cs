@@ -103,7 +103,6 @@ public class Inventory : MonoBehaviour
 	}
 
 	public void equipOrUseItem(int itemLocation) {
-		//personalInventory [itemLocation];
 		print (personalInventory [itemLocation].Name + " was equipped or used");
 
 		// call databases for what item it is/what it does and apply it to the player
@@ -121,6 +120,17 @@ public class Inventory : MonoBehaviour
 			print ("Current Range: " + currentPlayer.currentCharacterCombat().AttackRange);
 			print ("Current Width: " + currentPlayer.currentCharacterCombat().AttackWidth);
 		}
+	}
+
+	public bool placeItem(string checkedItemName) {
+		for(int i = 0; i < personalInventory.Length; i++) {
+			if(personalInventory[i].Name == checkedItemName) {
+				removeItemFromInventory(checkedItemName);
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public bool inventoryIsInvisible() {
