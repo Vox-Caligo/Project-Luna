@@ -1,12 +1,14 @@
 To Do:		
 	Placement Puzzles
 		Place items in holes (Inventory check)
+		Slide certain pieces on to certain tiles (basic check between type of platform and type of moving/sliding piece)
 		
 	Karma
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 		Create variables on NPCs to respond to different karma (or not being there at all)
 	
 	Comment
+		If it has to be put on a GameObject on screen (DB) or is on a Prefab, make note
 		
 	Round Two:
 		Improved AI
