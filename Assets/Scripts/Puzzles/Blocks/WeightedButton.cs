@@ -5,7 +5,7 @@ public class WeightedButton : MonoBehaviour
 {
 	public int buttonGroup;
 	public bool buttonRequiresSpecificItem = false;
-	private bool isWeightedDown;
+	private bool isWeightedDown = false;
 	private ArrayList objectsCurrentlyOn = new ArrayList();
 	private WeightedButtonController buttonController;
 
@@ -14,12 +14,6 @@ public class WeightedButton : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D col) {
 		if(col.gameObject.GetComponent<MoveableBlock>() != null || col.gameObject.GetComponent<PlayerMaster>() != null) {
 			objectsCurrentlyOn.Add(col.gameObject);
-		}
-	}
-
-	private void OnTriggerStay2D(Collider2D col) {
-		if(col.gameObject.GetComponent<MoveableBlock>() != null || col.gameObject.GetComponent<PlayerMaster>() != null) {
-			isWeightedDown = true;
 		}
 	}
 
@@ -47,26 +41,36 @@ public class WeightedButton : MonoBehaviour
 					}
 				}
 			}
-		} else {
-			if(!buttonRequiresSpecificItem) {
-				isWeightedDown = false;
-				buttonController.buttonHasBeenManipulated(false);
-			} else {
-				bool correctObjectStillOn = false;
+		} else if(isWeightedDown) {
+			if (objectsCurrentlyOn.Count <= 0) {
+				removedWeight();
+			} else if (buttonRequiresSpecificItem) {
+				if (objectsCurrentlyOn.Count == 1 && ((GameObject)objectsCurrentlyOn[0]).GetComponent<PlayerMaster>() != null) {
+					removedWeight();
+				} else {
+					// if the appropriate block is no longer on
+					bool missingKeyBlock = true;
+					foreach(GameObject objectCurrentlyOn in objectsCurrentlyOn) {
+						MoveableBlock blocks = objectCurrentlyOn.GetComponent<MoveableBlock>();
 
-				foreach(GameObject objectCurrentlyOn in objectsCurrentlyOn) {
-					MoveableBlock blocks = objectCurrentlyOn.GetComponent<MoveableBlock>();
-					if(blocks != null && blocks.buttonGroup == buttonGroup) {
-						correctObjectStillOn = true;
+						if (blocks != null && blocks.buttonGroup == buttonGroup) {
+							missingKeyBlock = false;
+							break;
+						}
 					}
-				}
 
-				if(!correctObjectStillOn) {
-					isWeightedDown = false;
-					buttonController.buttonHasBeenManipulated(false);
+					if(missingKeyBlock) {
+						print ("Missing key block");
+						removedWeight();
+					}
 				}
 			}
 		}
+	}
+
+	private void removedWeight() {
+		isWeightedDown = false;
+		buttonController.buttonHasBeenManipulated(false);
 	}
 
 	public bool IsWeightedDown {

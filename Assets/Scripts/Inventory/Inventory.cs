@@ -94,10 +94,8 @@ public class Inventory : MonoBehaviour
 		inventoryUIScript.Invisible = !inventoryUIScript.Invisible;
 
 		if (inventoryUIScript.Invisible) {
-			print("Made invisible");
 			inventoryUIGroup.alpha = 0;
 		} else {
-			print("Made visible");
 			inventoryUIGroup.alpha = 1;
 		}
 	}
@@ -107,24 +105,16 @@ public class Inventory : MonoBehaviour
 
 		// call databases for what item it is/what it does and apply it to the player
 		if (personalInventory [itemLocation].Type == "Weapon") {
-			print ("Previous Damage: " + currentPlayer.currentCharacterCombat().Damage);
-			print ("Previous Speed: " + currentPlayer.currentCharacterCombat().AttackDelay);
-			print ("Previous Range: " + currentPlayer.currentCharacterCombat().AttackRange);
-			print ("Previous Width: " + currentPlayer.currentCharacterCombat().AttackWidth);
 			currentPlayer.currentCharacterCombat().Damage = (int)weaponData.getValue (personalInventory [itemLocation].Name, "Damage");
 			currentPlayer.currentCharacterCombat().AttackDelay = weaponData.getValue (personalInventory [itemLocation].Name, "Speed");
 			currentPlayer.currentCharacterCombat().AttackRange = weaponData.getValue (personalInventory [itemLocation].Name, "Length");
 			currentPlayer.currentCharacterCombat().AttackWidth = weaponData.getValue (personalInventory [itemLocation].Name, "Width");
-			print ("Current Damage: " + currentPlayer.currentCharacterCombat().Damage);
-			print ("Current Speed: " + currentPlayer.currentCharacterCombat().AttackDelay);
-			print ("Current Range: " + currentPlayer.currentCharacterCombat().AttackRange);
-			print ("Current Width: " + currentPlayer.currentCharacterCombat().AttackWidth);
 		}
 	}
 
 	public bool placeItem(string checkedItemName) {
 		for(int i = 0; i < personalInventory.Length; i++) {
-			if(personalInventory[i].Name == checkedItemName) {
+			if(personalInventory[i] != null && personalInventory[i].Name == checkedItemName) {
 				removeItemFromInventory(checkedItemName);
 				return true;
 			}

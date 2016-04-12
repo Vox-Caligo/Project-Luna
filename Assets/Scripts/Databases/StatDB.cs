@@ -18,7 +18,7 @@ public class StatDB : MonoBehaviour {
 	}
 
 	public int getValue(string character, string soughtValue) {
-		if(allCharacters.ContainsKey(character)) {
+		if(allCharacters.ContainsKey("Player")) {
 			switch (soughtValue) {
 			case "Health":
 				return allCharacters[character].Health;
@@ -27,7 +27,7 @@ public class StatDB : MonoBehaviour {
 			}
 		}
 
-		print("Character does not exist in Character Database");
+		print(character + " does not exist in Character Database");
 		return -1;
 	}
 }
