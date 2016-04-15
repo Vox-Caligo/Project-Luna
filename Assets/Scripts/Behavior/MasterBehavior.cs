@@ -10,6 +10,7 @@ public class MasterBehavior : MonoBehaviour
 	protected DefaultMovementController npcMovement;
 	protected DefaultCombatController npcCombat;
 	protected int currentDirection = 0;
+	protected int karma;
 
 	// know when/where to move
 	// know when to attack
@@ -34,5 +35,10 @@ public class MasterBehavior : MonoBehaviour
 	// setting combatants to inAttack
 	public virtual void characterInCombat() {
 		//characterCombat.setInCombat();
+	}
+
+	public int Karma {
+		get { return karma; }
+		set { karma = value; }
 	}
 }

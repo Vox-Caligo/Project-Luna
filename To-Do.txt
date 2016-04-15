@@ -3,6 +3,8 @@ To Do:
 		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
 		Create variables on NPCs to respond to different karma (or not being there at all)
 	
+	Auto Saving
+	
 	Comment
 		If it has to be put on a GameObject on screen (DB) or is on a Prefab, make note
 		
@@ -25,7 +27,6 @@ To Do:
 		Inventory: Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes)
 
 Future:
-	Inventory will be set by me and can only be manipulated that way. Player can choose to wield whatever items but I decide the pack
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
 		Replace the int casting for a little bit of range (like a float?)
 	During polishing, wander should not stray too far from the start point when it begins to move

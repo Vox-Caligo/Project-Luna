@@ -34,7 +34,7 @@ public class Inventory : MonoBehaviour
 	private bool mouseDown = false;
 	private WeaponDB weaponData;
 
-	public Inventory() {
+	public Inventory(string storedInventory = null) {
 		GameObject inventoryUI = Instantiate(Resources.Load("UI/Inventory")) as GameObject;
 		inventoryUIGroup = inventoryUI.GetComponent<CanvasGroup>();
 		inventoryUIScript = inventoryUI.GetComponent<InventoryUI>();
@@ -42,6 +42,25 @@ public class Inventory : MonoBehaviour
 		weaponData = GameObject.Find ("Databases").GetComponent<WeaponDB> ();
 
 		currentPlayer = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster> ();
+
+		if (storedInventory != null) {
+			readInInventory (storedInventory);
+		}
+	}
+
+	private void readInInventory(string storedInventory) {
+		string[] currentInventory = storedInventory.Split (new string[] { "NEXT" }, System.StringSplitOptions.None);
+
+		for (int i = 0; i < currentInventory.Length; i++) {
+			if (currentInventory [i] != "EMPTY") {
+				inventoryRunner = i;
+				string[] newItem = currentInventory [i].Split (new string[] { "TYPE" }, System.StringSplitOptions.None);
+				print ("Item: " + newItem [0] + "       Type: " + newItem [1]);
+				addItemFromInventory (newItem [0], newItem [1]);
+			}
+		}
+
+		findNearestEmptyItemSlot();
 	}
 
 	// adds an item to the players inventory
@@ -121,6 +140,23 @@ public class Inventory : MonoBehaviour
 		}
 
 		return false;
+	}
+
+	public string storeInventory() {
+		string currentInventory = "";
+
+		for (int i = 0; i < personalInventory.Length; i++) {
+			if (personalInventory [i] == null) {
+				currentInventory += "EMPTY";
+			} else {
+				currentInventory += personalInventory [i].Name;
+				currentInventory += "TYPE" + personalInventory [i].Type;
+			}
+
+			currentInventory += "NEXT";
+		}
+
+		return currentInventory;
 	}
 
 	public bool inventoryIsInvisible() {

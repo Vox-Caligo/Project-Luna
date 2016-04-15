@@ -8,6 +8,7 @@ public class PlayerMaster : MasterBehavior {
 	private KeyboardInput keyChecker;
 	private PlayerHUD playerHud;
 	private Inventory playerInventory;
+	private PlayerStorage storage;
 
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
@@ -21,7 +22,11 @@ public class PlayerMaster : MasterBehavior {
 		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
 		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
-		playerInventory = new Inventory();
+
+		// pull values from storage
+		storage = new PlayerStorage ();
+		karma = storage.retrievePlayerKarma ();
+		playerInventory = new Inventory(storage.retrievePlayerInventory());
 	}
 
 	// Update is called once per frame
@@ -48,10 +53,12 @@ public class PlayerMaster : MasterBehavior {
 		if(keyChecker.useKey(KeyCode.O)) {
 			playerInventory.addItemFromInventory("Starter Sword", "Weapon");
 			playerInventory.addItemFromInventory("Starter Axe", "Weapon");
+			storage.storePlayer (0, playerInventory.storeInventory ());
 		}
 
 		if(keyChecker.useKey(KeyCode.P)) {
 			playerInventory.removeItemFromInventory("Axe");
+			storage.storePlayer (0, playerInventory.storeInventory ());
 		}
 	}
 
