@@ -23,7 +23,7 @@ public class InventoryItemsDB : MonoBehaviour {
 
 	private Dictionary<string, InventoryItemDB> allInventoryImages;
 
-	void Start() {
+	void Awake() {
 		allInventoryImages = new Dictionary<string, InventoryItemDB> ();
 		allInventoryImages.Add ("Starter Sword", new InventoryItemDB("Starter Sword", "InventoryImages/Sword", "A sword", "Dapper", "Weapon"));
 		allInventoryImages.Add ("Starter Axe", new InventoryItemDB("Starter Axe", "InventoryImages/Axe", "An axe", "Bloodthirst", "Weapon"));

@@ -28,6 +28,7 @@ public class DefaultAI : MasterBehavior
 			}
 		}
 
+		karmaReactions ();
 	}
 
 	protected virtual void OnCollisionEnter2D (Collision2D col) {
@@ -37,6 +38,9 @@ public class DefaultAI : MasterBehavior
 			((NpcCombat)characterCombat).applyAttackDamage (col.contacts [0].collider.gameObject);
 		} // else if(((NpcMovement)characterMovement) check for dash or bounce and collision with player
 		*/
+	}
+
+	protected virtual void karmaReactions() {
 	}
 
 	// Update is called once per frame

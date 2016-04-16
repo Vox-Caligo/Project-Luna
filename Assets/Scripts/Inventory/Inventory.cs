@@ -51,12 +51,18 @@ public class Inventory : MonoBehaviour
 	private void readInInventory(string storedInventory) {
 		string[] currentInventory = storedInventory.Split (new string[] { "NEXT" }, System.StringSplitOptions.None);
 
-		for (int i = 0; i < currentInventory.Length; i++) {
+		for (int i = 0; i < personalInventory.Length; i++) {
 			if (currentInventory [i] != "EMPTY") {
 				inventoryRunner = i;
-				string[] newItem = currentInventory [i].Split (new string[] { "TYPE" }, System.StringSplitOptions.None);
-				print ("Item: " + newItem [0] + "       Type: " + newItem [1]);
-				addItemFromInventory (newItem [0], newItem [1]);
+
+				if (currentInventory [i].Contains ("UNEQUIPPED")) {
+					string[] newItem = currentInventory [i].Split (new string[] { "UNEQUIPPED" }, System.StringSplitOptions.None);
+					addItemFromInventory (newItem [0], newItem [1]);
+				} else {
+					string[] newItem = currentInventory [i].Split (new string[] { "EQUIPPED" }, System.StringSplitOptions.None);
+					addItemFromInventory (newItem [0], newItem [1]);
+					inventoryUIScript.equipItem (i);
+				}
 			}
 		}
 
@@ -83,7 +89,6 @@ public class Inventory : MonoBehaviour
 				personalInventory[i] = null;
 				inventoryUIScript.removeItem(i);
 				findNearestEmptyItemSlot();
-				print("Removed " + itemName + " from inventory");
 				return true;
 			}
 		}
@@ -120,8 +125,6 @@ public class Inventory : MonoBehaviour
 	}
 
 	public void equipOrUseItem(int itemLocation) {
-		print (personalInventory [itemLocation].Name + " was equipped or used");
-
 		// call databases for what item it is/what it does and apply it to the player
 		if (personalInventory [itemLocation].Type == "Weapon") {
 			currentPlayer.currentCharacterCombat().Damage = (int)weaponData.getValue (personalInventory [itemLocation].Name, "Damage");
@@ -144,13 +147,23 @@ public class Inventory : MonoBehaviour
 
 	public string storeInventory() {
 		string currentInventory = "";
+		bool[] equippedItems = inventoryUIScript.EquippedItems;
 
 		for (int i = 0; i < personalInventory.Length; i++) {
 			if (personalInventory [i] == null) {
 				currentInventory += "EMPTY";
 			} else {
 				currentInventory += personalInventory [i].Name;
-				currentInventory += "TYPE" + personalInventory [i].Type;
+
+				string equippedStatus;
+
+				if (equippedItems [i]) {
+					equippedStatus = "EQUIPPED";
+				} else {
+					equippedStatus = "UNEQUIPPED";
+				}
+
+				currentInventory += equippedStatus + personalInventory [i].Type;
 			}
 
 			currentInventory += "NEXT";

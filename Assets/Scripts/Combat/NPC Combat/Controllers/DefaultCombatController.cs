@@ -13,10 +13,10 @@ public class DefaultCombatController : MonoBehaviour
 
 		switch(characterName) {
 		case "Minion":
-			npcCombat = new DefaultNpcCombat(characterName, character, "Sword"); //MinionCombat();
+			npcCombat = new DefaultNpcCombat(characterName, character, "Starter Sword"); //MinionCombat();
 			break;
 		default:
-			npcCombat = new DefaultNpcCombat(characterName, character, "Sword");
+			npcCombat = new DefaultNpcCombat(characterName, character, "Starter Sword");
 			break;
 		}
 	}

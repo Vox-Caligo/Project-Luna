@@ -7,7 +7,7 @@ public class SpeakerDB : MonoBehaviour
 	private Dictionary<string, string> allSpeakers;
 	private Dictionary<string, string> allProfiles;
 
-	void Start() {
+	void Awake() {
 		allSpeakers = new Dictionary<string, string> ();
 		allSpeakers.Add ("Aegis", "test1");
 		allSpeakers.Add ("Minion", "test2");

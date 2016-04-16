@@ -2,13 +2,14 @@
 using System.Collections;
 
 public class PlayerMaster : MasterBehavior {
-	private string playerWeapon = "Sword";	// get current weapon
+	private string playerWeapon = "Starter Sword";	// get current weapon
 	private InteractionArea interactableArea;
 	private DeterminingCollisionActions determiningCollisions;
 	private KeyboardInput keyChecker;
 	private PlayerHUD playerHud;
 	private Inventory playerInventory;
 	private PlayerStorage storage;
+	private AutoSave autoSave;
 
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
@@ -27,6 +28,8 @@ public class PlayerMaster : MasterBehavior {
 		storage = new PlayerStorage ();
 		karma = storage.retrievePlayerKarma ();
 		playerInventory = new Inventory(storage.retrievePlayerInventory());
+
+		autoSave = new AutoSave ();
 	}
 
 	// Update is called once per frame
@@ -50,15 +53,18 @@ public class PlayerMaster : MasterBehavior {
 			}
 		}
 
+		if (autoSave.autoSaveUpdate ()) {
+			storage.storePlayer (karma, playerInventory.storeInventory ());
+		}
+
 		if(keyChecker.useKey(KeyCode.O)) {
 			playerInventory.addItemFromInventory("Starter Sword", "Weapon");
 			playerInventory.addItemFromInventory("Starter Axe", "Weapon");
-			storage.storePlayer (0, playerInventory.storeInventory ());
 		}
 
 		if(keyChecker.useKey(KeyCode.P)) {
-			playerInventory.removeItemFromInventory("Axe");
-			storage.storePlayer (0, playerInventory.storeInventory ());
+			playerInventory.removeItemFromInventory("Starter Sword");
+			playerInventory.removeItemFromInventory("Starter Axe");
 		}
 	}
 

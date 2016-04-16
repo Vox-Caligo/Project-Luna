@@ -32,6 +32,10 @@ public class MinionAI : DefaultAI
 		base.processDecisions();
 	}
 
+	protected override void karmaReactions() {
+		// have it do things depending on players current karma
+	}
+
 	protected override void OnCollisionEnter2D (Collision2D col) {
 		base.OnCollisionEnter2D(col);
 		npcMovement.respondToCollision(col);

@@ -13,7 +13,7 @@ public class WeaponDB : MonoBehaviour {
 
 	private Dictionary<string, WeaponStats> allWeapons;
 
-	void Start() {
+	void Awake() {
 		allWeapons = new Dictionary<string, WeaponStats> ();
 		allWeapons.Add ("Starter Sword", new WeaponStats { Speed = 1, Damage = 5, Length = .5f, Width = .2f});
 		allWeapons.Add ("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .2f, Width = .5f});
@@ -35,7 +35,7 @@ public class WeaponDB : MonoBehaviour {
 				break;
 			}
 		} else {
-			print("Weapon does not exist in Weapon Database");
+			print(weapon + " does not exist in Weapon Database");
 		}
 
 		return -1;
