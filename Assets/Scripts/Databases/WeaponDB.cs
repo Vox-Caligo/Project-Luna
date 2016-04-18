@@ -31,7 +31,7 @@ public class WeaponDB : MonoBehaviour {
 			case "Width":
 				return allWeapons[weapon].Width;
 			default:
-				print("Weapon does not have sough property");
+				print(weapon + " does not have sought property " + soughtValue);
 				break;
 			}
 		} else {

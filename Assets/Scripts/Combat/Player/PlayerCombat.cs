@@ -3,7 +3,11 @@ using System.Collections;
 
 public class PlayerCombat : Combat
 {	
-	public PlayerCombat(string characterName, GameObject character, string characterWeapon) : base(characterName, character, characterWeapon) {}
+	private int experiencePointsGained;
+
+	public PlayerCombat(string characterName, GameObject character, int karma, string characterWeapon) : base(characterName, character, characterWeapon) {
+		this.karma = karma;
+	}
 
 	public void updatePlayerCombat(int currentDirection, bool attackKeyPressed) {
 		if (this.health <= 0) {
@@ -25,5 +29,10 @@ public class PlayerCombat : Combat
 				}
 			}
 		}
+	}
+
+	public int Karma {
+		get { return karma; }
+		set { karma = value; }
 	}
 }

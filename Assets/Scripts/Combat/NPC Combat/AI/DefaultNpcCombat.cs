@@ -12,6 +12,8 @@ public class DefaultNpcCombat : Combat
 
 	public void updateNpcCombat(int currentDirection) {
 		if (this.health <= 0) {
+			PlayerCombat player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster> ().currentCharacterCombat ();
+			player.Karma = player.Karma + this.karma;
 			npcCombatUi.destroyUi ();
 			Destroy (character);
 		} else {

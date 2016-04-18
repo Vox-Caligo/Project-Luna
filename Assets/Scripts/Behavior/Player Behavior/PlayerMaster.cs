@@ -17,18 +17,17 @@ public class PlayerMaster : MasterBehavior {
 	// Use this for initialization
 	protected override void Start() {
 		base.Start ();
-		characterMovement = new PlayerMovement(this.gameObject);
-		interactableArea = new InteractionArea(this.gameObject);
-		characterCombat = new PlayerCombat("Player", this.gameObject, playerWeapon);
-		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
-		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
-		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
-
 		// pull values from storage
 		storage = new PlayerStorage ();
 		karma = storage.retrievePlayerKarma ();
-		playerInventory = new Inventory(storage.retrievePlayerInventory());
 
+		characterMovement = new PlayerMovement(this.gameObject);
+		interactableArea = new InteractionArea(this.gameObject);
+		characterCombat = new PlayerCombat("Player", this.gameObject, karma, playerWeapon);
+		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
+		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
+		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
+		playerInventory = new Inventory(storage.retrievePlayerInventory());
 		autoSave = new AutoSave ();
 	}
 
@@ -54,7 +53,7 @@ public class PlayerMaster : MasterBehavior {
 		}
 
 		if (autoSave.autoSaveUpdate ()) {
-			storage.storePlayer (karma, playerInventory.storeInventory ());
+			storage.storePlayer (((PlayerCombat)characterCombat).Karma, playerInventory.storeInventory ());
 		}
 
 		if(keyChecker.useKey(KeyCode.O)) {

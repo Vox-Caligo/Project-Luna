@@ -7,12 +7,20 @@ class StandardStats {
 	public int Mana { get; set; }
 	public int Defense { get; set; }
 	public int Karma { get; set; }
+	public int Experience { get; set; }
 
-	public StandardStats(int health, int mana, int defense, int karma) {
+	public StandardStats(int health, int mana, int defense) {
+		this.Health = health;
+		this.Mana = mana;
+		this.Defense = defense;
+	}
+
+	public StandardStats(int health, int mana, int defense, int karma, int experience) {
 		this.Health = health;
 		this.Mana = mana;
 		this.Defense = defense;
 		this.Karma = karma;
+		this.Experience = experience;
 	}
 }
 
@@ -22,12 +30,13 @@ public class StatDB : MonoBehaviour {
 
 	void Awake() {
 		allCharacters = new Dictionary<string, StandardStats> ();
-		allCharacters.Add ("Player", new StandardStats(20, 10, 10, 0));
-		allCharacters.Add ("Minion", new StandardStats(10, 5, 5, 5));
+		allCharacters.Add ("Player", new StandardStats(20, 10, 10));
+		allCharacters.Add ("Minion", new StandardStats(10, 5, 5, 5, 5));
+		allCharacters.Add ("Villager", new StandardStats(10, 5, 5, -5, 5));
 	}
 
 	public int getValue(string character, string soughtValue) {
-		if(allCharacters.ContainsKey("Player")) {
+		if(allCharacters.ContainsKey(character)) {
 			switch (soughtValue) {
 			case "Health":
 				return allCharacters[character].Health;

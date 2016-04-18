@@ -3,6 +3,7 @@ using System.Collections;
 
 public class DefaultAI : MasterBehavior
 {
+	protected PlayerCombat playerKarma;
 	protected Vector2 currentPosition;
 	protected Collision2D lastCollision;
 	protected bool inCutscene = false;

@@ -11,6 +11,8 @@ public class Combat : MonoBehaviour {
 	protected int maxMana;
 	protected int damage;
 	protected int defense;
+	protected int karma;
+	protected int experiencePoints;
 	protected float attackWidth;
 	protected float attackRange;
 
@@ -44,6 +46,8 @@ public class Combat : MonoBehaviour {
 		maxMana = mana;
 		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
 		damage = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Damage"));
+		karma = (int)(GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Karma"));
+		//experiencePoints = (int)(GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Experience"));
 		attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed"));
 
 		attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");

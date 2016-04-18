@@ -1,8 +1,4 @@
 To Do:		
-	Karma
-		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
-		Create variables on NPCs to respond to different karma (or not being there at all)
-	
 	Comment
 		If it has to be put on a GameObject on screen (DB) or is on a Prefab, make note
 		
@@ -25,6 +21,16 @@ To Do:
 		Inventory: Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes)
 		When unequipping items make sure the space is also returned to the correct color
 		Shopkeepers
+		Player Experience: Lead to more health and mana?
+		Layer health bars above the enemies layer
+		Refactor what is needed to be
+		
+	Round Three:
+		Start piecing things together
+			Create levels
+			Create NPCs that are specialized
+			Create puzzles in levels
+			Specialized Karma reactions
 
 Future:
 	During polishing, with the directions have them have a bit of nuance but not 100% correct
@@ -41,6 +47,10 @@ Future:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/17
+		Karma system will save throughout the game with options changing depending on what you do (different NPCs are hostile, give different items)
+		Create variables on NPCs to respond to different karma (or not being there at all)
+	
 	4/15
 		-Auto Saving is working
 		-Items that are added and removed from inventory based on storage
