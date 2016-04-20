@@ -1,8 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
+/**
+ * AI specifically for movement that is the base for
+ * all NPCs with specialized movement. Can also be used
+ * alone for standard movements.
+ */
 public class DefaultMovementController : CharacterMovementController
 {
+	// variables that control the npc and its actions
 	protected GameObject character;
 	protected string characterName;
 	protected string currentAction = "";
@@ -11,14 +17,16 @@ public class DefaultMovementController : CharacterMovementController
 	protected bool injureViaMovement = false;
 	protected Vector2 targetPoint;
 	protected Vector3 previousLocation;
-	
+
+	// classes that cause different movements
 	protected Wandering wanderingFunctions;
 	protected Pursuing pursuingFunctions;
 	protected PathFollowing pathfollowingFunctions;
 	protected ArrayList pathFollowingPoints;
 	protected Bounce bouncingFunctions;
 	protected NearbyTarget nearbyPlayerFunctions;
-	
+
+	// stores all needed movement functions and npc components
 	public DefaultMovementController(string characterName, GameObject character) {
 		this.characterName = characterName;
 		this.character = character;
@@ -31,7 +39,8 @@ public class DefaultMovementController : CharacterMovementController
 	}
 	
 	// animation
-	
+
+	// what happens when given a current action
 	public virtual void runScript() {	
 		int moveCharacter = -1;
 
@@ -68,8 +77,10 @@ public class DefaultMovementController : CharacterMovementController
 		currentDirection = (moveCharacter != -1) ? moveCharacter : currentDirection;
 	}
 
+	// ways for the npc to respond to colliding with an object
 	public void respondToCollision(Collision2D col) {
 		if (col.gameObject.tag == "Structure") {
+			// hitting a structure causes a ricochet (bounce) or stoppage (dash)
 			if(currentAction == "bounce") {
 				if (col.contacts [0].point.x != col.contacts [1].point.x) {
 					bouncingFunctions.changeDirection (true);
@@ -80,9 +91,12 @@ public class DefaultMovementController : CharacterMovementController
 				pursuingFunctions.Dashing = false;
 			}
 		} else if(col.gameObject.tag == "Player") {
+			// collisions with the player
 			if(currentAction == "bounce") {
+				// damages the player if they're hit
 				injureViaMovement = true;
 			} else if (currentAction == "dash") {
+				// stops dashing and injures the player
 				pursuingFunctions.Dashing = false;
 				injureViaMovement = true;
 				character.GetComponent<Rigidbody2D> ().velocity = new Vector2 ();
@@ -91,22 +105,26 @@ public class DefaultMovementController : CharacterMovementController
 			}
 		}
 	}
-	
+
+	// get/set the npc current action
 	public string CurrentAction {
 		get {return currentAction;}
 		set {currentAction = value;}
 	}
 
+	// get/set the npc current direction
 	public int CurrentDirection {
 		get {return currentDirection;}
 		set {currentDirection = value;}
 	}
 
+	// get/set causes damage by collision
 	public bool InjureViaMovement {
 		get {return injureViaMovement;}
 		set {injureViaMovement = value;}
 	}
 
+	// get/set the current npc point of interest
 	public Vector2 TargetPoint {
 		get {return targetPoint;}
 		set {targetPoint = value;}

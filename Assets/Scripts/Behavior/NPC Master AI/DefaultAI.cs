@@ -2,16 +2,16 @@
 using System.Collections;
 
 /**
- * 
+ * Default thought processes for any NPC
  */
 public class DefaultAI : MasterBehavior
 {
-	protected PlayerCombat playerKarma;
-	protected Vector2 currentPosition;
-	protected Collision2D lastCollision;
-	protected bool inCutscene = false;
+	protected PlayerCombat playerKarma;		// karma of the player
+	protected Vector2 currentPosition;		// the current location
+	protected Collision2D lastCollision;	// the last collision experienced
+	protected bool inCutscene = false;		// if character is in a cutscene
 
-	// Use this for initialization
+	// initializes combat and movement to default values
 	protected override void Start() {
 		if(npcCombat == null)
 			npcCombat = new DefaultCombatController(characterName, this.gameObject);
@@ -20,11 +20,16 @@ public class DefaultAI : MasterBehavior
 			npcMovement = new DefaultMovementController(characterName, this.gameObject);
 	}
 
+	// ai to be run by this character
 	protected virtual void processDecisions() {
+		// current location
 		currentPosition = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+
 		// determine if actor should move, attack, or other
 		// if move, determine how to move
 		// if attack, determine how to attack
+
+		// two special movements
 		if(npcMovement.CurrentAction == "dash" || npcMovement.CurrentAction == "bounce") {
 			if(npcMovement.InjureViaMovement) {
 				// pass to combat apply damage (lastCollision does not contain the actual gameObject)
@@ -32,9 +37,11 @@ public class DefaultAI : MasterBehavior
 			}
 		}
 
+		// respond to player karma
 		karmaReactions ();
 	}
 
+	// collects the last collision
 	protected virtual void OnCollisionEnter2D (Collision2D col) {
 		lastCollision = col;
 		/*	if(npcCombat.InAttack 
@@ -44,12 +51,13 @@ public class DefaultAI : MasterBehavior
 		*/
 	}
 
-	protected virtual void karmaReactions() {
-	}
+	// how to respond to player karma
+	protected virtual void karmaReactions() {}
 
-	// Update is called once per frame
+	// checks if the character can use ai and then runs its combat/movement scripts
 	protected virtual void Update ()
 	{
+		// cannot use ai if in a cutscene
 		if(!inCutscene) {
 			processDecisions();
 		}
@@ -58,6 +66,7 @@ public class DefaultAI : MasterBehavior
 		npcCombat.runScript(npcMovement.CurrentDirection);
 	}
 
+	// get/set for the character's health
 	public override int characterHealth(int newHealthValue = -1) {
 		if (newHealthValue == -1) {
 			return npcCombat.characterHealth(); // change this to call the AI Combat and then proceed to call health
@@ -67,10 +76,12 @@ public class DefaultAI : MasterBehavior
 		}
 	}
 
+	// returns the characters movement controller
 	public DefaultMovementController NpcMovement {
 		get {return npcMovement;}
 	}
 
+	// get/set for whether the character is in a cutscene
 	public bool InCutscene {
 		get {return inCutscene;}
 		set {inCutscene = value;}

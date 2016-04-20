@@ -57,7 +57,8 @@ public class PlayerMaster : MasterBehavior {
 			}
 		}
 
-		if (autoSave.runningTimerCountdown ()) {
+		//this is a running timer countdownn that autosaves ;)
+		if (autoSave.runningTimerCountdown()) {
 			storage.storePlayer (((PlayerCombat)characterCombat).Karma, playerInventory.storeInventory ());
 		}
 
