@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * 
+ */
 public class PlayerMaster : MasterBehavior {
 	private string playerWeapon = "Starter Sword";	// get current weapon
 	private InteractionArea interactableArea;
@@ -9,7 +12,9 @@ public class PlayerMaster : MasterBehavior {
 	private PlayerHUD playerHud;
 	private Inventory playerInventory;
 	private PlayerStorage storage;
-	private AutoSave autoSave;
+
+	private UtilTimer autoSave;
+	private int timeDelay = 150000; // 2.5 min
 
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
@@ -28,7 +33,7 @@ public class PlayerMaster : MasterBehavior {
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
 		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
 		playerInventory = new Inventory(storage.retrievePlayerInventory());
-		autoSave = new AutoSave ();
+		autoSave = new UtilTimer (1, 1); // replace with timeDelay when not testing
 	}
 
 	// Update is called once per frame
@@ -52,7 +57,7 @@ public class PlayerMaster : MasterBehavior {
 			}
 		}
 
-		if (autoSave.autoSaveUpdate ()) {
+		if (autoSave.runningTimerCountdown ()) {
 			storage.storePlayer (((PlayerCombat)characterCombat).Karma, playerInventory.storeInventory ());
 		}
 

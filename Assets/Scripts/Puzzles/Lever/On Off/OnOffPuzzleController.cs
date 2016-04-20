@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Controlls all on/off switches for a given group and, when
+ * all are correct, is responsible for an action.
+ */
 public class OnOffPuzzleController : LeverPuzzleController {
+	// how many pieces are in the correct position
 	private int numberCurrentlyCorrect = 0;
 
-	// Use this for initialization
+	// Grabs all puzzle pieces that belong to this controller
 	void Start () {
 		foreach(GameObject possiblePieces in GameObject.FindGameObjectsWithTag("Puzzle Piece")) {
 			OnOffPuzzlePiece possiblePiece = possiblePieces.GetComponent<OnOffPuzzlePiece>();
@@ -18,20 +23,20 @@ public class OnOffPuzzleController : LeverPuzzleController {
 			}
 		}
 	}
-	
+
+	// adds/removes a piece to those currently correct
 	public void changeNumberCurrentlyCorrect(bool isCorrect) {
 		if(isCorrect) {
 			numberCurrentlyCorrect++;
-			print("Correct");
 		} else {
 			numberCurrentlyCorrect--;	
-			print("Incorrect");	// make an indication that it's wrong
 		}
 	}
 
+	// checks if all pieces are correctly activated and
+	// does something as a result
 	public override void checkIfSolved() {
 		if(numberCurrentlyCorrect == numberOfPieces) {
-			print("Yay, solved!");	// success (be sure to tag all puzzle pieces)
 			base.checkIfSolved();
 		}
 	}

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Example test scene to see if things work
+ */
 public class TestCutscene : CutsceneTrigger
 {
 	// Use this for initialization

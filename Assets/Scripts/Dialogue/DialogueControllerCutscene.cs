@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Controlls the dialogue being displayed during a cutscene
+ */
 public class DialogueControllerCutscene : DialogueController
 {
 	// Utilities
@@ -38,29 +41,34 @@ public class DialogueControllerCutscene : DialogueController
 		currentSpeaker.sprite = Resources.Load (speakerDatabase.getSpeaker (currentCutsceneDialogue.Character), typeof(Sprite)) as Sprite;
 	}
 
+	// ends the current line being spoken
 	public void endCurrentDialogue() {
 		newDialogueRunner = 0;
 		dialogueText.text = "";
 		completedTalkingPoint = false;
 	}
 
+	// ends the dialogue that is being shown 
 	public void endCutsceneDialogue() {
 		this.currentCutsceneDialogue = null;
 		dialogueGroup.alpha = 0;
 		inCutscene = false;
 	}
 
+	// displays options that are given to the player to select from
 	protected override void multiplePlayerOptions(ArrayList dialoguePieces) {
 		playerChoices.alpha = 1;
 		dialogueOptionOne.GetComponentInChildren<Text> ().text = dialoguePieces [0].ToString();
 		dialogueOptionTwo.GetComponentInChildren<Text> ().text = dialoguePieces [2].ToString();
 	}
 
+	// returns the choice that was selected
 	protected override void selectedChoice(int buttonPressed) {
 		playerChoices.alpha = 0;
 		//conversationNpc.CurrentDialogueSection = (int)conversationNpc.getCurrentOptions () [buttonPressed + 1];
 	}
 
+	// timer (to be replaced)
 	protected bool timerCountdownIsZero() {
 		if(timerTick > 0) {
 			timerTick -= Time.deltaTime;

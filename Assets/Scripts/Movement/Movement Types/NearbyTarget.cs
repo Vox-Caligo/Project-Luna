@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * When near the player, head towards a certain spot instead of 
+ * being inside of the player
+ */ 
 public class NearbyTarget : BaseMovement
 {
 	private float weaponRange;
 
+	// gets the range to be away from the player
 	public NearbyTarget (GameObject character, Vector2 targetPoint, float weaponRange) : base(character) {
 		this.weaponRange = weaponRange;
 	}
 
+	// checks, when near the player, which location to move to
 	public int nearbyPlayerCheck(Vector2 targetPoint, float movementSpeed) {
 		// use a compass rose and proceed to a point on the access near the player and attack
 		// depending on the current direction, line them up

@@ -19,11 +19,21 @@ To Do:
 		UI: growing as the player gains more health
 		UI: clean it up and tighten
 		Inventory: Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes)
+			-When inventory is closed revert the colors and text
 		When unequipping items make sure the space is also returned to the correct color
 		Shopkeepers
 		Player Experience: Lead to more health and mana?
 		Layer health bars above the enemies layer
 		Refactor what is needed to be
+		Sound pipeline
+		NPC respond when hit
+		Puzzles: make indication when something is wrong/right (noise)
+		Have character chat change upon karma levels
+			Change karma level for certain answers
+		DialogueController: remove timer and replace with util timer
+		DialogueControllerCutscene: remove timer and replace with util timer
+			Do the same for wandering
+		
 		
 	Round Three:
 		Start piecing things together

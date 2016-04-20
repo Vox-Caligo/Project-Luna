@@ -1,13 +1,20 @@
 using UnityEngine;
 using System.Collections;
 
+/**
+ * Randomly wanders around the stage
+ */
 public class Wandering : BaseMovement
 {
+	// gets the current direction and start point
 	private Vector2 currentDirectionVelocity = new Vector2();
 	private Vector2 startPoint;
+
+	// timer variables
 	private float timerTick = 2f;
 	private float maxTimer = 2f;
-	
+
+	// sets the point where it starts
 	public Wandering (GameObject character) : base(character) {
 		startPoint = character.GetComponent<Rigidbody2D>().position;
 	}

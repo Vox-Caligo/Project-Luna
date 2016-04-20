@@ -2,6 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * When used, checks if a key has been pressed and
+ * if that press has caused it to be used for anything.
+ */
 public class PlayerKeys {
 	public bool Pressed { get; set; }
 	public bool Used { get; set; }
@@ -12,6 +16,10 @@ public class PlayerKeys {
 	}
 }
 
+/**
+ * A better way to check if keys have been pressed and used.
+ * Stores it in a way that makes retrieval of information easier
+ */
 public class KeyboardInput : MonoBehaviour
 {
 	// checks if key is pressed and changes the first value if so. The second value
@@ -32,6 +40,7 @@ public class KeyboardInput : MonoBehaviour
 		{KeyCode.Space, new PlayerKeys(false, false)}
 	};
 
+	// uses the key that was pressed (if able)
 	public bool useKey(KeyCode pressedKey) {
 		PlayerKeys checkingKeyProperties = usedKeys [pressedKey];
 		if (checkingKeyProperties.Pressed && !checkingKeyProperties.Used) {
@@ -41,6 +50,8 @@ public class KeyboardInput : MonoBehaviour
 		return false;
 	}
 
+	// checks which keys are down and which are up and resets/sets
+	// values appropriately
 	void Update () {
 		ArrayList modifiedButtons = new ArrayList ();
 

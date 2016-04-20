@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * The area that the players attack takes up,
+ * thus causing anything inside to take damage
+ */
 public class AttackArea : CollisionArea
 {
+	// if the player is walking left/right
 	private bool isHorizontal = false;
+
+	// weapon area values
 	private float attackRange = 2;
 	private float attackWidth = 1;
 
+	// creates the attack area
 	public AttackArea(GameObject character, string characterName, float attackWidth, float attackRange) : base(character)
 	{	
 		collisionDetector.name = characterName + " Attack";
@@ -14,6 +22,7 @@ public class AttackArea : CollisionArea
 		this.attackRange = attackRange;
 	}
 
+	// rearranges the area by the way the player is walking
 	public override void rearrangeCollisionArea(int currentDirection) {
 		if(currentDirection % 2 == 0 && !isHorizontal) {
 			isHorizontal = true;
@@ -30,6 +39,7 @@ public class AttackArea : CollisionArea
 		} 
 	}
 
+	// turns the attack area on and off depending on what is needed
 	public void manipulateAttackArea(bool active, int currentDirection = 0) {
 		if (active) {
 			collisionDetectionBox.isTrigger = false;
@@ -42,10 +52,12 @@ public class AttackArea : CollisionArea
 		}
 	}
 
+	// gets the current range of the attack
 	public int AttackRange {
 		set{attackRange = value;}
 	}
 
+	// gets the current width of the attack
 	public int AttackWidth {
 		set{attackWidth = value;}
 	}

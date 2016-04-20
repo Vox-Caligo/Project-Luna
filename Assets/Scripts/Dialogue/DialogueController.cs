@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Controlls the dialogue when in conversation
+ */
 public class DialogueController : MonoBehaviour
 {
 	// Dialogue UI
@@ -25,15 +28,21 @@ public class DialogueController : MonoBehaviour
 
 	protected bool completedTalkingPoint = false;
 
+	// initializes conversation variables
 	protected virtual void Start() {
+		// gets the dialogue UI
 		dialogueGroup = GameObject.FindGameObjectWithTag("Dialogue Text").GetComponent<CanvasGroup>();
 		dialogueText = dialogueGroup.GetComponentInChildren<Text>();
+
+		// gets the choices from the player
 		playerChoices = GameObject.Find("Player Choices").GetComponent<CanvasGroup>();
+
+		// gets information from the databases
 		currentSpeaker = GameObject.Find ("Speaker").GetComponent<Image>();
 		speakerDatabase = GameObject.Find ("Databases").GetComponent<SpeakerDB> ();
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
 
-		// set buttons
+		// set buttons for being able to select options
 		dialogueOptionOne = GameObject.Find ("Option One");
 		dialogueOptionTwo = GameObject.Find ("Option Two");
 		dialogueOptionOne.GetComponent<Button> ().onClick.AddListener (() => {
@@ -44,14 +53,18 @@ public class DialogueController : MonoBehaviour
 		});
 	}
 
+	// updates the currently shown dialogue
 	protected virtual bool updateDialogue(string newDialoguePiece, bool skipDialogue) {
+		// checks if there is more dialogue to be shown
 		if(newDialogueRunner < newDialoguePiece.Length) {
 			if (skipDialogue) {
+				// places letters individually if not skipped
 				for (int i = newDialogueRunner; i < newDialoguePiece.Length; i++) {
 					dialogueText.text += newDialoguePiece [i];
 				}
 			} else {
 				if (!dialogueTyperDelay) {
+					// places all the dialogue on the page
 					dialogueText.text += newDialoguePiece [newDialogueRunner];
 					newDialogueRunner++;
 					dialogueTyperDelay = true;
@@ -67,14 +80,17 @@ public class DialogueController : MonoBehaviour
 		return true;
 	}
 
+	// options for the player that can be selected
 	protected virtual void multiplePlayerOptions(ArrayList dialoguePieces) {
 		playerChoices.alpha = 1;
 		dialogueOptionOne.GetComponentInChildren<Text> ().text = dialoguePieces [0].ToString();
 		dialogueOptionTwo.GetComponentInChildren<Text> ().text = dialoguePieces [2].ToString();
 	}
 
+	// gets the choice that is currently selected
 	protected virtual void selectedChoice(int buttonPressed) {}
 
+	// timer (to be replaced)
 	protected bool timerCountdownIsZero() {
 		if(timerTick > 0) {
 			timerTick -= Time.deltaTime;
@@ -84,6 +100,7 @@ public class DialogueController : MonoBehaviour
 		}
 	}
 
+	// checks if the talking point was complete
 	public bool CompletedTalkingPoint {
 		get { return completedTalkingPoint; }
 	}

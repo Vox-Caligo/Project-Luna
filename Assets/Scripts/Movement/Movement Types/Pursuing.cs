@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
+/**
+ * Follows a target point (pursue), rushes without changing direction (dash),
+ * or runs away (flee)
+ */
 public class Pursuing : BaseMovement
 {
 	private Vector2 currentMovement;
@@ -13,6 +17,7 @@ public class Pursuing : BaseMovement
 	
 	public Pursuing (GameObject character) : base(character) {}
 
+	// checks if it should head to a position or no longer pursuing if there
 	public int pursuitCheck(Vector2 targetPoint, float movementSpeed) {
 		float targetX = targetPoint.x;
 		float targetY = targetPoint.y;
@@ -25,6 +30,7 @@ public class Pursuing : BaseMovement
 		return calculateDirection(currentPosition, newPosition);
 	}
 
+	// checks if the character is dashing and pursues if it's supposed to
 	public int dashCheck(Vector2 targetPoint, float movementSpeed) {
 		if (!dashing) {
 			dashing = true;
@@ -36,6 +42,7 @@ public class Pursuing : BaseMovement
 		return pursuitCheck(dashLocation, movementSpeed * 4);
 	}
 
+	// calculates where the player will dash too until it stops
 	private void dashLocationCalculator(Vector2 targetPoint) {
 		float newTargetPointX = (targetPoint.x - character.transform.position.x) * 2f;
 		float newTargetPointY = (targetPoint.y - character.transform.position.y) * 2f;
@@ -46,10 +53,12 @@ public class Pursuing : BaseMovement
 		}
 	}
 
+	// checks if the player is fleeing
 	public int fleeCheck(Vector2 targetPoint, float movementSpeed) {
 		return pursuitCheck (targetPoint, -movementSpeed);
 	}
 
+	// get/set if the character is dashing
 	public bool Dashing {
 		get { return dashing; }
 		set { dashing = value; }

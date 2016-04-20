@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Character rolls around the stage and bounces off certain structures
+ * and/or the player
+ */
 public class Bounce : BaseMovement
 {
 	private bool currentlyRolling = false;
@@ -9,6 +13,8 @@ public class Bounce : BaseMovement
 
 	public Bounce (GameObject character) : base(character) {}
 
+	// moves in directions based upon straight lines and speeds. Continues to move
+	// and just bounce off of objects
 	public int inBounce(float movementSpeed, float duration, string verticalDirection, string horizontalDirection) {
 		float xVelocity = 0;
 		float yVelocity = 0;
@@ -36,6 +42,7 @@ public class Bounce : BaseMovement
 		return calculateDirection(currentPosition, newPosition);
 	}
 
+	// reflect to a different direction after a collision
 	public void changeDirection(bool verticalCollision) {
 		if(verticalCollision) {
 			if(verticalDirection == "north")

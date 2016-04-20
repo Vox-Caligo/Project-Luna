@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * 
+ */
 public class DefaultAI : MasterBehavior
 {
 	protected PlayerCombat playerKarma;

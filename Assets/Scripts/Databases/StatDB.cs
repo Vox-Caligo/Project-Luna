@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Easy database reading for stats
+ */
 class StandardStats {
 	public int Health { get; set; }
 	public int Mana { get; set; }
@@ -24,10 +27,14 @@ class StandardStats {
 	}
 }
 
+/**
+ * (Put on Database GameObject) 
+ */
 public class StatDB : MonoBehaviour {
 
 	private Dictionary<string, StandardStats> allCharacters;
 
+	// sets the dictionary
 	void Awake() {
 		allCharacters = new Dictionary<string, StandardStats> ();
 		allCharacters.Add ("Player", new StandardStats(20, 10, 10));
@@ -35,6 +42,7 @@ public class StatDB : MonoBehaviour {
 		allCharacters.Add ("Villager", new StandardStats(10, 5, 5, -5, 5));
 	}
 
+	// returns a value for a property of the given character
 	public int getValue(string character, string soughtValue) {
 		if(allCharacters.ContainsKey(character)) {
 			switch (soughtValue) {

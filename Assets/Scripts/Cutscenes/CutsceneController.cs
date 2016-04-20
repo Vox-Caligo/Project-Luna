@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * A controller that is in charge of cutscenes
+ */
 public class CutsceneController : MonoBehaviour
 {
+	// variables to run through a cutscene
 	private DialogueControllerCutscene dialogueController;
 	private CutsceneTrigger currentCutscene;
 	private KeyboardInput keyChecker;
 	private ArrayList currentScript;
 	private int scriptRunner;
 
+	// used for the three actions
 	private bool inMovement = false;
 	private bool inDialogue = false;
 	private bool inAction = false;
@@ -18,14 +23,17 @@ public class CutsceneController : MonoBehaviour
 	// the player
 	PlayerMovement playerMovement;
 
+	// actor currently being used
 	private GameObject currentActor;
 
+	// sets the appropriate variable
 	void Start() {
 		dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueControllerCutscene>();
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
 		playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().currentCharacterMovement();
 	}
 
+	// holds the script for the current cutscene
 	public void initializeScript(CutsceneTrigger currentCutscene) {
 		playerMovement.InCutscene = true;
 		this.currentCutscene = currentCutscene;
@@ -38,18 +46,22 @@ public class CutsceneController : MonoBehaviour
 	{
 		if(currentCutscene != null) {
 			if(inMovement) {
+				// moves until at the spot
 				characterMoving ();
 			} else if(inDialogue) {
 				if(dialogueController.CompletedTalkingPoint && keyChecker.useKey (KeyCode.E)) {
+					// ends dialogue
 					inDialogue = false;
 					dialogueController.endCurrentDialogue();
 				}
 			} else if(inAction) {
 
 			} else {
+				// reads the next line
 				ScriptLine nextLine = (ScriptLine)currentScript [scriptRunner];
 				scriptRunner++;
 
+				// has the character talk, move, or end
 				if (nextLine.Action == "Talk") {
 					inDialogue = true;
 					characterTalking (nextLine);
@@ -72,7 +84,7 @@ public class CutsceneController : MonoBehaviour
 		dialogueController.displayCutsceneDialogue(new TalkingCharacterInformation (currentLine.Character, currentLine.LineOrAct));
 	}
 
-	// used to have a character move
+	// used to have a character move during the cutscene
 	private void characterMoving() {
 		DefaultAI aiCharacter = currentActor.GetComponent<DefaultAI> ();
 
@@ -106,6 +118,7 @@ public class CutsceneController : MonoBehaviour
 		}
 	}
 
+	// ends the playing cutscene
 	private void endCutscene() {
 		inMovement = false;
 		inDialogue = false;
@@ -116,6 +129,7 @@ public class CutsceneController : MonoBehaviour
 		Destroy (currentCutscene);
 	}
 
+	// checks if the character is in a cutscene
 	public bool isCurrentlyInCutscene() {
 		return (inMovement || inAction || inDialogue);
 	}

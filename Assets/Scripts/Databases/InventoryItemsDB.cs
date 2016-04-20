@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Easy database reading for items
+ */
 class InventoryItemDB {
 	public string ItemName { get; set; }
 	public string ImagePath { get; set; }
@@ -19,16 +22,23 @@ class InventoryItemDB {
 	}
 }
 
+/**
+ * (Put on Database GameObject) Holds every item that may
+ * be displayed in the visual inventory. This includes the
+ * name, image path, description, effects, and item type.
+ */
 public class InventoryItemsDB : MonoBehaviour {
 
 	private Dictionary<string, InventoryItemDB> allInventoryImages;
 
+	// sets the dictionary
 	void Awake() {
 		allInventoryImages = new Dictionary<string, InventoryItemDB> ();
 		allInventoryImages.Add ("Starter Sword", new InventoryItemDB("Starter Sword", "InventoryImages/Sword", "A sword", "Dapper", "Weapon"));
 		allInventoryImages.Add ("Starter Axe", new InventoryItemDB("Starter Axe", "InventoryImages/Axe", "An axe", "Bloodthirst", "Weapon"));
 	}
 
+	// returns a value for the given item
 	public string getValue(string inventoryItem, string soughtValue) {
 		if(allInventoryImages.ContainsKey(inventoryItem)) {
 			switch (soughtValue) {

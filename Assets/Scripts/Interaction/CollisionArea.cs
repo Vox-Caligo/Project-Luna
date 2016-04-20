@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * An area that can be collided with that is
+ * on the player and npcs
+ */
 public class CollisionArea : MonoBehaviour
 {
-	protected int currentDirection;
-	protected GameObject collisionDetector;
-	protected BoxCollider2D collisionDetectionBox;
+	protected int currentDirection;					// the current direction being faced
+	protected GameObject collisionDetector;			// the detector for the collision
+	protected BoxCollider2D collisionDetectionBox;	// the box for detecting collisions
+
+	// the area of the collision box
 	protected float boxWidth;
 	protected float boxHeight;
 
+	// sets the collision area to be collided with
 	public CollisionArea(GameObject parentCharacter) {
 		collisionDetector = new GameObject();
 		collisionDetector.transform.parent = parentCharacter.transform;
@@ -42,6 +49,7 @@ public class CollisionArea : MonoBehaviour
 		}
 	}
 
+	// the current direction that the box is facing
 	public int CurrentDirection {
 		get {return currentDirection;}
 	}

@@ -2,10 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * A test conversation with a minion
+ */
 public class TalkingMinion : TalkingNpc
 {
 	public TalkingMinion() { }
 
+	// the conversation that is set. With each timesTalkedTo increase
+	// new conversations appear
 	public override void setupConversation() { 
 		conversationDialogue = new Dictionary<int, TalkingCharacterInformation> ();
 
@@ -14,6 +19,7 @@ public class TalkingMinion : TalkingNpc
 			conversationDialogue.Add(1, new TalkingCharacterInformation("Minion", "I am a minion! Well...that's what I've been called so far. There's a lot left to do but the game is coming along."));
 			conversationDialogue.Add(2, new TalkingCharacterInformation("Minion", "Pretty cool huh? Well, I'll talk to you later! Actually...I don't think you introduced yourself!"));
 
+			// player options
 			playerOptions = new ArrayList ();
 			playerOptions.Add ("The murderer Jimmy Sixer!");
 			playerOptions.Add (4);
