@@ -1,38 +1,62 @@
 To Do:		
 	Phase Two:
-		Improved AI
-			Teleporting
-			Pouncing
-		Killable land terrain
-		Health restoring/depleting land terrain
-		Ability to receive and give items to NPCs
-		Follower NPCs?
-		Objects slide on ice
-		Reavers: modified humans and animals that listen to Vox and his subordinates
-			When a Reaver attack hits it places the user under the Reaver Effect
-				While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
-					Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
-		Quest log
-		UI: growing as the player gains more health
-		UI: clean it up and tighten
-		Inventory: Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes)
-			-When inventory is closed revert the colors and text
-		When unequipping items make sure the space is also returned to the correct color
-		Shopkeepers
-		Player Experience: Lead to more health and mana?
-		Layer health bars above the enemies layer
-		Refactor what is needed to be
-		Sound pipeline
-		NPC respond when hit
-		Puzzles: make indication when something is wrong/right (noise)
-		Have character chat change upon karma levels
-			Change karma level for certain answers
-		DialogueController: remove timer and replace with util timer
-		DialogueControllerCutscene: remove timer and replace with util timer
-			Do the same for wandering
-		PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders are put inside the parent so this won't be needed
-		PlayerMovement: separate sliding things into a new class
+		Objects:
+			Objects/Characters(?) slide on ice
+			Objects/Characters(?) can teleport
 		
+		Puzzle 
+			Sliding and teleports
+				- can add friction stop to button too			
+			
+		UI
+			Growing as the player gains more health
+			Clean it up and tighten
+			Quest log
+			
+		Inventory
+			Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes)
+				-When inventory is closed revert the colors and text
+			When unequipping items make sure the space is also returned to the correct color
+		
+		Sound pipeline
+			Puzzles: make indication when something is wrong/right (noise)
+			
+		Animation pipeline
+		
+		Cutscene 
+			Errors when skipping too fast (text gets chopped up)
+			Animation testing
+			
+		Player	
+			Player Experience: Lead to more health and mana?
+			PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders are put inside the parent so this won't be needed
+			PlayerMovement: separate sliding things into a new class			
+			Have character chat change upon karma levels
+				Change karma level for certain answers
+			Multiple Protagonists
+			Magic
+				Magic attacks
+				Magic that drains health instead of mana (blood magic)
+				
+		NPCs
+			Improved AI
+				Teleporting
+				Pouncing
+			Ability to receive and give items to NPCs
+			Follower NPCs
+			Reavers: modified humans and animals that listen to Vox and his subordinates
+				When a Reaver attack hits it places the user under the Reaver Effect
+					While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
+						Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
+			Shape Changers: change their looks and attack styles
+			Shopkeepers
+			NPC respond when hit
+			Wander should not stray too far from the start point when it begins to move
+				Should also be a bit less random
+			The directions have them have a bit of nuance but not 100% correct
+			Replace the int casting for a little bit of range (like a float?)
+				
+		Refactor code
 		
 	Phase Three:
 		Start piecing things together
@@ -40,22 +64,36 @@ To Do:
 			Create NPCs that are specialized
 			Create puzzles in levels
 			Specialized Karma reactions
-
-Future:
-	During polishing, with the directions have them have a bit of nuance but not 100% correct
-		Replace the int casting for a little bit of range (like a float?)
-	During polishing, wander should not stray too far from the start point when it begins to move
-		Should also be a bit less random
-	Cutscene errors when skipping too fast
-	The Ot Brothers (Little, Middle, Big (Bigot)), Mark robots (Named due to Mark I, Mark II, etc), Breaking fourth wall with text talk
-	Awesome puzzle with sliding and teleports
-		Means that objects also have to be able to slide around on ice
-	Observation Puzzles: Need to observe the room/level/game for the answer
-	Cutscene animation testing more
-	Magic that drains health instead of mana (blood magic)
-------------------------------------------------------------------------------------------------------------------------------
+			
+		The Ot Brothers (Little, Middle, Big (Bigot))
+		
+		Mark robots (Named due to Mark I, Mark II, etc)
+		
+		The Hero's ('Save' a town from monsters they unleash on it)
+		
+		Bedlam (woman who used to be quiet but snapped)
+		
+		Breaking fourth wall with text talk
+		
+		Observation Puzzles: Need to observe the room/level/game for the answer
 
 ------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------
+	4/24
+		Terrain
+			Separate pieces into other sections
+			Health restoring/depleting land terrain
+			Mana restoring/depleting land terrain
+			Overboosting health/mana terrain
+	
+	4/22
+		Layer health bars above the enemies layer
+		Moveable objects only allow one to be picked up at a time
+	
+	4/21
+		Removed all timers that were being individually used and replaced with UtilTimer
+	
 	4/20
 		Finished Commenting
 		Phase 1 Done!!!

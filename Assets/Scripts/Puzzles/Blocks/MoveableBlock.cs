@@ -100,5 +100,9 @@ public class MoveableBlock : InteractableItem
 			rotationArray = new float[4] {270, 180, 90, 0};
 		}
 	}
+
+	public bool BeingCarried {
+		get { return beingCarried; }
+	}
 }
 

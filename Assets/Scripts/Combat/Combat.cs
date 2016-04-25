@@ -31,6 +31,9 @@ public class Combat : MonoBehaviour {
 	protected float characterWidth;
 	protected float characterHeight;
 
+	protected bool manaRegeneration = false;
+	protected bool healthRegeneration = false;
+
 	// timer to tell if the player has been out of combat long enough to regenerate health
 	protected bool inCombat = false;
 
@@ -138,12 +141,12 @@ public class Combat : MonoBehaviour {
 
 	// restore mana/health if below the thresholds
 	protected void regeneration() {
-		if(mana < maxMana) {
+		if(manaRegeneration && mana < maxMana) {
 			mana++;
 		}
 
 		// goes until the character is full/half health (depends on current health)
-		if(health < maxHealth / 2 || (health > maxHealth / 2 && health < maxHealth)) {
+		if(healthRegeneration && (health < maxHealth / 2 || (health > maxHealth / 2 && health < maxHealth))) {
 			health++;
 		}
 	}
@@ -159,10 +162,22 @@ public class Combat : MonoBehaviour {
 		set {	health = value;	}
 	}
 
+	// get/set the character's max health
+	public int MaxHealth {
+		get {	return maxHealth;	} 
+		set {	maxHealth = value;	}
+	}
+
 	// get/set the character's mana
 	public int Mana {	
 		get {	return mana;	} 
 		set {	mana = value;	}
+	}
+
+	// get/set the character's max mana
+	public int MaxMana {
+		get {	return maxMana;	} 
+		set {	maxMana = value;	}
 	}
 
 	// get/set the character's damage
@@ -199,5 +214,17 @@ public class Combat : MonoBehaviour {
 	public bool InCombat {
 		get { return inCombat; }
 		set { inCombat = value; }
+	}
+
+	// get/set if mana can regenerate
+	public bool ManaRegeneration {
+		get { return manaRegeneration; }
+		set { manaRegeneration = value; }
+	}
+
+	// get/set if health can regenerate
+	public bool HealthRegeneration {
+		get { return healthRegeneration; }
+		set { healthRegeneration = value; }
 	}
 }

@@ -27,5 +27,9 @@ public class UtilTimer : MonoBehaviour
 		runningTimerTick = runningTimerMax;
 		return false;
 	}
-}
 
+	public float RunningTimerMax {
+		get { return runningTimerMax; }
+		set { runningTimerMax = value; }
+	}
+}

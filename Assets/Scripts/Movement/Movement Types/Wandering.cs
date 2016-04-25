@@ -11,8 +11,7 @@ public class Wandering : BaseMovement
 	private Vector2 startPoint;
 
 	// timer variables
-	private float timerTick = 2f;
-	private float maxTimer = 2f;
+	private UtilTimer wanderingMotionTimer = new UtilTimer(2, 2);
 
 	// sets the point where it starts
 	public Wandering (GameObject character) : base(character) {
@@ -21,11 +20,11 @@ public class Wandering : BaseMovement
 
 	// wandering around
 	public int wanderingCheck(float movementSpeed) {
-		if(timerTick > 0) {
-			timerTick -= Time.deltaTime;
+		if(!wanderingMotionTimer.runningTimerCountdown()) {
 			return proceedToWandering(movementSpeed, false);						
 		} else {
-			timerTick = Random.Range(maxTimer - maxTimer / .25f, maxTimer);
+			float maxTimer = wanderingMotionTimer.RunningTimerMax;
+			wanderingMotionTimer.RunningTimerMax = Random.Range(maxTimer - maxTimer / .25f, maxTimer);
 			return proceedToWandering(movementSpeed, true);
 		}
 	}

@@ -67,15 +67,5 @@ public class DialogueControllerCutscene : DialogueController
 		playerChoices.alpha = 0;
 		//conversationNpc.CurrentDialogueSection = (int)conversationNpc.getCurrentOptions () [buttonPressed + 1];
 	}
-
-	// timer (to be replaced)
-	protected bool timerCountdownIsZero() {
-		if(timerTick > 0) {
-			timerTick -= Time.deltaTime;
-			return false;
-		} else {
-			return true;
-		}
-	}
 }
 

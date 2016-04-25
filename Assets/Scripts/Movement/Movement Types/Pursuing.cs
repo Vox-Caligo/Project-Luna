@@ -10,10 +10,6 @@ public class Pursuing : BaseMovement
 	private Vector2 currentMovement;
 	private Vector2 dashLocation;
 	private bool dashing = false;
-
-	// timer properties
-	private float timerTick = .5f;
-	private float maxTimer = .5f;
 	
 	public Pursuing (GameObject character) : base(character) {}
 

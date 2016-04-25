@@ -23,6 +23,8 @@ public class PlayerMaster : MasterBehavior {
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
 
+	private MoveableBlock carryingMovableObject;
+
 	// Use this for initialization
 	protected override void Start() {
 		base.Start ();
@@ -34,7 +36,7 @@ public class PlayerMaster : MasterBehavior {
 		characterMovement = new PlayerMovement(this.gameObject);
 		interactableArea = new InteractionArea(this.gameObject);
 		characterCombat = new PlayerCombat("Player", this.gameObject, karma, playerWeapon);
-		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement));
+		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement), ((PlayerCombat)characterCombat));
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
 		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
 		playerInventory = new Inventory(storage.retrievePlayerInventory());
@@ -103,8 +105,15 @@ public class PlayerMaster : MasterBehavior {
 	protected void OnTriggerStay2D(Collider2D col) {
 		// interacts with an object when the E key is pressed
 		if(keyChecker.useKey(KeyCode.E)) {
+			// carryingMovableObject
 			if(col.gameObject.GetComponent<MoveableBlock>() != null) {
-				col.gameObject.GetComponent<MoveableBlock>().onInteractionWithMovable(((PlayerMovement)characterMovement));
+				if (carryingMovableObject == null) {
+					carryingMovableObject = col.gameObject.GetComponent<MoveableBlock> ();
+					carryingMovableObject.onInteractionWithMovable(((PlayerMovement)characterMovement));
+				} else {
+					carryingMovableObject.onInteractionWithMovable(((PlayerMovement)characterMovement));
+					carryingMovableObject = null;
+				}
 			} else if(col.gameObject.GetComponent<InteractableItem>() != null) {
 				col.gameObject.GetComponent<InteractableItem>().onInteraction();
 			}
@@ -149,8 +158,8 @@ public class PlayerMaster : MasterBehavior {
 			if(collidingPieces == 0) {
 				TerrainPiece currentTerrain = col.gameObject.GetComponent<TerrainPiece>();
 
-				if(currentTerrain != null && currentTerrain.receiver) {
-					currentTerrain.TeleporterOnFreeze = false;
+				if(currentTerrain.getTerrainType() == "teleporter terrain" && ((TeleporterTerrain)currentTerrain).receiver) {
+					((TeleporterTerrain)currentTerrain).TeleporterOnFreeze = false;
 				}
 
 				determiningCollisions.interpretExitingCurrentTerrainTrigger(col, col.gameObject.GetComponent<TerrainPiece>());

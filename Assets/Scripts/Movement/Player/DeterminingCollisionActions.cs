@@ -12,6 +12,7 @@ public class DeterminingCollisionActions : MonoBehaviour
 	// variables for the player
 	private GameObject player;
 	private PlayerMovement playerMovement;
+	private PlayerCombat playerCombat;
 	private PlayerBoundingBox currentBoundingBox;
 
 	// variables for the terrain
@@ -19,24 +20,33 @@ public class DeterminingCollisionActions : MonoBehaviour
 	private ColliderBoundingBox currentColliderBoundingBox;
 
 	// grabs the player game object and the movement script
-	public DeterminingCollisionActions(GameObject player, PlayerMovement playerMovement) {
+	public DeterminingCollisionActions(GameObject player, PlayerMovement playerMovement, PlayerCombat playerCombat) {
 		this.player = player;
 		this.playerMovement = playerMovement;
+		this.playerCombat = playerCombat;
 		currentBoundingBox = new PlayerBoundingBox (this.player);
 	}
 
 	// checks the terrain and if it has a special effect
 	public void checkIfActiveTerrain() {
 		// makes sure terrain exists
-		if(currentTerrain != null) {
+		if (currentTerrain != null) {
 			currentBoundingBox.updatePlayerBoundingBox ();
 
 			// activaes terrain if on, otherwise turns terrain off
-			if(determineIfCurrentlyColliding()) {
-				activateTerrainFeature();
+			if (determineIfCurrentlyColliding ()) {
+				activateTerrainFeature ();
 				playerMovement.TerrainIsActivated = true;
 			} else {
 				playerMovement.TerrainIsActivated = false;
+			}
+		} else {
+			if (!playerCombat.HealthRegeneration) {
+				playerCombat.HealthRegeneration = true;
+			}
+
+			if (!playerCombat.ManaRegeneration) {
+				playerCombat.ManaRegeneration = true;
 			}
 		}
 	}
@@ -68,9 +78,13 @@ public class DeterminingCollisionActions : MonoBehaviour
 		} else if(playerMovement.CurrentDirection == 3) {
 			if(playerMovement.IsFrictionStopNeeded && currentBoundingBox.PlayerTopBound < currentColliderBoundingBox.ColliderTopBound) {
 				return true;
-			} else if(((currentTerrain != null && currentTerrain.isSlippery) || (currentTerrain.sender || currentTerrain.receiver)) && 
-						currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound) {
-				return true;
+			} else {
+				string currentTerrainType = currentTerrain.getTerrainType();
+
+				if (((currentTerrain != null && currentTerrainType == "slippery terrain") || currentTerrainType == "teleporter terrain") &&
+				   currentBoundingBox.PlayerBottomBound < currentColliderBoundingBox.ColliderTopBound) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -89,26 +103,61 @@ public class DeterminingCollisionActions : MonoBehaviour
 	private void activateTerrainFeature() {
 		// checks that there is terrain with features
 		if(currentTerrain != null) {
-			// checks if the terrain causes sliding
-			if (currentTerrain.isSlippery) {
-				playerMovement.IsSliding = true;
-			}
+			string currentTerrainType = currentTerrain.getTerrainType ();
 
-			// checks if the terrain is sliding and needs a stop piece
-			if (currentTerrain.needsFrictionStop) {
-				playerMovement.IsFrictionStopNeeded = true;
+			// checks if the terrain causes sliding
+			if (currentTerrainType == "slippery terrain") {
+				playerMovement.IsSliding = true;
+
+				// checks if the terrain is sliding and needs a stop piece
+				if (((SlipperyTerrain)currentTerrain).needsFrictionStop) {
+					playerMovement.IsFrictionStopNeeded = true;
+				}
 			}
 
 			// checks if the terrain is a teleporter entrance
-			if (currentTerrain.sender) {
-				if (!currentTerrain.TeleporterOnFreeze && currentTerrain.isSisterAReceiver()) {
+			if (currentTerrainType == "teleporter terrain" && ((TeleporterTerrain)currentTerrain).sender) {
+				if (!((TeleporterTerrain)currentTerrain).TeleporterOnFreeze && ((TeleporterTerrain)currentTerrain).isSisterAReceiver()) {
 					playerMovement.teleport();
 				}
 			}
 
 			// checks if the current terrain is the type to climb
-			if(currentTerrain.climable) {
+			if(currentTerrainType == "climable terrain") {
 				playerMovement.IsClimbing = true;
+			}
+
+			if (currentTerrainType == "health manipulator terrain") {
+				int healthManipulation = ((HealthManipulatorTerrain)currentTerrain).healthManipulation;
+				float maxHealth = ((HealthManipulatorTerrain)currentTerrain).overboost ? playerCombat.MaxHealth * 1.5f : playerCombat.MaxHealth;
+
+				if (healthManipulation < 0) {
+					playerCombat.HealthRegeneration = false;
+					playerCombat.Health = playerCombat.Health + healthManipulation;
+				} else if (playerCombat.Health < maxHealth) {
+					playerCombat.Health = playerCombat.Health + healthManipulation;
+				}
+
+				print("Manipulated health: " + playerCombat.Health);
+			}
+
+			if (currentTerrainType == "mana manipulator terrain") {
+				int manaManipulation = ((ManaManipulatorTerrain)currentTerrain).manaManipulation;
+				float maxMana = ((ManaManipulatorTerrain)currentTerrain).overboost ? playerCombat.MaxMana * 1.5f : playerCombat.MaxMana;
+
+				if (manaManipulation < 0) {
+					playerCombat.ManaRegeneration = false;
+
+					if (playerCombat.Mana > 0) {
+						playerCombat.Mana = playerCombat.Mana + manaManipulation;
+					} else {
+						playerCombat.Mana = 0;
+					}
+				} else if (playerCombat.Mana < maxMana) {
+					playerCombat.Mana = playerCombat.Mana + manaManipulation;
+				}
+
+				print("Manipulated mana: " + playerCombat.Mana);
 			}
 		} 
 	}
@@ -128,7 +177,7 @@ public class DeterminingCollisionActions : MonoBehaviour
 
 	// checks if colliding with a piece of terrain
 	public void interpretCurrentTerrainCollider(Collision2D col) {
-		if(col.gameObject.GetComponent<TerrainPiece>().isSturdy) {
+		if(col.gameObject.GetComponent<TerrainPiece>().getTerrainType() == "sturdy terrain") {
 			playerMovement.CollidingWithSturdyObject = true;
 		}
 	}

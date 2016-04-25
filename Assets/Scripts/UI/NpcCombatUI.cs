@@ -32,6 +32,7 @@ public class NpcCombatUI : MonoBehaviour
 
 		// creates a new npc ui and attaches it to the npc
 		combatUI = Instantiate(Resources.Load("UI/Combat UI")) as GameObject;
+		combatUI.GetComponent<Canvas>().sortingLayerName = "npc ui";
 		characterHeight = this.characterParent.GetComponent<BoxCollider2D> ().bounds.extents.y * 1.5f;
 		combatUI.transform.position = new Vector3(characterParent.transform.position.x, 
 													characterParent.transform.position.y + characterHeight);

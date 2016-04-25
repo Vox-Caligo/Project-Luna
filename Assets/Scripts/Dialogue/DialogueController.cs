@@ -22,9 +22,7 @@ public class DialogueController : MonoBehaviour
 	protected KeyboardInput keyChecker;
 
 	// Timer Properties
-	protected float timerTick = 0;
-	protected float maxTimer = .05f;
-	protected bool dialogueTyperDelay = false;
+	protected UtilTimer dialogueTyperDelayTimer = new UtilTimer(0, .05f);
 
 	protected bool completedTalkingPoint = false;
 
@@ -63,17 +61,12 @@ public class DialogueController : MonoBehaviour
 					dialogueText.text += newDialoguePiece [i];
 				}
 			} else {
-				if (!dialogueTyperDelay) {
+				if (!dialogueTyperDelayTimer.runningTimerCountdown()) {
 					// places all the dialogue on the page
 					dialogueText.text += newDialoguePiece [newDialogueRunner];
 					newDialogueRunner++;
-					dialogueTyperDelay = true;
-				} else {
-					if (timerCountdownIsZero ()) {
-						dialogueTyperDelay = false;
-						timerTick = maxTimer;
-					}
-				} 
+				}
+
 				return false;
 			}
 		}
@@ -89,16 +82,6 @@ public class DialogueController : MonoBehaviour
 
 	// gets the choice that is currently selected
 	protected virtual void selectedChoice(int buttonPressed) {}
-
-	// timer (to be replaced)
-	protected bool timerCountdownIsZero() {
-		if(timerTick > 0) {
-			timerTick -= Time.deltaTime;
-			return false;
-		} else {
-			return true;
-		}
-	}
 
 	// checks if the talking point was complete
 	public bool CompletedTalkingPoint {

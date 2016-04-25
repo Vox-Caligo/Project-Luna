@@ -47,18 +47,18 @@ public class PlayerMovement : CharacterMovementController {
 				if(collidingWithSturdyObject) {
 					checkIfMovingWhileSliding();
 				} else {
-					if (currentTerrain.isFrictionStop && terrainIsActivated) {
+					if (currentTerrain.getTerrainType() == "friction terrain" && terrainIsActivated) {
 						isSliding = false;
 						isFrictionStopNeeded = false;
-					} else if(!isFrictionStopNeeded && isSliding != currentTerrain.isSlippery) {
-						isSliding = currentTerrain.isSlippery;
+					} else if(!isFrictionStopNeeded && currentTerrain.getTerrainType() == "slippery terrain") {
+						isSliding = currentTerrain.getTerrainType () == "slippery terrain" ? true : false;
 					} else {
 						slide ();
 					}
 				}
-			} else if(isClimbing != currentTerrain.climable) {
+			} else if(currentTerrain.getTerrainType() == "climable") {
 				// if the terrain is climable, make the player climb
-				isClimbing = currentTerrain.climable;
+				isClimbing = true;
 			} else {
 				walk();
 			}
@@ -162,13 +162,14 @@ public class PlayerMovement : CharacterMovementController {
 		float terrainModifier = 1;
 
 		// if the player is being slown down
-		if(currentTerrain.isSlowdown) {
-			terrainModifier = currentTerrain.slowdownSpeed;
-		}
+		if(currentTerrain.getTerrainType() == "speed manipulator terrain") {
+			if (((SpeedManipulatorTerrain)currentTerrain).isSlowdown) {
+				terrainModifier = ((SpeedManipulatorTerrain)currentTerrain).slowdownSpeed;
+			}
 
-		// if the player is being sped up
-		if(currentTerrain.isSpeedup) {
-			terrainModifier = currentTerrain.speedupSpeed;
+			if (((SpeedManipulatorTerrain)currentTerrain).isSpeedup) {
+				terrainModifier = ((SpeedManipulatorTerrain)currentTerrain).speedupSpeed;
+			}
 		}
 
 		// moves the player
@@ -177,8 +178,8 @@ public class PlayerMovement : CharacterMovementController {
 
 	// teleports the player to a receiver teleport
 	public void teleport() {
-		player.transform.position = currentTerrain.teleportCoordinates ();
-		int newTeleportDirection = currentTerrain.isSisterADirectional();
+		player.transform.position = ((TeleporterTerrain)currentTerrain).teleportCoordinates ();
+		int newTeleportDirection = ((TeleporterTerrain)currentTerrain).isSisterADirectional();
 
 		if(newTeleportDirection != -1) {
 			currentDirection = newTeleportDirection;
