@@ -8,15 +8,17 @@ To Do:
 			Sliding and teleports
 				- can add friction stop to button too			
 			
-		UI
-			Growing as the player gains more health
-			Clean it up and tighten
-			Quest log
-			
 		Inventory
 			Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes)
 				-When inventory is closed revert the colors and text
 			When unequipping items make sure the space is also returned to the correct color
+			
+		UI
+			Growing as the player gains more health
+			Clean it up and tighten
+			Quest log
+		
+	----------------------BEFORE HAWAII----------------------
 		
 		Sound pipeline
 			Puzzles: make indication when something is wrong/right (noise)
@@ -27,6 +29,8 @@ To Do:
 			Errors when skipping too fast (text gets chopped up)
 			Animation testing
 			
+	----------------------BEFORE / DURING HAWAII----------------------	
+	
 		Player	
 			Player Experience: Lead to more health and mana?
 			PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders are put inside the parent so this won't be needed
