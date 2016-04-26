@@ -1,16 +1,12 @@
 To Do:		
 	Phase Two:
 		Objects:
-			Objects/Characters(?) slide on ice
-			Objects/Characters(?) can teleport
-		
-		Puzzle 
-			Sliding and teleports
-				- can add friction stop to button too			
+			Objects that are sliding are stopped by sturdy terrain
+			Water and having the player show more body as they approach shore
 			
 		Inventory
-			Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes)
-				-When inventory is closed revert the colors and text
+			Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes))
+				-When inventory is closed revert the colors and text (keep equipped, remove selected)
 			When unequipping items make sure the space is also returned to the correct color
 			
 		UI
@@ -80,10 +76,21 @@ To Do:
 		Breaking fourth wall with text talk
 		
 		Observation Puzzles: Need to observe the room/level/game for the answer
+		
+	Phase Four:
+		Level Design
+			Puzzles 
+				Sliding and teleports
+					- can add friction stop to button too	
 
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/25
+		Objects can teleport
+		Objects slide on ice
+		Change pick up to be in front of the player when facing down and behind when facing up
+	
 	4/24
 		Terrain
 			Separate pieces into other sections

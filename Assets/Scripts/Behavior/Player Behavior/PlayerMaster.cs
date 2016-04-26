@@ -23,7 +23,8 @@ public class PlayerMaster : MasterBehavior {
 	private bool beAwareOfChildColliders = false;
 	private int collidingPieces = 0;
 
-	private MoveableBlock carryingMovableObject;
+	// a block to pick up
+	private PickupableBlock carryingMovableObject;
 
 	// Use this for initialization
 	protected override void Start() {
@@ -95,9 +96,9 @@ public class PlayerMaster : MasterBehavior {
 		} else if(col.gameObject.GetComponent<TerrainPiece>() != null) {
 			// checks if the player is colliding with terrain
 			determiningCollisions.interpretCurrentTerrainCollider(col);
-		} else if(col.gameObject.GetComponent<MoveableBlock>() != null) {
-			// checks if the player is interacting with a movable object
-			col.gameObject.GetComponent<MoveableBlock>().collidedWithCharacter(((PlayerMovement)characterMovement).CurrentDirection);
+		} else if(col.gameObject.GetComponent<SlidingBlock>() != null) {
+			// checks if the player is interacting with a sliding object
+			col.gameObject.GetComponent<SlidingBlock>().collidedWithCharacter(((PlayerMovement)characterMovement).CurrentDirection);
 		}
 	}
 
@@ -106,9 +107,10 @@ public class PlayerMaster : MasterBehavior {
 		// interacts with an object when the E key is pressed
 		if(keyChecker.useKey(KeyCode.E)) {
 			// carryingMovableObject
-			if(col.gameObject.GetComponent<MoveableBlock>() != null) {
+			if(col.gameObject.GetComponent<PickupableBlock>() != null) {
+				print ("Hi");
 				if (carryingMovableObject == null) {
-					carryingMovableObject = col.gameObject.GetComponent<MoveableBlock> ();
+					carryingMovableObject = col.gameObject.GetComponent<PickupableBlock> ();
 					carryingMovableObject.onInteractionWithMovable(((PlayerMovement)characterMovement));
 				} else {
 					carryingMovableObject.onInteractionWithMovable(((PlayerMovement)characterMovement));
