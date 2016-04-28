@@ -23,9 +23,12 @@ public class SlidingBlock : MoveableBlock
 		}
 	}
 
+	private void OnCollisionEnter2D(Collision2D col) {
+		print ("Touching " + col.contacts[0].collider.name);
+	}
+
 	private void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.GetComponent<TerrainPiece> () != null) {
-			print ("New Terrain");
 			currentTerrain = col.gameObject.GetComponent<TerrainPiece> ();
 
 			if (currentTerrain.getTerrainType () == "slippery terrain") {
@@ -38,7 +41,8 @@ public class SlidingBlock : MoveableBlock
 			}
 
 			if (currentTerrain.getTerrainType () == "sturdy terrain") {
-				print ("Sturdy");
+				print ("Stop");
+				isSliding = false;
 				this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2 (0, 0);
 			}
 

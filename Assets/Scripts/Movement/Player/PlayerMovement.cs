@@ -160,15 +160,23 @@ public class PlayerMovement : CharacterMovementController {
 	// applies movement to the player
 	private void applyMovement(Vector2 calculatedMovement) {
 		float terrainModifier = 1;
+		string currentTerrainType = currentTerrain.getTerrainType ();
 
-		// if the player is being slown down
-		if(currentTerrain.getTerrainType() == "speed manipulator terrain") {
+		// if the player is being speed manipulater
+		if(currentTerrainType == "speed manipulator terrain" || currentTerrainType == "water terrain") {
 			if (((SpeedManipulatorTerrain)currentTerrain).isSlowdown) {
 				terrainModifier = ((SpeedManipulatorTerrain)currentTerrain).slowdownSpeed;
 			}
 
 			if (((SpeedManipulatorTerrain)currentTerrain).isSpeedup) {
 				terrainModifier = ((SpeedManipulatorTerrain)currentTerrain).speedupSpeed;
+			}
+
+			// submerge the player somewhat
+			if (currentTerrainType == "water terrain") {
+				// clip away with an alpha mask from the bottom to somwhere in the middle
+				// that or add a new sprite just for water
+					// better way but more time consuming 
 			}
 		}
 

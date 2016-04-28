@@ -1,13 +1,7 @@
 To Do:		
-	Phase Two:
-		Objects:
-			Objects that are sliding are stopped by sturdy terrain
-			Water and having the player show more body as they approach shore
-			
+	Phase Two:			
 		Inventory
 			Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes))
-				-When inventory is closed revert the colors and text (keep equipped, remove selected)
-			When unequipping items make sure the space is also returned to the correct color
 			
 		UI
 			Growing as the player gains more health
@@ -82,10 +76,21 @@ To Do:
 			Puzzles 
 				Sliding and teleports
 					- can add friction stop to button too	
+					
+		Animation
+			Player enters water and changes sprite. When they leave they return. No inbetween (like a pool ladder or the like)
+				Unless feeling masochistic, in which case animate a few sections of it (one whole body then quarter it off by water levels)
 
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/27
+		Objects that are sliding are stopped by sturdy terrain 
+			To do: Needs a stable collider and a trigger collider
+		When unequipping items make sure the space is also returned to the correct color
+		When inventory is closed revert the colors and text (keep equipped, remove selected)
+		Make sure you cant select spots when the inventory is invisible
+	
 	4/25
 		Objects can teleport
 		Objects slide on ice

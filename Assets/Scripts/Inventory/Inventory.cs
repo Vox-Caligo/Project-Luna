@@ -133,6 +133,7 @@ public class Inventory : MonoBehaviour
 
 		if (inventoryUIScript.Invisible) {
 			inventoryUIGroup.alpha = 0;
+			inventoryUIScript.makeInventoryInvisible ();
 		} else {
 			inventoryUIGroup.alpha = 1;
 		}

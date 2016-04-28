@@ -61,7 +61,7 @@ public class InventoryUI : MonoBehaviour
 	// when an item is clicked it is responded to by either showing descriptions or equipping
 	private void itemSlotSelected(int selectedButton) {
 		// checks if the spot is visible
-		if (inventoryImages [selectedButton].color.a == 1) {
+		if (!invisible && inventoryImages [selectedButton].color.a == 1) {
 			// checks if the button has been previously clicked
 			if (previouslySelectedButton != selectedButton) {
 				// resets the previously selected button to grey
@@ -116,7 +116,7 @@ public class InventoryUI : MonoBehaviour
 	private Color changeVisibility(Color givenItem, bool makeVisible) {
 		Color itemSlotAlpha = givenItem;
 
-		if(makeVisible) {
+		if (makeVisible) {
 			itemSlotAlpha.a = 1;
 			return itemSlotAlpha;
 		}
@@ -124,6 +124,18 @@ public class InventoryUI : MonoBehaviour
 		previouslySelectedButton = -1;
 		itemSlotAlpha.a = 0;
 		return itemSlotAlpha;
+	}
+
+	// things to do when the inventory is hidden
+	public void makeInventoryInvisible() {
+		inventoryItemName.text = "";
+		inventoryItemDescription.text = "";
+		inventoryItemEffects.text = "";
+
+		if (previouslySelectedButton != -1 && backgroundImages [previouslySelectedButton].color == backgroundBlue) {
+			backgroundImages [previouslySelectedButton].color = backgroundGrey;
+			previouslySelectedButton = -1;
+		}
 	}
 
 	// checks if the display is visible
