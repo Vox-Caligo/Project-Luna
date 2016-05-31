@@ -52,6 +52,12 @@ public class AttackArea : CollisionArea
 		}
 	}
 
+	// create a newly sized attack area
+	public void brandNewAttackArea(float attackWidth, float attackRange) {
+		this.attackWidth = attackWidth;
+		this.attackRange = attackRange;
+	}
+
 	// gets the current range of the attack
 	public int AttackRange {
 		set{attackRange = value;}

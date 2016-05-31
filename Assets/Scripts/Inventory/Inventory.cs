@@ -142,10 +142,7 @@ public class Inventory : MonoBehaviour
 	// when an item is used, applies its effects to the player
 	public void equipOrUseItem(int itemLocation) {
 		if (personalInventory [itemLocation].Type == "Weapon") {
-			currentPlayer.currentCharacterCombat().Damage = (int)weaponData.getValue (personalInventory [itemLocation].Name, "Damage");
-			currentPlayer.currentCharacterCombat().AttackDelay = weaponData.getValue (personalInventory [itemLocation].Name, "Speed");
-			currentPlayer.currentCharacterCombat().AttackRange = weaponData.getValue (personalInventory [itemLocation].Name, "Length");
-			currentPlayer.currentCharacterCombat().AttackWidth = weaponData.getValue (personalInventory [itemLocation].Name, "Width");
+			currentPlayer.currentCharacterCombat ().changeWeapon (personalInventory [itemLocation].Name);
 		}
 	}
 

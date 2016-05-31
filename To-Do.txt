@@ -1,15 +1,15 @@
 To Do:		
-	Phase Two:			
-		Inventory
-			Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes))
+	Phase Two:		
+		Autosave
+			Issue with the newest Unity update
 			
 		UI
 			Growing as the player gains more health
 			Clean it up and tighten
 			Quest log
+			NPC health bars disappearing (switch to newest Unity the cause?)
 		
 	----------------------BEFORE HAWAII----------------------
-		
 		Sound pipeline
 			Puzzles: make indication when something is wrong/right (noise)
 			
@@ -18,8 +18,6 @@ To Do:
 		Cutscene 
 			Errors when skipping too fast (text gets chopped up)
 			Animation testing
-			
-	----------------------BEFORE / DURING HAWAII----------------------	
 	
 		Player	
 			Player Experience: Lead to more health and mana?
@@ -84,6 +82,14 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	4/28
+		Inventory
+			Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes))
+			If a weapon is equipped and selected it isn't made to be blue
+		Combat
+			Speed/Attack delay seems to keep the item out for that time, not being the delay between swings
+			Only calling change weapon when a new weapon is actually given
+	
 	4/27
 		Objects that are sliding are stopped by sturdy terrain 
 			To do: Needs a stable collider and a trigger collider

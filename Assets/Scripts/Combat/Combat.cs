@@ -43,6 +43,10 @@ public class Combat : MonoBehaviour {
 	protected UtilTimer combatCooldownTimer;// delay after combat
 	protected UtilTimer regenerationTimer;	// time to regenerate
 
+	// databases
+	protected StatDB statDatabase;
+	protected WeaponDB weaponDatabase;
+
 	// sets the base combat for all game characters
 	public Combat(string characterName, GameObject character, string characterWeapon) {
 		// sets the character and their weapon
@@ -50,31 +54,34 @@ public class Combat : MonoBehaviour {
 		this.character = character;
 		this.characterWeapon = characterWeapon;
 
+		statDatabase = GameObject.Find ("Databases").GetComponent<StatDB> ();
+		weaponDatabase = GameObject.Find ("Databases").GetComponent<WeaponDB> ();
+
 		// sets character health
-		health = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Health");
+		health = statDatabase.getValue (this.characterName, "Health");
 		maxHealth = health;
 
 		// sets character mana
-		mana = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Mana");
+		mana = statDatabase.getValue (this.characterName, "Mana");
 		maxMana = mana;
 
 		// sets character defense
-		defense = GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Defense");
+		defense = statDatabase.getValue (this.characterName, "Defense");
 
 		// sets character damage
-		damage = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Damage"));
+		damage = (int)(weaponDatabase.getValue (this.characterWeapon, "Damage"));
 
 		// sets character karma
-		karma = (int)(GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Karma"));
+		karma = (int)(statDatabase.getValue (this.characterName, "Karma"));
 
-		//experiencePoints = (int)(GameObject.Find ("Databases").GetComponent<StatDB> ().getValue (this.characterName, "Experience"));
+		//experiencePoints = (int)(statDatabase.getValue (this.characterName, "Experience"));
 
 		// set the delay between character attacks
-		attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed"));
+		attackDelay = (int)(weaponDatabase.getValue (this.characterWeapon, "Speed"));
 
 		// set the area of the attack area
-		attackWidth = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Width");
-		attackRange = GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue(characterWeapon, "Length");
+		attackWidth = weaponDatabase.getValue(characterWeapon, "Width");
+		attackRange = weaponDatabase.getValue(characterWeapon, "Length");
 		attackArea = new AttackArea (this.character, characterName, attackWidth, attackRange);
 
 		// sets the character's bounding box
@@ -83,7 +90,7 @@ public class Combat : MonoBehaviour {
 
 		// sets the timers to be used
 		attackTimer = new UtilTimer(1.5f, 1.5f);
-		attackDelayTimer = new UtilTimer(1.5f, 1.5f);	// use attackDelay = (int)(GameObject.Find ("Databases").GetComponent<WeaponDB> ().getValue (this.characterWeapon, "Speed")); 
+		attackDelayTimer = new UtilTimer(attackDelay, attackDelay);	// use attackDelay = (int)(weaponDatabase.getValue (this.characterWeapon, "Speed")); 
 		combatCooldownTimer = new UtilTimer(1.5f, 1.5f);
 		regenerationTimer = new UtilTimer(1.5f, 1.5f);
 	}
@@ -148,6 +155,21 @@ public class Combat : MonoBehaviour {
 		// goes until the character is full/half health (depends on current health)
 		if(healthRegeneration && (health < maxHealth / 2 || (health > maxHealth / 2 && health < maxHealth))) {
 			health++;
+		}
+	}
+
+	// change the weapon that the character is using
+	public void changeWeapon(string newWeapon) {
+		if (this.characterWeapon != newWeapon) {
+			this.characterWeapon = newWeapon;
+
+			damage = (int)weaponDatabase.getValue (this.characterWeapon, "Damage");
+			attackDelay = weaponDatabase.getValue (this.characterWeapon, "Speed");
+			attackRange = weaponDatabase.getValue (this.characterWeapon, "Length");
+			attackWidth = weaponDatabase.getValue (this.characterWeapon, "Width");
+			attackDelayTimer.RunningTimerMax = attackDelay;
+
+			attackArea.brandNewAttackArea (attackWidth, attackRange);
 		}
 	}
 

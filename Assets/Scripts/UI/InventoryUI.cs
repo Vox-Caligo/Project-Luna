@@ -75,7 +75,11 @@ public class InventoryUI : MonoBehaviour
 				inventoryItemName.text = itemDB.getValue (itemNames [selectedButton], "Name");
 				inventoryItemDescription.text = itemDB.getValue (itemNames [selectedButton], "Description");
 				inventoryItemEffects.text = itemDB.getValue (itemNames [selectedButton], "Effects");
-				backgroundImages [selectedButton].color = backgroundBlue;
+
+				// does not unequip any items when viewing stats for equipped 
+				if (backgroundImages [selectedButton].color != backgroundYellow) {
+					backgroundImages [selectedButton].color = backgroundBlue;
+				}
 			} else {
 				// equips the item if selected twice
 				equipItem (selectedButton);

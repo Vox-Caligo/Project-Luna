@@ -24,7 +24,7 @@ public class WeaponDB : MonoBehaviour {
 	void Awake() {
 		allWeapons = new Dictionary<string, WeaponStats> ();
 		allWeapons.Add ("Starter Sword", new WeaponStats { Speed = 1, Damage = 5, Length = .5f, Width = .2f});
-		allWeapons.Add ("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .2f, Width = .5f});
+		allWeapons.Add ("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f});
 	}
 
 	// returns a value for a property of the given weapon
@@ -36,6 +36,7 @@ public class WeaponDB : MonoBehaviour {
 			case "Damage":
 				return allWeapons[weapon].Damage;
 			case "Length":
+				print ("Changed Length");
 				return allWeapons[weapon].Length;
 			case "Width":
 				return allWeapons[weapon].Width;
