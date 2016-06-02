@@ -10,25 +10,22 @@ public class QuestLog : MonoBehaviour
     public QuestLog() {
         questLogUI = new QuestLogUI();
     }
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}
 
+    // adds a quest that has been started to the log
     public void addActiveQuest(string questName) {
         if(!activeQuests.ContainsKey(questName)) {
             activeQuests.Add(questName, false);
         }
     }
 
+    // completes a quest that has been inside the log
     public void completeActiveQuest(string questName) {
         if (activeQuests.ContainsKey(questName)) {
             activeQuests[questName] = true;
         }
     }
 
+    // gets the current status of a quest in the log
     public bool getQuestStatus(string questName) {
         if (activeQuests.ContainsKey(questName)) {
             return activeQuests[questName];
