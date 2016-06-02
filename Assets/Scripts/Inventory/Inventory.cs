@@ -62,18 +62,24 @@ public class Inventory : MonoBehaviour
 		string[] currentInventory = storedInventory.Split (new string[] { "NEXT" }, System.StringSplitOptions.None);
 
 		for (int i = 0; i < personalInventory.Length; i++) {
-			// checks to make sure there is an item
-			if (currentInventory [i] != "EMPTY") {
+            // checks to make sure there is an item
+			if (currentInventory.Length > i && currentInventory[i] != "EMPTY") {
 				inventoryRunner = i;
 
 				// adds the item and has it either be equipped or not
 				if (currentInventory [i].Contains ("UNEQUIPPED")) {
 					string[] newItem = currentInventory [i].Split (new string[] { "UNEQUIPPED" }, System.StringSplitOptions.None);
-					addItemFromInventory (newItem [0], newItem [1]);
+                    if (newItem.Length == 2)
+                    {
+                        addItemFromInventory(newItem[0], newItem[1]);
+                    }
 				} else {
 					string[] newItem = currentInventory [i].Split (new string[] { "EQUIPPED" }, System.StringSplitOptions.None);
-					addItemFromInventory (newItem [0], newItem [1]);
-					inventoryUIScript.equipItem (i);
+                    if (newItem.Length == 2)
+                    {
+                        addItemFromInventory(newItem[0], newItem[1]);
+                        inventoryUIScript.equipItem(i);
+                    }
 				}
 			}
 		}
