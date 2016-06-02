@@ -1,13 +1,19 @@
 To Do:		
 	Phase Two:		
-		Autosave
-			Issue with the newest Unity update
+		Quest log
+			Create it so it can be given items to complete
+				Track those items
+			Create UI to show the current Quest (Name, Description, icon for primary?, in progress?)
 			
+			When talking in dialogue, if certain dialogue has the quest trigger then start the quest
+		
 		UI
 			Growing as the player gains more health
 			Clean it up and tighten
-			Quest log
 			NPC health bars disappearing (switch to newest Unity the cause?)
+			
+		Autosave
+			Issue with the newest Unity update
 		
 	----------------------BEFORE HAWAII----------------------
 		Sound pipeline
