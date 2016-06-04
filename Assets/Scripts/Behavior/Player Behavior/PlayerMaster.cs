@@ -13,6 +13,7 @@ public class PlayerMaster : MasterBehavior {
 	private KeyboardInput keyChecker;	// checks keys that have been interacted with
 	private PlayerHUD playerHud;		// shows player status
 	private Inventory playerInventory;	// the inventory that the player has
+	private QuestLog playerQuests;		// stores information about currently active quests 
 	private PlayerStorage storage;		// stores information for different play sessions
 
 	// timer that saves the current player to storage
@@ -41,6 +42,7 @@ public class PlayerMaster : MasterBehavior {
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
 		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
 		playerInventory = new Inventory(storage.retrievePlayerInventory());
+		playerQuests = new QuestLog ();
 		autoSave = new UtilTimer (1, 1); // replace with timeDelay when not testing
 	}
 

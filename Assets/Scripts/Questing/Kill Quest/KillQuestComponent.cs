@@ -3,19 +3,20 @@ using System.Collections;
 
 public class KillQuestComponent : QuestComponentTemplate
 {
-	public KillQuestComponent(string questName) : base(questName) {
+	private DefaultAI npcToKill;
 
-	}
-
-	// Use this for initialization
+	// applied to an npc that can be killed
 	void Start ()
 	{
-	
+		npcToKill = this.gameObject.GetComponent<DefaultAI> ();
 	}
-	
-	public override void updateQuest ()
-	{
 
+	// Update is called once per frame
+	void Update ()
+	{
+		if (npcToKill.characterHealth() == 0) {
+			print ("UPDATE WIT DA KILL!");
+		}
 	}
 }
 

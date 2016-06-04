@@ -33,5 +33,11 @@ public class QuestLog : MonoBehaviour
 
         return false;
     }
+
+	public void updateQuestLog() {
+		//foreach(string quest
+		// find components
+		// update them
+	}
 }
 

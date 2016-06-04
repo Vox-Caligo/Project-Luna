@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemQuestComponent : QuestComponentTemplate
+public class Test : MonoBehaviour
 {
+
 	// Use this for initialization
 	void Start ()
 	{
 	
 	}
 	
-	public override void updateQuest ()
+	// Update is called once per frame
+	void Update ()
 	{
-
+	
 	}
 }
 

@@ -36,7 +36,6 @@ public class WeaponDB : MonoBehaviour {
 			case "Damage":
 				return allWeapons[weapon].Damage;
 			case "Length":
-				print ("Changed Length");
 				return allWeapons[weapon].Length;
 			case "Width":
 				return allWeapons[weapon].Width;
