@@ -21,6 +21,13 @@ public class DefaultNpcCombat : Combat
 			PlayerCombat player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster> ().currentCharacterCombat ();
 			player.Karma = player.Karma + this.karma;
 			npcCombatUi.destroyUi ();
+
+            KillQuestComponent myKillQuestComponent = character.GetComponent<KillQuestComponent>();
+
+            if(myKillQuestComponent != null) {
+                myKillQuestComponent.updateQuest();
+            }
+
 			Destroy (character);
 		} else {
 			// goes through attack ai and does what is needed

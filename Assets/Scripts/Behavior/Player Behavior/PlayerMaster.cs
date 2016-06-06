@@ -185,4 +185,9 @@ public class PlayerMaster : MasterBehavior {
 	public Inventory PlayerInventory {
 		get { return playerInventory; }
 	}
+
+    // returns the player's quest log
+    public QuestLog PlayerQuests {
+        get { return playerQuests; }
+    }
 }

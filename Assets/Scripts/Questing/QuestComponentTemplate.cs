@@ -3,12 +3,12 @@ using System.Collections;
 
 public class QuestComponentTemplate : MonoBehaviour
 {
+    protected QuestTemplate quest;
 	public string questName;
 	protected string questDescription;
 	protected bool questComplete;
 
-	public virtual void updateQuest ()
-	{
+	public virtual void updateQuest () {
 
 	}
 

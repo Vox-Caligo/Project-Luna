@@ -1,10 +1,14 @@
 To Do:		
 	Phase Two:		
 		Quest log
+			Check if quest is active before ticking off boxes (?)
 			Create it so it can be given items to complete
 				Track those items
 			Create UI to show the current Quest (Name, Description, icon for primary?, in progress?)
-			
+			Kill Quests need to be able to spawn characters if enabled
+			Location Quests need to update when hit
+			Item quests need to know when the item is returned
+			Quests need to become active if the dialogue is appropriate
 			When talking in dialogue, if certain dialogue has the quest trigger then start the quest
 		
 		UI
@@ -14,8 +18,8 @@ To Do:
 			
 		Autosave
 			Issue with the newest Unity update
+				Might not be an issue anymore?
 		
-	----------------------BEFORE HAWAII----------------------
 		Sound pipeline
 			Puzzles: make indication when something is wrong/right (noise)
 			
@@ -67,7 +71,7 @@ To Do:
 		
 		Mark robots (Named due to Mark I, Mark II, etc)
 		
-		The Hero's ('Save' a town from monsters they unleash on it)
+		The Hero's ('Save' a town from monsters they unleash on it (Musical Inspiration: Avatar - The Eagle Has Landed)
 		
 		Bedlam (woman who used to be quiet but snapped)
 		
@@ -88,6 +92,15 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/5
+		Revamping Quest system to allow quest lines
+			Trying to solve issue of having a quest component without the active quest
+				Have the quest be active?
+				I actually think the quest template is what I was looking for, an in between between components and quests/log
+					Kind of... have the template be created for every new section
+	6/4
+		Kill Quests basics are complete
+	
 	4/28
 		Inventory
 			Make sure things work when selected (hit boxes change, speed delays, etc (will be heavily with other classes))

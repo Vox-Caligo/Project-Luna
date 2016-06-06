@@ -3,11 +3,11 @@ using System.Collections;
 
 public class LocationQuestComponent : QuestComponentTemplate
 {
-	// Use this for initialization
-	void Start ()
-	{
-	
-	}
+    public int locationNumber;
+
+    // Use this for initialization
+    void Start() {
+    }
 	
 	void Update () 
 	{
@@ -16,7 +16,8 @@ public class LocationQuestComponent : QuestComponentTemplate
 		// if location is discovered
 	}
 
-	public void atLocation(string locationBlockName) {
-		//if(locationBlockName == 
-	}
+    public override void updateQuest() {
+        locateQuestLog();
+        questLog.updateLocationQuest(questName, locationNumber);
+    }
 }

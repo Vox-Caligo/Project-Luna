@@ -18,10 +18,10 @@ public class QuestLog : MonoBehaviour
         }
     }
 
-    // completes a quest that has been inside the log
-    public void completeActiveQuest(string questName) {
-        if (activeQuests.ContainsKey(questName)) {
-            activeQuests[questName] = true;
+    // checks if the quest is currently active, otherwise sets it so
+    public void verifyActiveQuest(string questName) {
+        if (!activeQuests.ContainsKey(questName)) {
+            addActiveQuest(questName);
         }
     }
 
@@ -34,8 +34,13 @@ public class QuestLog : MonoBehaviour
         return false;
     }
 
+    // complete a quest
+    public void completeQuest(string questName) {
+        activeQuests[questName] = true;
+    }
+
 	public void updateQuestLog() {
-		//foreach(string quest
+		// foreach(string quest
 		// find components
 		// update them
 	}
