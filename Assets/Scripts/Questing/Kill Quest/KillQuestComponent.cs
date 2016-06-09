@@ -7,13 +7,9 @@ public class KillQuestComponent : QuestComponentTemplate
 	private DefaultAI npcToKill;    // the character that the npc is on
 
 	// applied to an npc that can be killed
-	void Start () {
+	protected override void Start () {
+        base.Start();
 		npcToKill = this.gameObject.GetComponent<DefaultAI> ();
 	}
-
-    // 
-    public override void updateQuest() {
-        questLog.updateKillQuest(questName);
-    }
 }
 

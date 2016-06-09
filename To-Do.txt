@@ -10,6 +10,8 @@ To Do:
 			Item quests need to know when the item is returned
 			Quests need to become active if the dialogue is appropriate
 			When talking in dialogue, if certain dialogue has the quest trigger then start the quest
+			Quests with multiple pieces should remain in order
+			Have a distinction between quests that can be run at the same time and those that cannot in a questline
 		
 		UI
 			Growing as the player gains more health
@@ -92,6 +94,18 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/8
+		Finished base questline architecture (1 quest)
+			Quests that aren't startable until the player receives the quest works
+		Finished base kill quest (enemies that are there already)
+		Quests can have multiple pieces
+	
+	6/7
+		Updated Questline flow
+	
+	6/6
+		Created Questline
+		
 	6/5
 		Revamping Quest system to allow quest lines
 			Trying to solve issue of having a quest component without the active quest

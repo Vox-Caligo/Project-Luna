@@ -6,7 +6,8 @@ public class LocationQuestComponent : QuestComponentTemplate
     public int locationNumber;
 
     // Use this for initialization
-    void Start() {
+    protected override void Start() {
+        base.Start();
     }
 	
 	void Update () 
@@ -15,9 +16,4 @@ public class LocationQuestComponent : QuestComponentTemplate
 
 		// if location is discovered
 	}
-
-    public override void updateQuest() {
-        locateQuestLog();
-        questLog.updateLocationQuest(questName, locationNumber);
-    }
 }

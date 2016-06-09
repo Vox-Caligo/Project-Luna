@@ -3,14 +3,18 @@ using System.Collections;
 
 public class QuestComponentTemplate : MonoBehaviour
 {
-    protected QuestTemplate quest;
+    protected QuestLog questLog;
 	public string questName;
 	protected string questDescription;
 	protected bool questComplete;
 
-	public virtual void updateQuest () {
+    protected virtual void Start() {
+        questLog = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
+    }
 
-	}
+	public void updateQuest () {
+        questLog.updateQuest(questName);
+    }
 
 	public string QuestName {
 		get { return questName; }

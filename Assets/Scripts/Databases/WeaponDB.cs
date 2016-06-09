@@ -23,7 +23,7 @@ public class WeaponDB : MonoBehaviour {
 	// sets the dictionary
 	void Awake() {
 		allWeapons = new Dictionary<string, WeaponStats> ();
-		allWeapons.Add ("Starter Sword", new WeaponStats { Speed = 1, Damage = 5, Length = .5f, Width = .2f});
+		allWeapons.Add ("Starter Sword", new WeaponStats { Speed = 1, Damage = 20, Length = .5f, Width = .2f});
 		allWeapons.Add ("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f});
 	}
 
