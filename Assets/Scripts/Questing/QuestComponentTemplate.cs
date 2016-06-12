@@ -13,7 +13,7 @@ public class QuestComponentTemplate : MonoBehaviour
     }
 
 	public void updateQuest () {
-        questLog.updateQuest(questName);
+        questLog.updateQuestLine(questName);
     }
 
 	public string QuestName {

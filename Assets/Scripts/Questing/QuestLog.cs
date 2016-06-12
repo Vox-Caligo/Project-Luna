@@ -6,7 +6,7 @@ public class QuestLog : MonoBehaviour
 {
     private QuestDB questDatabase;
     private QuestLogUI questLogUI;
-    private Dictionary<string, bool> activeQuests = new Dictionary<string, bool>();
+    private Dictionary<string, bool> activeQuestLines = new Dictionary<string, bool>();
 
     public QuestLog() {
         questLogUI = new QuestLogUI();
@@ -14,45 +14,45 @@ public class QuestLog : MonoBehaviour
     }
 
     // adds a quest that has been started to the log
-    public void addActiveQuest(string questName) {
-        if(!activeQuests.ContainsKey(questName)) {
-            activeQuests.Add(questName, false);
+    public void addActiveQuestLine(string questName) {
+        if(!activeQuestLines.ContainsKey(questName)) {
+            activeQuestLines.Add(questName, false);
         }
     }
 
     // checks if the quest is currently active, otherwise sets it so
-    public void verifyActiveQuest(string questName) {
-        if (!activeQuests.ContainsKey(questName)) {
-            addActiveQuest(questName);
+    public void verifyActiveQuestLine(string questName) {
+        if (!activeQuestLines.ContainsKey(questName)) {
+            addActiveQuestLine(questName);
         }
     }
 
     // gets the current status of a quest in the log
-    public bool getQuestStatus(string questName) {
-        if (activeQuests.ContainsKey(questName)) {
-            return activeQuests[questName];
+    public bool getQuestLineStatus(string questName) {
+        if (activeQuestLines.ContainsKey(questName)) {
+            return activeQuestLines[questName];
         }
 
         return false;
     }
 
     // complete a quest
-    public void completeQuest(string questName) {
+    public void completeQuestLine(string questName) {
         print("Completed the Quest Line: " + questName);
-        activeQuests[questName] = true;
+        activeQuestLines[questName] = true;
     }
 
-    public void updateQuest(string questName) {
+    public void updateQuestLine(string questName) {
         // gets the quest line with the active quest
         string questLineWithQuest = questDatabase.questLineWithQuest(questName);
 
         // adds a quest that was started if it should
-        if (questLineWithQuest != "" && !activeQuests.ContainsKey(questLineWithQuest) && questDatabase.questLineCanBeStartedEarly(questLineWithQuest)) {
+        if (questLineWithQuest != "" && !activeQuestLines.ContainsKey(questLineWithQuest) && questDatabase.questLineCanBeStartedEarly(questLineWithQuest)) {
             print("Added Quest Line: " + questLineWithQuest);
-            addActiveQuest(questLineWithQuest);
+            addActiveQuestLine(questLineWithQuest);
         }
 
-        if (activeQuests.ContainsKey(questLineWithQuest)) {
+        if (activeQuestLines.ContainsKey(questLineWithQuest)) {
             questDatabase.updateQuestLine(questLineWithQuest, questName);
         }
     }

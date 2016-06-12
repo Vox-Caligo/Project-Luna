@@ -14,8 +14,8 @@ public class QuestLine : MonoBehaviour {
     private bool startableEarly { get; set; }
     private string questLineName;
     private ArrayList quests;
-    private int currentSection = 0;
-
+    private int completedQuests = 0;
+    private ArrayList completedQuestNumbers = new ArrayList();
 
     public QuestLine(string questLineName, ArrayList quests, bool startableEarly) {
         this.questLineName = questLineName;
@@ -37,7 +37,6 @@ public class QuestLine : MonoBehaviour {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -52,10 +51,10 @@ public class QuestLine : MonoBehaviour {
 
         // switch this to a while loop
         foreach (Quest quest in quests) {
-            if (quest.QuestName == questName) {
+            if (quest.QuestName == questName && checkQuestsDoneBefore(quest)) {
                 // if quest is startable early
                 if(quest.QuestType == "kill") {
-                    updateKillQuest(questName);
+                    updateKillQuest(quest);
                 } else if (quest.QuestType == "location") {
 
                 }
@@ -66,14 +65,28 @@ public class QuestLine : MonoBehaviour {
         }
     }
 
-    // completes a kill quest that has been inside the log
-    private void updateKillQuest(string questName) {
-        print("Updated the Kill Quest: " + questName);
-        questDatabase.decrementKillAmount(questLineName, currentSection);
+    // checks that all prerequisite quests are done beforehand
+    private bool checkQuestsDoneBefore(Quest quest) {
+        if(quest.QuestsToBeDoneBefore == null) {
+            return true;
+        } else {
+            for(int i = 0; i < quest.QuestsToBeDoneBefore.Length; i++) {
+                if(!completedQuestNumbers.Contains(quest.QuestsToBeDoneBefore[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
 
-        if (questDatabase.getKillAmount(questLineName, currentSection) == 0) {
-            print("Completed the Kill Quest");
-            completedQuestSection(questName);
+
+    // completes a kill quest that has been inside the log
+    private void updateKillQuest(Quest quest) {
+        print("Updated the Kill Quest: " + quest.QuestName);
+        questDatabase.decrementKillAmount(questLineName, quest.QuestNumber);
+
+        if (questDatabase.getKillAmount(questLineName, quest.QuestNumber) == 0) {
+            completedQuest(quest);
         }
 
         // if it meets the criteria then end the quest
@@ -95,11 +108,25 @@ public class QuestLine : MonoBehaviour {
     */
 
     // finish a section of the overall questline
-    private void completedQuestSection(string questName) {
-        if (currentSection < questDatabase.getQuestLength(questLineName)) {
-            currentSection++;
-        } else {
-            questLog.completeQuest(questLineName);
+    private void completedQuest(Quest quest) {
+        print("Completed the Quest: " + quest.QuestName);
+        completedQuestNumbers.Add(quest.QuestNumber);
+        completedQuests++;
+
+        // finishes any quests that may be obsolete by the current being completed
+        if (quest.QuestsThatWillBeDone != null) {
+            for (int i = 0; i < quest.QuestsThatWillBeDone.Length; i++) {
+                int optionalQuestNumber = quest.QuestsThatWillBeDone[i];
+
+                if (!completedQuestNumbers.Contains(optionalQuestNumber)) {
+                    completedQuestNumbers.Add(optionalQuestNumber);
+                    completedQuests++;
+                }
+            }
+        }
+
+        if (completedQuests >= quests.Count) {
+            questLog.completeQuestLine(questLineName);
         }
     }
 

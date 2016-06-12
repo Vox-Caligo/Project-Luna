@@ -14,12 +14,13 @@ public class QuestDB : MonoBehaviour {
     // sets the dictionary
     public QuestDB() {
 		allQuestlines.Add ("Kill the Minions", new QuestLine("Kill the Minions", new ArrayList {
-            new Quest("Kill the Minions", "Kill the Minions", "Exactly that!", 2, false, false),
-            new Quest("Kill the Master Minion", "Kill the Master Minion", "Exactly that!", 1, false, true)
+            new Quest(0, "Kill the Minions", "Exactly that!", 2, false, null, new int[] {1}),
+            new Quest(1, "Kill the Villagers", "Exactly that!", 2, false),
+            new Quest(2, "Kill the Master Minion", "Exactly that!", 1, true, new int[] {0, 1 })
         }, true));
 
         allQuestlines.Add("Go to the Mana Block", new QuestLine("Go to the Mana Block", new ArrayList {
-            new Quest("Go to the Mana Block", "Get to the Mana Block", "Go there now", false, false)
+            new Quest(0, "Get to the Mana Block", "Go there now")
         }, true));
 	}
 
@@ -45,9 +46,9 @@ public class QuestDB : MonoBehaviour {
 	}
 
     // returns a value for the amount of kills needed
-    public int getKillAmount(string currentQuest, int currentSection) {
+    public int getKillAmount(string currentQuest, int questNumber) {
         if (allQuestlines.ContainsKey(currentQuest)) {
-            Quest questToCheck = allQuestlines[currentQuest].getQuestWithIndex(currentSection);
+            Quest questToCheck = allQuestlines[currentQuest].getQuestWithIndex(questNumber);
             return questToCheck.EnemyAmount;
         }
 
@@ -55,16 +56,11 @@ public class QuestDB : MonoBehaviour {
     }
 
     // decrements a kill from a quest line if needed
-    public void decrementKillAmount(string currentQuestLine, int currentSection) {
+    public void decrementKillAmount(string currentQuestLine, int questNumber) {
         if (allQuestlines.ContainsKey(currentQuestLine)) {
-            Quest questToDecrement = allQuestlines[currentQuestLine].getQuestWithIndex(currentSection);
+            Quest questToDecrement = allQuestlines[currentQuestLine].getQuestWithIndex(questNumber);
             questToDecrement.EnemyAmount -= 1;
         }
-    }
-
-    // gets the length of the entire questline
-    public int getQuestLength(string currentQuestLine) {
-        return allQuestlines[currentQuestLine].getQuestLineLength();
     }
 
     public bool questLineCanBeStartedEarly(string questLine) {

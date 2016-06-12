@@ -6,11 +6,14 @@ using System.Collections.Generic;
 // Basic quests
 public class Quest {
     // base for all quests
+    public int QuestNumber { get; set; }
     public string QuestType { get; set; }
     public string QuestName { get; set; }
     public string QuestDescription { get; set; }
-    public bool ConcurrentQuest { get; set; }
-    public bool NeedsToBeOrdered { get; set; }
+    
+    public bool IsMandatory { get; set; }
+    public int[] QuestsToBeDoneBefore { get; set; }
+    public int[] QuestsThatWillBeDone { get; set; }
 
     // used for item quests
     public string ItemName { get; set; }
@@ -19,31 +22,29 @@ public class Quest {
     public int EnemyAmount { get; set; }
 
     // item quest
-    public Quest(string questLineName, string questName, string questDescription, string itemName, bool concurrent, bool needsToBeOrdered) {
-        QuestType = "item";
-        QuestName = questName;
-        QuestDescription = questDescription;
+    public Quest(int questNumber, string questName, string questDescription, string itemName, bool isMandatory = false, int[] questsToBeDoneBefore = null, int[] questsThatWillBeDone = null) {
+        applyBasicQuestComponents(questNumber, "item", questName, questDescription, isMandatory, questsToBeDoneBefore, questsThatWillBeDone);
         ItemName = itemName;
-        ConcurrentQuest = concurrent;
-        NeedsToBeOrdered = needsToBeOrdered;
     }
 
     // kill quest
-    public Quest(string questLineName, string questName, string questDescription, int enemyAmount, bool concurrent, bool needsToBeOrdered) {
-        QuestType = "kill";
-        QuestName = questName;
-        QuestDescription = questDescription;
+    public Quest(int questNumber, string questName, string questDescription, int enemyAmount, bool isMandatory = false, int[] questsToBeDoneBefore = null, int[] questsThatWillBeDone = null) {
+        applyBasicQuestComponents(questNumber, "kill", questName, questDescription, isMandatory, questsToBeDoneBefore, questsThatWillBeDone);
         EnemyAmount = enemyAmount;
-        ConcurrentQuest = concurrent;
-        NeedsToBeOrdered = needsToBeOrdered;
     }
 
     // location quest
-    public Quest(string questLineName, string questName, string questDescription, bool concurrent, bool needsToBeOrdered) {
-        QuestType = "location";
+    public Quest(int questNumber, string questName, string questDescription, bool isMandatory = false, int[] questsToBeDoneBefore = null, int[] questsThatWillBeDone = null) {
+        applyBasicQuestComponents(questNumber, "location", questName, questDescription, isMandatory, questsToBeDoneBefore, questsThatWillBeDone);
+    }
+
+    private void applyBasicQuestComponents(int questNumber, string questType, string questName, string questDescription, bool isMandatory, int[] questsToBeDoneBefore, int[] questsThatWillBeDone) {
+        QuestNumber = questNumber;
+        QuestType = questType;
         QuestName = questName;
         QuestDescription = questDescription;
-        ConcurrentQuest = concurrent;
-        NeedsToBeOrdered = needsToBeOrdered;
+        IsMandatory = isMandatory;
+        QuestsToBeDoneBefore = questsToBeDoneBefore;
+        QuestsThatWillBeDone = questsThatWillBeDone;
     }
 }

@@ -1,17 +1,17 @@
 To Do:		
 	Phase Two:		
 		Quest log
-			Check if quest is active before ticking off boxes (?)
+			Talk quest
+				When talking in dialogue, if certain dialogue has the quest trigger then start the quest
+				Quests need to become active if the dialogue is appropriate
+			Check if quest is active before ticking off boxes
 			Create it so it can be given items to complete
 				Track those items
 			Create UI to show the current Quest (Name, Description, icon for primary?, in progress?)
-			Kill Quests need to be able to spawn characters if enabled
+			Kill Quests need to be able to spawn characters if quest is active
 			Location Quests need to update when hit
 			Item quests need to know when the item is returned
-			Quests need to become active if the dialogue is appropriate
-			When talking in dialogue, if certain dialogue has the quest trigger then start the quest
-			Quests with multiple pieces should remain in order
-			Have a distinction between quests that can be run at the same time and those that cannot in a questline
+			
 		
 		UI
 			Growing as the player gains more health
@@ -33,7 +33,7 @@ To Do:
 	
 		Player	
 			Player Experience: Lead to more health and mana?
-			PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders are put inside the parent so this won't be needed
+			PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders a re put inside the parent so this won't be needed
 			PlayerMovement: separate sliding things into a new class			
 			Have character chat change upon karma levels
 				Change karma level for certain answers
@@ -94,6 +94,11 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/11
+		Quests with multiple pieces can only be completed in order
+		Quests can complete other quests if bypassed
+			Also makes sure that they haven't been completed before completing
+	
 	6/8
 		Finished base questline architecture (1 quest)
 			Quests that aren't startable until the player receives the quest works
