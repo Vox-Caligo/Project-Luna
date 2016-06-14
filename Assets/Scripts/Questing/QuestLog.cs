@@ -16,6 +16,7 @@ public class QuestLog : MonoBehaviour
     // adds a quest that has been started to the log
     public void addActiveQuestLine(string questName) {
         if(!activeQuestLines.ContainsKey(questName)) {
+            print("Added Quest Line: " + questName);
             activeQuestLines.Add(questName, false);
         }
     }
@@ -48,7 +49,6 @@ public class QuestLog : MonoBehaviour
 
         // adds a quest that was started if it should
         if (questLineWithQuest != "" && !activeQuestLines.ContainsKey(questLineWithQuest) && questDatabase.questLineCanBeStartedEarly(questLineWithQuest)) {
-            print("Added Quest Line: " + questLineWithQuest);
             addActiveQuestLine(questLineWithQuest);
         }
 
@@ -56,7 +56,6 @@ public class QuestLog : MonoBehaviour
             questDatabase.updateQuestLine(questLineWithQuest, questName);
         }
     }
-
 
     public void updateQuestLog() {
 		// foreach(string quest

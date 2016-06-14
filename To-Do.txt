@@ -1,9 +1,6 @@
 To Do:		
 	Phase Two:		
 		Quest log
-			Talk quest
-				When talking in dialogue, if certain dialogue has the quest trigger then start the quest
-				Quests need to become active if the dialogue is appropriate
 			Check if quest is active before ticking off boxes
 			Create it so it can be given items to complete
 				Track those items
@@ -12,7 +9,6 @@ To Do:
 			Location Quests need to update when hit
 			Item quests need to know when the item is returned
 			
-		
 		UI
 			Growing as the player gains more health
 			Clean it up and tighten
@@ -94,6 +90,11 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/13
+		Talk quest
+			When talking in dialogue, if certain dialogue has the quest trigger then start the quest
+			Quests need to become active if the dialogue is appropriate
+	
 	6/11
 		Quests with multiple pieces can only be completed in order
 		Quests can complete other quests if bypassed

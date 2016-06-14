@@ -32,9 +32,12 @@ public class TalkingNpc : InteractableItem
 	// variables for controlling the flow of dialogue
 	protected DialogueControllerInGame dialogueController;
 	protected Dictionary<int, TalkingCharacterInformation> conversationDialogue;
+    protected Dictionary<int, string> questsFromDialogue = new Dictionary<int, string>();
+    protected Dictionary<int, string> questsDialogueCompletes = new Dictionary<int, string>();
+    protected QuestLog questLog;
 
-	// variables for player choices in conversation
-	protected ArrayList playerOptions;
+    // variables for player choices in conversation
+    protected ArrayList playerOptions;
 	protected string playerChoice;
 
 	// variables for dialogue traversal
@@ -46,7 +49,9 @@ public class TalkingNpc : InteractableItem
 	public override void onInteraction () {	
 		if(dialogueController == null) {
 			dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueControllerInGame>();
-		}
+            questLog = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
+
+        }
 
 		if(!dialogueController.InConversation) {
 			setupConversation ();
@@ -100,5 +105,18 @@ public class TalkingNpc : InteractableItem
 
 		return null;
 	}
+
+    public void checkIfQuestActivated() {
+        if(questsFromDialogue.ContainsKey(currentDialogueSection)) {
+            questLog.addActiveQuestLine(questsFromDialogue[currentDialogueSection]);
+        }
+    }
+
+    public void checkIfQuestCompleted() {
+        print("Checking 1: " + currentDialogueSection);
+        if (questsDialogueCompletes.ContainsKey(currentDialogueSection)) {
+            questLog.updateQuestLine(questsDialogueCompletes[currentDialogueSection]);
+        }
+    }
 }
 

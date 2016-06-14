@@ -31,8 +31,10 @@ public class DialogueControllerInGame : DialogueController
 				}
 			} else {
 				if (keyChecker.useKey (KeyCode.E)) {
-					// goes through the dialogue
-					conversationNpc.CurrentDialogueSection = conversationNpc.CurrentDialogueSection + 1;
+                    // goes through the dialogue
+                    conversationNpc.checkIfQuestActivated();
+                    conversationNpc.checkIfQuestCompleted();
+                    conversationNpc.CurrentDialogueSection = conversationNpc.CurrentDialogueSection + 1;
 					newDialogueRunner = 0;
 					dialogueText.text = "";
 					completedTalkingPoint = false;
@@ -62,14 +64,12 @@ public class DialogueControllerInGame : DialogueController
 	private void haveConversation(bool skipDialogue) {
 		if (conversationDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
 			currentSpeaker.sprite = Resources.Load (speakerDatabase.getSpeaker (conversationNpc.getCurrentActor()), typeof(Sprite)) as Sprite;
-
-			if (conversationDialogue.ContainsKey (conversationNpc.CurrentDialogueSection)) {
-				if (conversationNpc.getCurrentOptions() == null) {
-					completedTalkingPoint = updateDialogue (conversationNpc.getCurrentDialogue(), skipDialogue);
-				} else {
-					multiplePlayerOptions (conversationNpc.getCurrentOptions());
-				}
-			} 
+            
+			if (conversationNpc.getCurrentOptions() == null) {
+				completedTalkingPoint = updateDialogue (conversationNpc.getCurrentDialogue(), skipDialogue);
+			} else {
+				multiplePlayerOptions (conversationNpc.getCurrentOptions());
+			}
 		} else {
 			endConversation ();
 		}
