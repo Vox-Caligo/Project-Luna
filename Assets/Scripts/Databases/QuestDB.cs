@@ -19,8 +19,10 @@ public class QuestDB : MonoBehaviour {
             new Quest(2, "Kill the Master Minion", "Exactly that!", 1, true, new int[] {0, 1 })
         }, true));
 
-        allQuestlines.Add("Go to the Mana Block", new QuestLine("Go to the Mana Block", new ArrayList {
-            new Quest(0, "Get to the Mana Block", "Go there now")
+        allQuestlines.Add("Go to Locations", new QuestLine("Go to Locations", new ArrayList {
+            new Quest(0, "Go to the Mana Spot", "Go to the Mana Spot"),
+            new Quest(1, "Go to the Blood Pool", "Go to the Blood Pool", true, new int[] {0}),
+            new Quest(2, "Go to the Health Generator", "Go to the Health Generator", true, null, new int[] {0})
         }, true));
 	}
 

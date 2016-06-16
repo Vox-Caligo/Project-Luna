@@ -41,8 +41,6 @@ public class QuestLine : MonoBehaviour {
     }
 
     public void updateQuest(string questName) {
-        print("Update quest line");
-
         if(questDatabase == null || questLog == null) {
             questDatabase = GameObject.Find("Databases").GetComponent<QuestDB>();
             questLog = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
@@ -52,15 +50,19 @@ public class QuestLine : MonoBehaviour {
         // switch this to a while loop
         foreach (Quest quest in quests) {
             if (quest.QuestName == questName && checkQuestsDoneBefore(quest)) {
+                print("Update quest line");
+
                 // if quest is startable early
-                if(quest.QuestType == "kill") {
+                if (quest.QuestType == "kill") {
                     updateKillQuest(quest);
-                } else if (quest.QuestType == "location") {
-
+                } else {
+                    completedQuest(quest);
                 }
-                else if (quest.QuestType == "item") {
+                /*if (quest.QuestType == "location") {
+                    completedQuest(quest);
+                } else if (quest.QuestType == "item") {
 
-                }
+                }*/
             }
         }
     }
@@ -88,18 +90,9 @@ public class QuestLine : MonoBehaviour {
         if (questDatabase.getKillAmount(questLineName, quest.QuestNumber) == 0) {
             completedQuest(quest);
         }
-
-        // if it meets the criteria then end the quest
-        // activeQuests[questName] = true;
     }
 
-    /* completes a location quest that has been inside the log
-    private void updateLocationQuest(string questName, int locationNumber) {
-        print("Updated the Location Quest: " + questName);
-        questLog.verifyActiveQuest(questName);
-
-    }
-
+    /*
     // completes an item quest that has been inside the log
     private void updateItemQuest(string questName) {
         print("Updated the Item Quest: " + questName);

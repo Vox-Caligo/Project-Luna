@@ -58,6 +58,11 @@ To Do:
 				
 		Refactor code
 		
+		Bugs?
+			Talking not working on first key press
+			Quest updating after completion
+			Health isnt showing above enemies
+		
 	Phase Three:
 		Start piecing things together
 			Create levels

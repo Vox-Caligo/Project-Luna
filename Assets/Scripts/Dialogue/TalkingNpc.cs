@@ -113,7 +113,6 @@ public class TalkingNpc : InteractableItem
     }
 
     public void checkIfQuestCompleted() {
-        print("Checking 1: " + currentDialogueSection);
         if (questsDialogueCompletes.ContainsKey(currentDialogueSection)) {
             questLog.updateQuestLine(questsDialogueCompletes[currentDialogueSection]);
         }

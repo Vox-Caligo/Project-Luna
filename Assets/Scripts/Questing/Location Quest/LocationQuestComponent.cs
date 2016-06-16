@@ -3,17 +3,16 @@ using System.Collections;
 
 public class LocationQuestComponent : QuestComponentTemplate
 {
-    public int locationNumber;
-
     // Use this for initialization
     protected override void Start() {
         base.Start();
     }
 	
-	void Update () 
-	{
-		// if location is not discovered
-
-		// if location is discovered
-	}
+    // DETECT IF COLLISION OCCURS
+    private void OnTriggerEnter2D(Collider2D player) {
+        if(player.gameObject.GetComponent<PlayerMaster>()) {
+            this.updateQuest();
+            //Destroy(this);
+        }
+    }
 }
