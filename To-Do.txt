@@ -6,7 +6,7 @@ To Do:
 				Track those items
 			Create UI to show the current Quest (Name, Description, icon for primary?, in progress?)
 			Kill Quests need to be able to spawn characters if quest is active
-			Location Quests need to update when hit
+			
 			Item quests need to know when the item is returned
 			
 		UI
@@ -95,6 +95,12 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/15
+		Finished Location Quests
+	
+	6/14
+		Worked on Location Quests
+	
 	6/13
 		Talk quest
 			When talking in dialogue, if certain dialogue has the quest trigger then start the quest
