@@ -2,12 +2,8 @@ To Do:
 	Phase Two:		
 		Quest log
 			Check if quest is active before ticking off boxes
-			Create it so it can be given items to complete
-				Track those items
 			Create UI to show the current Quest (Name, Description, icon for primary?, in progress?)
 			Kill Quests need to be able to spawn characters if quest is active
-			
-			Item quests need to know when the item is returned
 			
 		UI
 			Growing as the player gains more health
@@ -95,6 +91,9 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/16
+		Items quests are complete (already mostly done because of forethought :) )
+	
 	6/15
 		Finished Location Quests
 	

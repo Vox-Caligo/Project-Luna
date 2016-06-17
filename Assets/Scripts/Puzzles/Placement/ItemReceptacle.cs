@@ -7,8 +7,11 @@ using System.Collections;
  */
 public class ItemReceptacle : InteractableItem
 {
-	// items that are being requested
-	public string[] soughtItems;
+    // quest name that is attached to this item receptacle
+    public string questName;
+
+    // items that are being requested
+    public string[] soughtItems;
 
 	// which item the player needs to currently add
 	private int soughtItemRunner = 0;
@@ -46,5 +49,7 @@ public class ItemReceptacle : InteractableItem
 	// when it has all needed items, something happens
 	private void placementFinished() {
 		print ("All items are put in");
-	}
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests.updateQuestLine(questName);
+    }
 }
