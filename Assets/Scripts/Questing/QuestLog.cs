@@ -6,10 +6,13 @@ public class QuestLog : MonoBehaviour
 {
     private QuestDB questDatabase;
     private QuestLogUI questLogUI;
+    private CanvasGroup questLogUIGroup;
     private Dictionary<string, bool> activeQuestLines = new Dictionary<string, bool>();
 
     public QuestLog() {
-        questLogUI = new QuestLogUI();
+        GameObject questUI = Instantiate(Resources.Load("UI/Quest Log")) as GameObject;
+        questLogUI = questUI.GetComponent<QuestLogUI>();
+        questLogUIGroup = questUI.GetComponent<CanvasGroup>();
         questDatabase = GameObject.Find("Databases").GetComponent<QuestDB>();
     }
 
@@ -62,5 +65,17 @@ public class QuestLog : MonoBehaviour
 		// find components
 		// update them
 	}
+
+    // turns the visibility of the UI on/off
+    public void changeQuestLogVisibility() {
+        questLogUI.Invisible = !questLogUI.Invisible;
+
+        if (questLogUI.Invisible) {
+            questLogUIGroup.alpha = 0;
+        }
+        else {
+            questLogUIGroup.alpha = 1;
+        }
+    }
 }
 

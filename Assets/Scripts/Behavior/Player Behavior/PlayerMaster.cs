@@ -65,7 +65,12 @@ public class PlayerMaster : MasterBehavior {
 				playerInventory.visibility();
 			}
 
-		} else {
+            // shows the player quest log
+            if (keyChecker.useKey(KeyCode.R)) {
+                playerQuests.changeQuestLogVisibility();
+            }
+
+        } else {
 			// hides inventory during cutscenes
 			if(!playerInventory.inventoryIsInvisible()) {
 				playerInventory.visibility();
