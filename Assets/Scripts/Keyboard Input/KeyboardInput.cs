@@ -32,6 +32,7 @@ public class KeyboardInput : MonoBehaviour
 		{KeyCode.D, new PlayerKeys(false, false)},
 		{KeyCode.Q, new PlayerKeys(false, false)},
         {KeyCode.R, new PlayerKeys(false, false)},
+        {KeyCode.T, new PlayerKeys(false, false)},
         {KeyCode.O, new PlayerKeys(false, false)}, // for testing
 		{KeyCode.P, new PlayerKeys(false, false)}, // for testing
 		{KeyCode.UpArrow, new PlayerKeys(false, false)},

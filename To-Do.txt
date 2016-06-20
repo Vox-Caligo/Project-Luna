@@ -3,6 +3,10 @@ To Do:
 		Quest log
 			Check if quest is active before ticking off boxes
 			Create UI to show the current Quest (Name, Description, icon for primary?, in progress?)
+				Titles need to be aligned properly
+				Description needs to be able to change when clicked
+				Scrolling the quest lines needs to occur (unless I have so few it doesnt matter)
+					Will quest lines have sub quest descriptions or, when completed, be replaced with the new quest? (Leaning towards the latter)
 			Kill Quests need to be able to spawn characters if quest is active
 			
 		UI
@@ -91,6 +95,10 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/19
+		More UI
+			Got QuestTitle working better
+	
 	6/18
 		Did more UI
 	

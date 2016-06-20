@@ -27,6 +27,9 @@ public class PlayerMaster : MasterBehavior {
 	// a block to pick up
 	private PickupableBlock carryingMovableObject;
 
+    // test for quest log adding
+    private int nextQuestLogAdd = 0;
+
 	// Use this for initialization
 	protected override void Start() {
 		base.Start ();
@@ -68,6 +71,23 @@ public class PlayerMaster : MasterBehavior {
             // shows the player quest log
             if (keyChecker.useKey(KeyCode.R)) {
                 playerQuests.changeQuestLogVisibility();
+            }
+
+            // shows the player quest log
+            if (keyChecker.useKey(KeyCode.T)) {
+                if(nextQuestLogAdd == 0) {
+                    playerQuests.addActiveQuestLine("Testing Test 0");
+                } else if (nextQuestLogAdd == 1) {
+                    playerQuests.addActiveQuestLine("Testing Test 1");
+                } else if (nextQuestLogAdd == 2) {
+                    playerQuests.addActiveQuestLine("Testing Test 2");
+                } else if (nextQuestLogAdd == 3) {
+                    playerQuests.addActiveQuestLine("Testing Test 3");
+                } else {
+                    playerQuests.addActiveQuestLine("Testing Test 4");
+                }
+
+                nextQuestLogAdd++;
             }
 
         } else {

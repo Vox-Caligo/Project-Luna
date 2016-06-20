@@ -43,9 +43,9 @@ public class QuestDB : MonoBehaviour {
     }
 
     // returns a value for the given item
-    public string getValue(string currentQuest, int currentSection, string soughtValue) {
-		if(allQuestlines.ContainsKey(currentQuest)) {
-            Quest questToCheck = allQuestlines[currentQuest].getQuestWithIndex(currentSection);
+    public string getValue(string currentQuestLine, int currentSection, string soughtValue) {
+		if(allQuestlines.ContainsKey(currentQuestLine)) {
+            Quest questToCheck = allQuestlines[currentQuestLine].getQuestWithIndex(currentSection);
 
             switch (soughtValue) {
 			case "Name":
@@ -94,6 +94,21 @@ public class QuestDB : MonoBehaviour {
 
         return "";
     }
+
+    // get location of quest index from the quest line
+    /*
+    public string questIndexInQuestLine(string questName, string questLineWithQuest) {
+        allQuestlines[questLine]
+
+        foreach (QuestLine questLine in allQuestlines.Values) {
+            if (questLine.containsQuest(questName)) {
+                return questLine.QuestLineName;
+            }
+        }
+
+        return "";
+    }
+    */
 
     public void updateQuestLine(string questLine, string questName) {
         allQuestlines[questLine].updateQuest(questName);

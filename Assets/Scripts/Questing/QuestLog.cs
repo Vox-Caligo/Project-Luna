@@ -21,6 +21,8 @@ public class QuestLog : MonoBehaviour
         if(!activeQuestLines.ContainsKey(questName)) {
             print("Added Quest Line: " + questName);
             activeQuestLines.Add(questName, false);
+            questLogUI.addQuest(questName, "testing");
+            // for this, find which questline it is and the quest name
         }
     }
 

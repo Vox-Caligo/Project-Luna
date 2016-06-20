@@ -6,31 +6,11 @@ public class QuestLogUI : MonoBehaviour {
     public ArrayList activeQuestNames = new ArrayList();
     public bool invisible = true;
 
-    // Use this for initialization
-    void Start() {
-        activeQuestNames.Add("Test Quest 1");
-        activeQuestNames.Add("Test Quest 2");
-        activeQuestNames.Add("Test Quest 3");
-        activeQuestNames.Add("Test Quest 4");
-        activeQuestNames.Add("Test Quest 5");
-        addQuest("Moo", "Cow");
-    }
-
     public void addQuest(string questName, string questDescription) {
-        //GameObject newQuestTitle = Instantiate(Resources.Load("UI/Quest Title", typeof(GameObject))) as GameObject;
-        GameObject newQuestTitle = GameObject.Find("Quest Title");
-
-        if (newQuestTitle != null) {
-            print("Made it");
-        }
-        else {
-            print("Not made it");
-        }
-
-        print("This is here: " + newQuestTitle.name);
-        newQuestTitle.GetComponent<Text>().text = "Moo Cow Goes Moo!";
-        //newQuestTitle.transform.parent = GameObject.Find("Quest Log").transform;
-        print("HERE");
+        GameObject newQuestTitle = Instantiate(Resources.Load("UI/Quest Title", typeof(GameObject))) as GameObject;
+        newQuestTitle.GetComponent<Text>().text = questName;
+        newQuestTitle.transform.parent = this.gameObject.transform;
+        newQuestTitle.GetComponent<QuestTitle>().setupQuestTitleProperties(questDescription, transform.Find("Quest Description").gameObject.GetComponent<Text>());
     }
 
     // checks if the display is visible
