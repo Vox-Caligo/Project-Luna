@@ -10,6 +10,9 @@ public class QuestLogUI : MonoBehaviour {
         GameObject newQuestTitle = Instantiate(Resources.Load("UI/Quest Title", typeof(GameObject))) as GameObject;
         newQuestTitle.GetComponent<Text>().text = questName;
         newQuestTitle.transform.parent = this.gameObject.transform;
+
+        // set quest description
+        // attach to onclick event
         newQuestTitle.GetComponent<QuestTitle>().setupQuestTitleProperties(questDescription, transform.Find("Quest Description").gameObject.GetComponent<Text>());
     }
 

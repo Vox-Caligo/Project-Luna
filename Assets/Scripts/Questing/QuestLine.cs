@@ -27,6 +27,16 @@ public class QuestLine : MonoBehaviour {
         return (Quest)quests[questIndex];
     }
 
+    public int getQuestIndex(string questName) {
+        foreach (Quest quest in quests) {
+            if (quest.QuestName == questName) {
+                return quests.IndexOf(quest);
+            }
+        }
+
+        return -1;
+    }
+
     public int getQuestLineLength() {
         return quests.Count - 1;
     }

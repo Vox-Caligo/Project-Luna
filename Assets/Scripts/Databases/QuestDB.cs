@@ -13,7 +13,6 @@ public class QuestDB : MonoBehaviour {
 
     // sets the dictionary
     public QuestDB() {
-        /*
         // test for kill quests
 		allQuestlines.Add ("Kill the Minions", new QuestLine("Kill the Minions", new ArrayList {
             new Quest(0, "Kill the Minions", "Exactly that!", 2, false, null, new int[] {1}),
@@ -32,14 +31,15 @@ public class QuestDB : MonoBehaviour {
         allQuestlines.Add("Deposit the Items", new QuestLine("Deposit the Items", new ArrayList {
             new Quest(0, "Deposit the Sword and Axe", "I need the sword please!")
         }, true));
-        */
 
+        /*
         // test the entire questline
         allQuestlines.Add("Do all the Quests", new QuestLine("Do all the Quests", new ArrayList {
             new Quest(0, "Deposit the Sword and Axe", "I need the sword please!"),
             new Quest(1, "Kill the Minions", "Exactly that!", 2, false, null, new int[] {0}),
             new Quest(2, "Go to the Mana Spot", "Go to the Mana Spot", false, new int[] {1})
         }, true));
+        */
     }
 
     // returns a value for the given item
@@ -64,9 +64,9 @@ public class QuestDB : MonoBehaviour {
 	}
 
     // returns a value for the amount of kills needed
-    public int getKillAmount(string currentQuest, int questNumber) {
-        if (allQuestlines.ContainsKey(currentQuest)) {
-            Quest questToCheck = allQuestlines[currentQuest].getQuestWithIndex(questNumber);
+    public int getKillAmount(string currentQuestLine, int questNumber) {
+        if (allQuestlines.ContainsKey(currentQuestLine)) {
+            Quest questToCheck = allQuestlines[currentQuestLine].getQuestWithIndex(questNumber);
             return questToCheck.EnemyAmount;
         }
 
@@ -96,19 +96,15 @@ public class QuestDB : MonoBehaviour {
     }
 
     // get location of quest index from the quest line
-    /*
-    public string questIndexInQuestLine(string questName, string questLineWithQuest) {
-        allQuestlines[questLine]
-
+    public int questIndexInQuestLine(string questName, string questLineWithQuest) {
         foreach (QuestLine questLine in allQuestlines.Values) {
             if (questLine.containsQuest(questName)) {
-                return questLine.QuestLineName;
+                // gets here but the quest index is not the right value
+                return questLine.getQuestIndex(questName);
             }
         }
-
-        return "";
+        return -1;
     }
-    */
 
     public void updateQuestLine(string questLine, string questName) {
         allQuestlines[questLine].updateQuest(questName);

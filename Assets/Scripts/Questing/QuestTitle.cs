@@ -14,9 +14,12 @@ public class QuestTitle : MonoBehaviour {
         // add a click event that changes the quest description to the new one
     }
 
+    // displays the text description in the quest log menu
+    public void displayDescription() {
+        descriptionArea.text = questDescription;
+    }
+
     public string QuestDescription {
         get { return questDescription; }
     }
-
-
 }
