@@ -16,6 +16,7 @@ public class QuestLine : MonoBehaviour {
     private ArrayList quests;
     private int completedQuests = 0;
     private ArrayList completedQuestNumbers = new ArrayList();
+    private string[] currentQuests;
 
     public QuestLine(string questLineName, ArrayList quests, bool startableEarly) {
         this.questLineName = questLineName;
@@ -113,8 +114,11 @@ public class QuestLine : MonoBehaviour {
     // finish a section of the overall questline
     private void completedQuest(Quest quest) {
         print("Completed the Quest: " + quest.QuestName);
+
+        questLog.expireActiveQuest(quest.QuestName);
         completedQuestNumbers.Add(quest.QuestNumber);
         completedQuests++;
+        // add new quest to questlog (questLog.add(quest.QuestName, quest.QuestDescription);
 
         // finishes any quests that may be obsolete by the current being completed
         if (quest.QuestsThatWillBeDone != null) {
@@ -124,6 +128,11 @@ public class QuestLine : MonoBehaviour {
                 if (!completedQuestNumbers.Contains(optionalQuestNumber)) {
                     completedQuestNumbers.Add(optionalQuestNumber);
                     completedQuests++;
+
+                    Quest finishedQuest = (Quest)quests[i];
+                    questLog.addActiveQuest(finishedQuest.QuestName, finishedQuest.QuestDescription);
+                    questLog.expireActiveQuest(finishedQuest.QuestName);
+                    // finish quests that are now to be completed (questLog.expireActiveQuest(quest.QuestName);)
                 }
             }
         }

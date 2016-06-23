@@ -21,6 +21,8 @@ public class QuestLog : MonoBehaviour
         if(!activeQuestLines.ContainsKey(questName)) {
             print("Added Quest Line: " + questName);
             activeQuestLines.Add(questName, false);
+
+            // add current quest of the questline to the ui (questLog.addQuest(quest.QuestName);)
         }
     }
 
@@ -50,6 +52,10 @@ public class QuestLog : MonoBehaviour
         questLogUI.addQuest(questName, questDatabase.getValue(questLine, questDatabase.questIndexInQuestLine(questName, questLine), "Description"));
     }
 
+    public void expireActiveQuest(string questName) {
+        questLogUI.expireQuest(questName);
+    }
+
     public void updateQuestLine(string questName) {
         // gets the quest line with the active quest
         string questLineWithQuest = questDatabase.questLineWithQuest(questName);
@@ -65,12 +71,6 @@ public class QuestLog : MonoBehaviour
             questDatabase.updateQuestLine(questLineWithQuest, questName);
         }
     }
-
-    public void updateQuestLog() {
-		// foreach(string quest
-		// find components
-		// update them
-	}
 
     // turns the visibility of the UI on/off
     public void changeQuestLogVisibility() {
