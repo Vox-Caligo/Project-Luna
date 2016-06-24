@@ -23,7 +23,7 @@ public class QuestDB : MonoBehaviour {
         // test for location quests
         allQuestlines.Add("Go to Locations", new QuestLine("Go to Locations", new ArrayList {
             new Quest(0, "Go to the Mana Spot", "Go to the Mana Spot"),
-            new Quest(1, "Go to the Blood Pool", "Go to the Blood Pool", true, new int[] {0}),
+            new Quest(1, "Go to the Blood Pool", "Go to the Blood Pool", true, null, new int[] {0}),
             new Quest(2, "Go to the Health Generator", "Go to the Health Generator", true, null, new int[] {0})
         }, true));
 
@@ -42,71 +42,14 @@ public class QuestDB : MonoBehaviour {
         */
     }
 
-    // returns a value for the given item
-    public string getValue(string currentQuestLine, int currentSection, string soughtValue) {
-		if(allQuestlines.ContainsKey(currentQuestLine)) {
-            Quest questToCheck = allQuestlines[currentQuestLine].getQuestWithIndex(currentSection);
-
-            switch (soughtValue) {
-			case "Name":
-				return questToCheck.QuestName;
-			case "Type":
-				return questToCheck.QuestType;
-			case "Description":
-				return questToCheck.QuestDescription;
-			case "Item":
-				return questToCheck.ItemName;
-			}
-		} 
-
-		print("Quest item does not exist");
-		return null;
-	}
-
-    // returns a value for the amount of kills needed
-    public int getKillAmount(string currentQuestLine, int questNumber) {
-        if (allQuestlines.ContainsKey(currentQuestLine)) {
-            Quest questToCheck = allQuestlines[currentQuestLine].getQuestWithIndex(questNumber);
-            return questToCheck.EnemyAmount;
-        }
-
-        return -1;
-    }
-
-    // decrements a kill from a quest line if needed
-    public void decrementKillAmount(string currentQuestLine, int questNumber) {
-        if (allQuestlines.ContainsKey(currentQuestLine)) {
-            Quest questToDecrement = allQuestlines[currentQuestLine].getQuestWithIndex(questNumber);
-            questToDecrement.EnemyAmount -= 1;
-        }
-    }
-
-    public bool questLineCanBeStartedEarly(string questLine) {
-        return allQuestlines[questLine].StartableEarly;
-    }
-
-    public string questLineWithQuest(string questName) {
-        foreach (QuestLine questLine in allQuestlines.Values) {
-            if(questLine.containsQuest(questName)) {
-                return questLine.QuestLineName;
+    // returns a quest line that contains a given quest
+    public QuestLine getQuestline(string questName) {
+        foreach(QuestLine questline in allQuestlines.Values) {
+            if(questline.containsQuest(questName)) {
+                return questline;
             }
         }
 
-        return "";
-    }
-
-    // get location of quest index from the quest line
-    public int questIndexInQuestLine(string questName, string questLineWithQuest) {
-        foreach (QuestLine questLine in allQuestlines.Values) {
-            if (questLine.containsQuest(questName)) {
-                // gets here but the quest index is not the right value
-                return questLine.getQuestIndex(questName);
-            }
-        }
-        return -1;
-    }
-
-    public void updateQuestLine(string questLine, string questName) {
-        allQuestlines[questLine].updateQuest(questName);
+        return null;
     }
 }

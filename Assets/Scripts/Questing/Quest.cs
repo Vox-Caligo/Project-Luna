@@ -10,7 +10,8 @@ public class Quest {
     public string QuestType { get; set; }
     public string QuestName { get; set; }
     public string QuestDescription { get; set; }
-    
+    public bool QuestCompleted { get; set; }
+
     public bool IsMandatory { get; set; }
     public int[] QuestsToBeDoneBefore { get; set; }
     public int[] QuestsThatWillBeDone { get; set; }
@@ -38,6 +39,7 @@ public class Quest {
         applyBasicQuestComponents(questNumber, "location", questName, questDescription, isMandatory, questsToBeDoneBefore, questsThatWillBeDone);
     }
 
+    // sets base values
     private void applyBasicQuestComponents(int questNumber, string questType, string questName, string questDescription, bool isMandatory, int[] questsToBeDoneBefore, int[] questsThatWillBeDone) {
         QuestNumber = questNumber;
         QuestType = questType;
@@ -46,5 +48,34 @@ public class Quest {
         IsMandatory = isMandatory;
         QuestsToBeDoneBefore = questsToBeDoneBefore;
         QuestsThatWillBeDone = questsThatWillBeDone;
+        QuestCompleted = false;
+    }
+
+    // updates a quest and determines if it has been completed or not
+    public void updateQuest(ArrayList previouslyCompletedQuests) {
+        bool reqQuestsComplete = true;
+        int reqIdx = 0;
+
+        // checks that all prerequisite quests are done beforehand
+        while (reqQuestsComplete && reqIdx < QuestsToBeDoneBefore.Length) {
+            if(previouslyCompletedQuests.IndexOf(QuestsToBeDoneBefore[reqIdx]) >= 0) {
+                reqIdx++;
+            } else {
+                reqQuestsComplete = false;
+            }
+        }
+
+        if (reqQuestsComplete) {
+            if (QuestType == "kill") {
+                UnityEngine.Debug.Log("Updated the Kill Quest: " + QuestName);
+                EnemyAmount--;
+
+                if (EnemyAmount == 0) {
+                    QuestCompleted = true;
+                }
+            } else {
+                QuestCompleted = true;
+            }
+        }
     }
 }

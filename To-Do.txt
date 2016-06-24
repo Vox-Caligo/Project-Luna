@@ -95,6 +95,10 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/23
+		Went through and cleaned stuff up a lot more on the Quest section (still in progress)
+			Easier to read code
+	
 	6/22
 		Can add multiple quests and they show up
 		Quests can expire

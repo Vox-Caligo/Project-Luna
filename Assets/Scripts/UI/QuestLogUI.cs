@@ -28,10 +28,12 @@ public class QuestLogUI : MonoBehaviour {
     }
 
     public void expireQuest(string questName) {
-        Text newTitleTextStyle = questTitles[questName].GetComponent<Text>();
-        newTitleTextStyle.text = questName;
-        newTitleTextStyle.color = Color.white;
-        newTitleTextStyle.fontStyle = FontStyle.Italic;
+        if (questTitles.ContainsKey(questName)) {
+            Text newTitleTextStyle = questTitles[questName].GetComponent<Text>();
+            newTitleTextStyle.text = questName;
+            newTitleTextStyle.color = Color.white;
+            newTitleTextStyle.fontStyle = FontStyle.Italic;
+        }
     }
 
     // checks if the display is visible

@@ -9,15 +9,15 @@ using System.Collections.Generic;
 
 // Used to have multiple quests in one larger quest line
 public class QuestLine : MonoBehaviour {
-    private QuestDB questDatabase;
-    private QuestLog questLog;
-    private bool startableEarly { get; set; }
-    private string questLineName;
-    private ArrayList quests;
-    private int completedQuests = 0;
     private ArrayList completedQuestNumbers = new ArrayList();
-    private string[] currentQuests;
+    private ArrayList activeQuests = new ArrayList();
+    private ArrayList quests;
 
+    private bool startableEarly;
+    private string questLineName;
+    
+    private string[] currentQuests;
+    
     public QuestLine(string questLineName, ArrayList quests, bool startableEarly) {
         this.questLineName = questLineName;
         this.quests = quests;
@@ -28,6 +28,7 @@ public class QuestLine : MonoBehaviour {
         return (Quest)quests[questIndex];
     }
 
+    // get location of quest index from the quest line
     public int getQuestIndex(string questName) {
         foreach (Quest quest in quests) {
             if (quest.QuestName == questName) {
@@ -51,97 +52,41 @@ public class QuestLine : MonoBehaviour {
         return false;
     }
 
+    // updates a quest in the quest line
     public void updateQuest(string questName) {
-        if(questDatabase == null || questLog == null) {
-            questDatabase = GameObject.Find("Databases").GetComponent<QuestDB>();
-            questLog = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
-        }
+        bool foundQuest = false;
+        int questIdx = 0;
 
+        while(!foundQuest && questIdx < quests.Count - 1) {
+            Quest checkQuest = (Quest)quests[questIdx];
 
-        // switch this to a while loop
-        foreach (Quest quest in quests) {
-            if (quest.QuestName == questName && checkQuestsDoneBefore(quest)) {
-                print("Update quest line");
-
-                // if quest is startable early
-                if (quest.QuestType == "kill") {
-                    updateKillQuest(quest);
-                } else {
-                    completedQuest(quest);
+            if (checkQuest.QuestName == questName) {
+                foundQuest = true;
+                checkQuest.updateQuest(completedQuestNumbers);
+                
+                if (checkQuest.QuestCompleted) {
+                    print("Completed the Quest: " + questName);
+                    activatedQuests(checkQuest.QuestNumber);
                 }
-                /*if (quest.QuestType == "location") {
-                    completedQuest(quest);
-                } else if (quest.QuestType == "item") {
-
-                }*/
+            } else {
+                questIdx++;
             }
         }
     }
 
-    // checks that all prerequisite quests are done beforehand
-    private bool checkQuestsDoneBefore(Quest quest) {
-        if(quest.QuestsToBeDoneBefore == null) {
-            return true;
-        } else {
-            for(int i = 0; i < quest.QuestsToBeDoneBefore.Length; i++) {
-                if(!completedQuestNumbers.Contains(quest.QuestsToBeDoneBefore[i])) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
+    // activates quests that can be started after a quest has completed
+    private void activatedQuests(int completedQuest) {
+        foreach (Quest possiblyActiveQuest in quests) {
+            if (completedQuest != possiblyActiveQuest.QuestNumber) {
+                int[] questReqs = possiblyActiveQuest.QuestsToBeDoneBefore;
 
-
-    // completes a kill quest that has been inside the log
-    private void updateKillQuest(Quest quest) {
-        print("Updated the Kill Quest: " + quest.QuestName);
-        questDatabase.decrementKillAmount(questLineName, quest.QuestNumber);
-
-        if (questDatabase.getKillAmount(questLineName, quest.QuestNumber) == 0) {
-            completedQuest(quest);
-        }
-    }
-
-    /*
-    // completes an item quest that has been inside the log
-    private void updateItemQuest(string questName) {
-        print("Updated the Item Quest: " + questName);
-        questLog.verifyActiveQuest(questName);
-    }
-    */
-
-    // finish a section of the overall questline
-    private void completedQuest(Quest quest) {
-        print("Completed the Quest: " + quest.QuestName);
-
-        questLog.expireActiveQuest(quest.QuestName);
-        completedQuestNumbers.Add(quest.QuestNumber);
-        completedQuests++;
-        // add new quest to questlog (questLog.add(quest.QuestName, quest.QuestDescription);
-
-        // finishes any quests that may be obsolete by the current being completed
-        if (quest.QuestsThatWillBeDone != null) {
-            for (int i = 0; i < quest.QuestsThatWillBeDone.Length; i++) {
-                int optionalQuestNumber = quest.QuestsThatWillBeDone[i];
-
-                if (!completedQuestNumbers.Contains(optionalQuestNumber)) {
-                    completedQuestNumbers.Add(optionalQuestNumber);
-                    completedQuests++;
-
-                    Quest finishedQuest = (Quest)quests[i];
-                    questLog.addActiveQuest(finishedQuest.QuestName, finishedQuest.QuestDescription);
-                    questLog.expireActiveQuest(finishedQuest.QuestName);
-                    // finish quests that are now to be completed (questLog.expireActiveQuest(quest.QuestName);)
+                if (System.Array.IndexOf(possiblyActiveQuest.QuestsToBeDoneBefore, completedQuest) > 0) {
+                    activeQuests.Add(possiblyActiveQuest);
                 }
             }
         }
-
-        if (completedQuests >= quests.Count) {
-            questLog.completeQuestLine(questLineName);
-        }
     }
-
+    
     public string QuestLineName {
         get { return questLineName; }
     }

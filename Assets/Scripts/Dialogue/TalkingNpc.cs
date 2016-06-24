@@ -108,13 +108,13 @@ public class TalkingNpc : InteractableItem
 
     public void checkIfQuestActivated() {
         if(questsFromDialogue.ContainsKey(currentDialogueSection)) {
-            questLog.addActiveQuestLine(questsFromDialogue[currentDialogueSection]);
+            questLog.addActiveQuest(questsFromDialogue[currentDialogueSection]);
         }
     }
 
     public void checkIfQuestCompleted() {
         if (questsDialogueCompletes.ContainsKey(currentDialogueSection)) {
-            questLog.updateQuestLine(questsDialogueCompletes[currentDialogueSection]);
+            questLog.updateQuest(questsDialogueCompletes[currentDialogueSection]);
         }
     }
 }

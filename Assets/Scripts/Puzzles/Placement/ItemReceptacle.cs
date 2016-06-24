@@ -50,6 +50,6 @@ public class ItemReceptacle : InteractableItem
 	private void placementFinished() {
 		print ("All items are put in");
         //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests.updateQuestLine(questName);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests.updateQuest(questName);
     }
 }
