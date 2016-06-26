@@ -16,19 +16,30 @@ public class QuestLog : MonoBehaviour
     }
 
     // updates a quest and adds the quest line to be active if it is not already
-    public void updateQuest(string questName) {
+    public void updateQuest(string questName, bool activation = false) {
         // gets the quest line with the active quest
         QuestLine activeQuestLine = questDatabase.getQuestline(questName);
-        activeQuestLine.updateQuest(questName);
-        checkQuestStatuses(activeQuestLine);
+
+        if (!activeQuestLine.questHasBeenCompleted(questName) && activeQuestLine.questPrereqsComplete(questName)) {
+            print("Updating " + questName);
+
+            if (!activation) {
+                activeQuestLine.updateQuest(questName);
+            }
+
+            questLogUI.updateUI(activeQuestLine.getQuest(questName));
+
+            if (activeQuestLine.getQuest(questName).QuestCompleted) {
+                foreach (Quest activeQuest in activeQuestLine.ActiveQuests) {
+                    questLogUI.updateUI(activeQuest);
+                }
+            }
+        }
     }
 
-    private void checkQuestStatuses(QuestLine updatedQuestLine) {
-        // check if certain quests should be added
-        questLogUI.addQuest(questName, questDatabase.getValue(questLine, questDatabase.questIndexInQuestLine(questName, questLine), "Description"));
-
-        // check if certain quests should be removed
-        questLogUI.expireQuest(questName);
+    // removes an enemy amount from kill quest
+    public void decrementFromKillQuest(string questName) {
+        questDatabase.getQuestline(questName).decrementFromKillQuest(questName);
     }
 
     // turns the visibility of the UI on/off

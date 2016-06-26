@@ -19,6 +19,9 @@ public class ItemReceptacle : InteractableItem
 	// the player's inventory
 	private Inventory playerInventory;
 
+    // the player's quest log
+    QuestLog playerLog;
+
 	// if the receptacle has all items needed
 	private bool receptacleIsFull = false;
 
@@ -27,7 +30,8 @@ public class ItemReceptacle : InteractableItem
 	public override void onInteraction() {
 		if (playerInventory == null) {
 			playerInventory = GameObject.FindWithTag ("Player").GetComponent<PlayerMaster> ().PlayerInventory;
-		}
+            playerLog = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
+        }
 
 		if (!receptacleIsFull) {
 			if (soughtItemRunner < soughtItems.Length) {
@@ -36,20 +40,15 @@ public class ItemReceptacle : InteractableItem
 					soughtItemRunner++;
 
 					if (soughtItemRunner == soughtItems.Length) {
-						receptacleIsFull = true;
-						placementFinished ();
-					}
-				} else {
+                        print("All items are put in");
+                        receptacleIsFull = true;
+                    }
+
+                    playerLog.updateQuest(questName);
+                } else {
 					print ("The item isn't in the inventory");
 				}
 			}
 		}
 	}
-
-	// when it has all needed items, something happens
-	private void placementFinished() {
-		print ("All items are put in");
-        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests.updateQuest(questName);
-    }
 }

@@ -57,19 +57,19 @@ public class Quest {
         int reqIdx = 0;
 
         // checks that all prerequisite quests are done beforehand
-        while (reqQuestsComplete && reqIdx < QuestsToBeDoneBefore.Length) {
-            if(previouslyCompletedQuests.IndexOf(QuestsToBeDoneBefore[reqIdx]) >= 0) {
-                reqIdx++;
-            } else {
-                reqQuestsComplete = false;
+        if (QuestsToBeDoneBefore != null) {
+            while (reqQuestsComplete && reqIdx < QuestsToBeDoneBefore.Length) {
+                if (previouslyCompletedQuests.IndexOf(QuestsToBeDoneBefore[reqIdx]) >= 0) {
+                    reqIdx++;
+                } else {
+                    reqQuestsComplete = false;
+                }
             }
         }
-
+        
         if (reqQuestsComplete) {
             if (QuestType == "kill") {
                 UnityEngine.Debug.Log("Updated the Kill Quest: " + QuestName);
-                EnemyAmount--;
-
                 if (EnemyAmount == 0) {
                     QuestCompleted = true;
                 }

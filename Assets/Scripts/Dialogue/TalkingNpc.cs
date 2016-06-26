@@ -107,13 +107,16 @@ public class TalkingNpc : InteractableItem
 	}
 
     public void checkIfQuestActivated() {
-        if(questsFromDialogue.ContainsKey(currentDialogueSection)) {
-            questLog.addActiveQuest(questsFromDialogue[currentDialogueSection]);
+        if (questsFromDialogue.ContainsKey(currentDialogueSection)) {
+            print("Kopo");
+            questLog.updateQuest(questsFromDialogue[currentDialogueSection], true);
         }
     }
 
     public void checkIfQuestCompleted() {
         if (questsDialogueCompletes.ContainsKey(currentDialogueSection)) {
+            print("Mopo");
+            questLog.decrementFromKillQuest(questsDialogueCompletes[currentDialogueSection]);
             questLog.updateQuest(questsDialogueCompletes[currentDialogueSection]);
         }
     }

@@ -10,88 +10,96 @@ using System.Collections.Generic;
 // Used to have multiple quests in one larger quest line
 public class QuestLine : MonoBehaviour {
     private ArrayList completedQuestNumbers = new ArrayList();
-    private ArrayList activeQuests = new ArrayList();
+    private ArrayList activeQuests;
     private ArrayList quests;
 
     private bool startableEarly;
-    private string questLineName;
     
     private string[] currentQuests;
     
-    public QuestLine(string questLineName, ArrayList quests, bool startableEarly) {
-        this.questLineName = questLineName;
+    public QuestLine(ArrayList quests, bool startableEarly) {
         this.quests = quests;
         this.startableEarly = startableEarly;
     }
 
-    public Quest getQuestWithIndex(int questIndex) {
-        return (Quest)quests[questIndex];
-    }
-
-    // get location of quest index from the quest line
-    public int getQuestIndex(string questName) {
+    public Quest getQuest(string questName) {
         foreach (Quest quest in quests) {
             if (quest.QuestName == questName) {
-                return quests.IndexOf(quest);
+                return quest;
             }
         }
-
-        return -1;
+        return null;
     }
 
-    public int getQuestLineLength() {
-        return quests.Count - 1;
+    public bool questHasBeenCompleted(string questName) {
+        return completedQuestNumbers.Contains(getQuest(questName).QuestNumber);
     }
 
-    public bool containsQuest(string questName) {
-        foreach(Quest quest in quests) {
-            if(quest.QuestName == questName) {
-                return true;
+    public bool questPrereqsComplete(string questName) {
+        Quest quest = getQuest(questName);
+
+        int[] questReqs = quest.QuestsToBeDoneBefore;
+        if (questReqs != null) {
+            int[] questsToBeDone = quest.QuestsToBeDoneBefore;
+            
+            for(int i = 0; i < questsToBeDone.Length; i++) {
+                if (!completedQuestNumbers.Contains(questsToBeDone[i])) {
+                    return false;
+                }
             }
+            
+            activeQuests.Add(quest);
         }
-        return false;
+
+        return true;
     }
 
     // updates a quest in the quest line
     public void updateQuest(string questName) {
-        bool foundQuest = false;
-        int questIdx = 0;
+        Quest checkQuest = getQuest(questName);
 
-        while(!foundQuest && questIdx < quests.Count - 1) {
-            Quest checkQuest = (Quest)quests[questIdx];
-
-            if (checkQuest.QuestName == questName) {
-                foundQuest = true;
-                checkQuest.updateQuest(completedQuestNumbers);
+        if (checkQuest.QuestName == questName) {
+            checkQuest.updateQuest(completedQuestNumbers);
                 
-                if (checkQuest.QuestCompleted) {
-                    print("Completed the Quest: " + questName);
-                    activatedQuests(checkQuest.QuestNumber);
+            if (checkQuest.QuestCompleted) {
+                print("Completed the Quest: " + questName);
+                completedQuestNumbers.Add(checkQuest.QuestNumber);
+
+                int[] questsThatWillBeDone = checkQuest.QuestsThatWillBeDone;
+                if (questsThatWillBeDone != null) {
+                    foreach (int questNumber in questsThatWillBeDone) {
+                        if (!completedQuestNumbers.Contains(questNumber)) {
+                            completedQuestNumbers.Add(questNumber);
+                        }
+                    }
                 }
-            } else {
-                questIdx++;
+
+                activatedQuests(checkQuest);
             }
         }
+    }
+
+    // decrements an enemy from the kill count requirement
+    public void decrementFromKillQuest(string questName) {
+        getQuest(questName).EnemyAmount--;
     }
 
     // activates quests that can be started after a quest has completed
-    private void activatedQuests(int completedQuest) {
-        foreach (Quest possiblyActiveQuest in quests) {
-            if (completedQuest != possiblyActiveQuest.QuestNumber) {
-                int[] questReqs = possiblyActiveQuest.QuestsToBeDoneBefore;
-
-                if (System.Array.IndexOf(possiblyActiveQuest.QuestsToBeDoneBefore, completedQuest) > 0) {
-                    activeQuests.Add(possiblyActiveQuest);
-                }
+    private void activatedQuests(Quest completedQuest) {
+        activeQuests = new ArrayList();
+        
+        foreach (Quest quest in quests) {
+            if (!quest.QuestCompleted && !completedQuestNumbers.Contains(quest.QuestNumber) && questPrereqsComplete(quest.QuestName)) {
+                activeQuests.Add(quest);
             }
         }
-    }
-    
-    public string QuestLineName {
-        get { return questLineName; }
     }
 
     public bool StartableEarly {
         get { return startableEarly; }
+    }
+
+    public ArrayList ActiveQuests {
+        get { return activeQuests; }
     }
 }
