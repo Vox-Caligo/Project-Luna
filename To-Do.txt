@@ -1,27 +1,14 @@
 To Do:		
-	Phase Two:		
-		Quest log
-			Kill Quests need to be able to spawn characters if quest is active
-			
-		UI
-			Growing as the player gains more health
-			Clean it up and tighten (FOR EVERYTHING)
-				Includes staying on when things resize
-			NPC health bars disappearing (switch to newest Unity the cause?)
-			
-		Autosave
-			Issue with the newest Unity update
-				Might not be an issue anymore?
-		
+	Phase Two:			
+		Cutscene 
+			Errors when skipping too fast (text gets chopped up)
+			Animation testing
+	
 		Sound pipeline
 			Puzzles: make indication when something is wrong/right (noise)
 			
 		Animation pipeline
 		
-		Cutscene 
-			Errors when skipping too fast (text gets chopped up)
-			Animation testing
-	
 		Player	
 			Player Experience: Lead to more health and mana?
 			PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders a re put inside the parent so this won't be needed
@@ -50,7 +37,13 @@ To Do:
 				Should also be a bit less random
 			The directions have them have a bit of nuance but not 100% correct
 			Replace the int casting for a little bit of range (like a float?)
-				
+		
+		UI
+			Growing as the player gains more health
+			Clean it up and tighten (FOR EVERYTHING)
+				Includes staying on when things resize
+			NPC health bars disappearing (switch to newest Unity the cause?)
+			
 		Refactor code
 		
 		Bugs?
@@ -90,6 +83,12 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/27
+		Autosave investigated: seems to be working
+		Can get karma/items as a reward for completing a quest
+		
+	6/26
+		All quests now have a check that will keep the object inactive until a certain quest is active (if so desired)
 	
 	6/25
 		Quests need to be individually called up from Questline

@@ -13,8 +13,11 @@ public class ItemReceptacle : InteractableItem
     // items that are being requested
     public string[] soughtItems;
 
-	// which item the player needs to currently add
-	private int soughtItemRunner = 0;
+    // determines if the object only shows up during a quest
+    public bool questRequired;
+
+    // which item the player needs to currently add
+    private int soughtItemRunner = 0;
 
 	// the player's inventory
 	private Inventory playerInventory;
@@ -24,6 +27,13 @@ public class ItemReceptacle : InteractableItem
 
 	// if the receptacle has all items needed
 	private bool receptacleIsFull = false;
+
+    // sets object to be inactive if it is required to be by quest
+    void Start() {
+        if(questRequired) {
+            this.gameObject.SetActive(false);
+        }
+    }
 
 	// if an item is needed, it checks the players inventory for it and places
 	// it in if so, otherwise tells how it doesn't exist.
@@ -51,4 +61,8 @@ public class ItemReceptacle : InteractableItem
 			}
 		}
 	}
+
+    public void activateComponent() {
+        this.gameObject.SetActive(true);
+    }
 }

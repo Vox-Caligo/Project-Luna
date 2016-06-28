@@ -16,7 +16,7 @@ public class QuestDB : MonoBehaviour {
         // test for kill quests
 		allQuestlines.Add ("Kill the Minions", new QuestLine(new ArrayList {
             new Quest(0, "Kill the Villagers", "Exactly that!", 2, false),
-            new Quest(1, "Kill the Minions", "Exactly that!", 2, false, null, new int[] { 0 }),
+            new Quest(1, "Kill the Minions", "Exactly that!", 2, false, null, new int[] { 0 }, new ArrayList() { "Item/Starter Sword/Weapon" }),
             new Quest(2, "Kill the Master Minion", "Exactly that!", 1, true, new int[] {0, 1})
         }, true));
 

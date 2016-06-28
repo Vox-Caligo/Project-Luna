@@ -22,6 +22,7 @@ public class QuestLine : MonoBehaviour {
         this.startableEarly = startableEarly;
     }
 
+    // finds a quest by searching the questline for its name
     public Quest getQuest(string questName) {
         foreach (Quest quest in quests) {
             if (quest.QuestName == questName) {
@@ -31,13 +32,7 @@ public class QuestLine : MonoBehaviour {
         return null;
     }
 
-    public bool questHasBeenCompleted(string questName) {
-        return completedQuestNumbers.Contains(getQuest(questName).QuestNumber);
-    }
-
-    public bool questPrereqsComplete(string questName) {
-        Quest quest = getQuest(questName);
-
+    public bool questPrereqsComplete(Quest quest) {
         int[] questReqs = quest.QuestsToBeDoneBefore;
         if (questReqs != null) {
             int[] questsToBeDone = quest.QuestsToBeDoneBefore;
@@ -47,10 +42,8 @@ public class QuestLine : MonoBehaviour {
                     return false;
                 }
             }
-            
             activeQuests.Add(quest);
         }
-
         return true;
     }
 
@@ -89,8 +82,9 @@ public class QuestLine : MonoBehaviour {
         activeQuests = new ArrayList();
         
         foreach (Quest quest in quests) {
-            if (!quest.QuestCompleted && !completedQuestNumbers.Contains(quest.QuestNumber) && questPrereqsComplete(quest.QuestName)) {
+            if (!quest.QuestCompleted && !completedQuestNumbers.Contains(quest.QuestNumber) && questPrereqsComplete(quest)) {
                 activeQuests.Add(quest);
+                quest.activateInactiveComponents();
             }
         }
     }

@@ -117,7 +117,6 @@ public class PlayerMaster : MasterBehavior {
 		if(keyChecker.useKey(KeyCode.E)) {
 			// carryingMovableObject
 			if(col.gameObject.GetComponent<PickupableBlock>() != null) {
-				print ("Hi");
 				if (carryingMovableObject == null) {
 					carryingMovableObject = col.gameObject.GetComponent<PickupableBlock> ();
 					carryingMovableObject.onInteractionWithMovable(((PlayerMovement)characterMovement));
