@@ -2,56 +2,31 @@
 using System.Collections;
 
 public class SoundInterpreter : MonoBehaviour {
-	private AudioSource source;
+	private GameObject source;
 	private AudioClip currentSound;
-	
-	void Start() {
-		source = Camera.main.GetComponent<AudioSource>();
-	}
-	
-	public void playOneShot(string newSound){
-		source = Camera.main.GetComponent<AudioSource>();
-		
-		switch(newSound) {
-		case "slashing attack":
-			currentSound = Resources.Load<AudioClip>("Sound Effects/Attacks/Melee/Slashing/Slashing1");
-			break;
-		case "fire attack":
-			currentSound = Resources.Load<AudioClip>("Sound Effects/Attacks/Magic/Fire/Fireball" + Random.Range(1,3));
-			break;
-		case "slashing":
-			break;
-		default:
-			currentSound = Resources.Load<AudioClip>("error");
-			break;
-		}
-		
-		source.PlayOneShot(currentSound);
-	}
-	
-	public void playMusic(string musicTitle, bool repeat){
-		source = Camera.main.GetComponent<AudioSource>();
-		
-		switch(musicTitle) {
-		case "Title":
-			source.clip = Resources.Load<AudioClip>("Music/Trixie's Trix (Short Edit)");
-			break;
-		case "Ghost World":
-			source.clip = Resources.Load<AudioClip>("Music/GhostWorld");
-			break;
-		case "slashing":
-			break;
-		default:
-			source.clip = Resources.Load<AudioClip>("error");
-			break;
-		}
-		
-		source.Play();
-		
-		if(repeat) {
-			source.loop = true;
-		} else {
-			source.loop = false;
-		}
-	}
+    private SoundDB soundDB;
+    private ArrayList activeSources = new ArrayList();
+
+    public SoundInterpreter() {
+        soundDB = GameObject.Find("Databases").GetComponent<SoundDB>();
+    }
+
+    // plays a single sound or environmental music depending on the variables given
+    public void playSound(string sound, bool oneOff, bool repeat = false) {
+        currentSound = Resources.Load<AudioClip>(soundDB.getSound(sound));
+
+        if (oneOff) {
+            source = new GameObject();
+            AudioSource audioSource = source.AddComponent<AudioSource>();
+            audioSource.clip = currentSound;
+            audioSource.PlayOneShot(currentSound);
+            source.AddComponent<AudioPiece>();
+            activeSources.Add(source);
+        } else {
+            AudioSource audioSource = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
+            audioSource.clip = currentSound;
+            audioSource.Play();
+            audioSource.loop = repeat;
+        }
+    }
 }

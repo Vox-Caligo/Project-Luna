@@ -4,8 +4,8 @@ To Do:
 			Errors when skipping too fast (text gets chopped up)
 			Animation testing
 	
-		Sound pipeline
-			Puzzles: make indication when something is wrong/right (noise)
+		Puzzles
+			Make indication when something is wrong/right (noise)
 			
 		Animation pipeline
 		
@@ -83,6 +83,12 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	6/29
+		Sound pipeline is complete
+	
+	6/28
+		Set up Sound Database for testing
+	
 	6/27
 		Autosave investigated: seems to be working
 		Can get karma/items as a reward for completing a quest

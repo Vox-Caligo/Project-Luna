@@ -15,6 +15,7 @@ public class PlayerMaster : MasterBehavior {
 	private Inventory playerInventory;	// the inventory that the player has
 	private QuestLog playerQuests;		// stores information about currently active quests 
 	private PlayerStorage storage;		// stores information for different play sessions
+    private SoundInterpreter sounds;
 
 	// timer that saves the current player to storage
 	private UtilTimer autoSave;
@@ -47,7 +48,8 @@ public class PlayerMaster : MasterBehavior {
 		playerInventory = new Inventory(storage.retrievePlayerInventory());
 		playerQuests = new QuestLog ();
 		autoSave = new UtilTimer (1, 1); // replace with timeDelay when not testing
-	}
+        sounds = new SoundInterpreter();
+    }
 
 	// Updates all lower ai (movement, inventory, combat)
 	protected void FixedUpdate () {
@@ -66,7 +68,7 @@ public class PlayerMaster : MasterBehavior {
 			// shows the player inventory
 			if(keyChecker.useKey(KeyCode.Q)) {
 				playerInventory.visibility();
-			}
+            }
 
             // shows the player quest log
             if (keyChecker.useKey(KeyCode.R)) {
