@@ -21,6 +21,10 @@ public class SoundDB : MonoBehaviour {
 
         // effects
         allSounds.Add("Slash 1", "Sounds/Effects/Attacks/Melee/Sword/Slashing/Slashing1");
+        allSounds.Add("Slash 2", "Sounds/Effects/Attacks/Melee/Sword/Slashing/Slashing2");
+
+        // movement
+        // footsteps
     }
 
     // returns a value for the given item

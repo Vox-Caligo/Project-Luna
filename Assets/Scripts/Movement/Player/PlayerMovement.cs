@@ -9,24 +9,24 @@ public class PlayerMovement : CharacterMovementController {
 	// player variables
 	private GameObject player;
 	private CharacterAnimator characterAnimator;
+    private Rigidbody2D playerRigidbody;
 
-	// movement variables
-	private int currentDirection = 0;
+    // movement variables
+    private int currentDirection = 0;
 	private Vector2 speed = new Vector2 (5, 5);
+    private float terrainModifier = 1;
 
-	// the current terrain piece the player is on
-	private TerrainPiece currentTerrain = new TerrainPiece();
-
-	// terrain attributed movement
-	private bool terrainIsActivated = false;
+    // the current terrain piece the player is on
+    private TerrainPiece currentTerrain = new TerrainPiece();
 
 	// ice/sliding
 	private bool isSliding = false;
 	private bool isFrictionStopNeeded = false;
 	private bool collidingWithSturdyObject = false;
+    private Vector2 slideValue;
 
-	// climbing
-	private bool isClimbing = false;
+    // climbing
+    private bool isClimbing = false;
 
 	// character is in the cutscene
 	private bool inCutscene = false;
@@ -35,38 +35,41 @@ public class PlayerMovement : CharacterMovementController {
 	public PlayerMovement (GameObject player) {
 		this.player = player;
 		characterAnimator = new CharacterAnimator(this.player);
-	}
+        playerRigidbody = player.GetComponent<Rigidbody2D>();
+    }
 
 	public void updatePlayerMovement() {
 		// checcks that the character is not in a cutscene
 		if(!inCutscene) {
-			if(isSliding) {
-				// if sliding, stop when either colliding, leaving the terrain, or
-				// hitting a friction stop (depending on what is required). Otherwise
-				// have the character slide
-				if(collidingWithSturdyObject) {
-					checkIfMovingWhileSliding();
-				} else {
-					if (currentTerrain.getTerrainType() == "friction terrain" && terrainIsActivated) {
-						isSliding = false;
-						isFrictionStopNeeded = false;
-					} else if(!isFrictionStopNeeded && currentTerrain.getTerrainType() == "slippery terrain") {
-						isSliding = currentTerrain.getTerrainType () == "slippery terrain" ? true : false;
-					} else {
-						slide ();
-					}
-				}
-			} else if(currentTerrain.getTerrainType() == "climable") {
-				// if the terrain is climable, make the player climb
-				isClimbing = true;
+            if (isSliding) {
+                // if sliding, stop when either colliding, leaving the terrain, or
+                // hitting a friction stop (depending on what is required). Otherwise
+                // have the character slide
+
+                if (collidingWithSturdyObject) {
+                    if (characterAnimator.isInMotion()) {
+                        characterAnimator.stop();
+                    }
+
+                    int newCurrentDirection = checkIfMovingWhileSliding(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), currentDirection);
+
+                    if (newCurrentDirection != -1) {
+                        currentDirection = newCurrentDirection;
+                        collidingWithSturdyObject = false;
+                        playerRigidbody.velocity = new Vector2(speed.x * slideValue.x * terrainModifier, speed.y * slideValue.y * terrainModifier);
+                        characterAnimator.walk(currentDirection);
+                    }
+                } else {
+                    playerRigidbody.velocity = new Vector2(speed.x * slideValue.x * terrainModifier, speed.y * slideValue.y * terrainModifier);
+                }
 			} else {
-				walk();
+				getPlayerInput();
 			}
 		}
 	}
 	
 	// used to walk around the map as well as apply the correct animation
-	private void walk() {
+	private void getPlayerInput() {
 		// gets input from the player
 		float inputX = Input.GetAxis ("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");
@@ -95,108 +98,40 @@ public class PlayerMovement : CharacterMovementController {
 				characterAnimator.walk(1);
 			}
 
-			// moves the character
-			applyMovement(new Vector2 ((speed.x * inputX), (speed.y * inputY)));
-		} else {
+            // moves the character
+            playerRigidbody.velocity = new Vector2((speed.x * inputX) * terrainModifier, (speed.y * inputY) * terrainModifier);
+        } else {
 			// stops all movement
 			characterAnimator.stop();
 		}
 	}
 
-	// has the player slide until out of the terrain/hits friction stop
-	private void slide() {
-		int xVelocity = 0, yVelocity = 0;
+    // check if the player is trying to move while sliding
+    public int checkIfMovingWhileSliding(float inputX, float inputY, int currentDirection) {
+        // moves a certain direction depending on input
+        if (Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
+            if (inputX > 0 && currentDirection != 2) {
+                slideValue = new Vector2(-1, 0);
+                return 2;
+            } else if (inputX < 0 && currentDirection != 0) {
+                slideValue = new Vector2(1, 0);
+                return 0;
+            }
+        } else {
+            if (inputY > 0 && currentDirection != 1) {
+                slideValue = new Vector2(0, 1);
+                return 1;
+            } else if (inputY < 0 && currentDirection != 3) {
+                slideValue = new Vector2(0, -1);
+                return 3;
+            }
+        }
 
-		if(currentDirection == 0) {
-			xVelocity = -1;
-		} else if(currentDirection == 1) {
-			yVelocity = 1;
-		} else if (currentDirection == 2) {
-			xVelocity = 1;
-		} else {
-			yVelocity = -1;
-		}
+        return -1;
+    }
 
-		applyMovement(new Vector2 ((speed.x * xVelocity), (speed.y * yVelocity)));
-	}
-
-	// check if the player is trying to move while sliding
-	private void checkIfMovingWhileSliding() {
-		// stops the characters animation
-		if(characterAnimator.isInMotion()) {
-			characterAnimator.stop();
-		}
-
-		float inputX = Input.GetAxis ("Horizontal");
-		float inputY = Input.GetAxis ("Vertical");
-		bool givenInput = false;
-
-		// moves a certain direction depending on input
-		if(Mathf.Abs(inputX) > Mathf.Abs(inputY)) {
-			if (inputX > 0 && currentDirection != 2) {
-				currentDirection = 2;
-				givenInput = true;
-			} else if (inputX < 0 && currentDirection != 0){
-				currentDirection = 0;
-				givenInput = true;
-			}
-		} else {
-			if (inputY > 0 && currentDirection != 1) {
-				currentDirection = 1;
-				givenInput = true;
-			} else if (inputY < 0 && currentDirection != 3){
-				currentDirection = 3;
-				givenInput = true;
-			}
-		}
-
-		// moves the character if input was given
-		if(givenInput) {
-			characterAnimator.walk(currentDirection);
-			collidingWithSturdyObject = false;
-		}
-	}
-
-	// applies movement to the player
-	private void applyMovement(Vector2 calculatedMovement) {
-		float terrainModifier = 1;
-		string currentTerrainType = currentTerrain.getTerrainType ();
-
-		// if the player is being speed manipulater
-		if(currentTerrainType == "speed manipulator terrain" || currentTerrainType == "water terrain") {
-			if (((SpeedManipulatorTerrain)currentTerrain).isSlowdown) {
-				terrainModifier = ((SpeedManipulatorTerrain)currentTerrain).slowdownSpeed;
-			}
-
-			if (((SpeedManipulatorTerrain)currentTerrain).isSpeedup) {
-				terrainModifier = ((SpeedManipulatorTerrain)currentTerrain).speedupSpeed;
-			}
-
-			// submerge the player somewhat
-			if (currentTerrainType == "water terrain") {
-				// clip away with an alpha mask from the bottom to somwhere in the middle
-				// that or add a new sprite just for water
-					// better way but more time consuming 
-			}
-		}
-
-		// moves the player
-		player.GetComponent<Rigidbody2D>().velocity = new Vector2 (calculatedMovement.x * terrainModifier, calculatedMovement.y * terrainModifier);
-	}
-
-	// teleports the player to a receiver teleport
-	public void teleport() {
-		player.transform.position = ((TeleporterTerrain)currentTerrain).teleportCoordinates ();
-		int newTeleportDirection = ((TeleporterTerrain)currentTerrain).isSisterADirectional();
-
-		if(newTeleportDirection != -1) {
-			currentDirection = newTeleportDirection;
-			characterAnimator.walk(currentDirection);
-		}
-	}
-
-	// get/set the player's current direction
-	public int CurrentDirection {
+    // get/set the player's current direction
+    public int CurrentDirection {
 		get {return currentDirection;}
 		set {currentDirection = value;}
 	}
@@ -211,19 +146,23 @@ public class PlayerMovement : CharacterMovementController {
 		set {currentTerrain = value;}
 	}
 
-	// sets if the player is sliding
-	public bool IsSliding {
-		set {isSliding = value;}
+    public float TerrainModifier {
+        set { terrainModifier = value; }
+    }
+
+    // sets if the player is sliding
+    public bool IsSliding {
+        get { return isSliding; }
+        set {isSliding = value;}
 	}
 
-	// sets if the player is climbing
-	public bool IsClimbing {
+    public Vector2 SlideValue {
+        set { slideValue = value; }
+    }
+
+    // sets if the player is climbing
+    public bool IsClimbing {
 		set {isClimbing = value;}
-	}
-
-	// sets the active terrain the player is on
-	public bool TerrainIsActivated {
-		set {terrainIsActivated = value;}
 	}
 
 	// get/set if the  player needs friction terrain to stop

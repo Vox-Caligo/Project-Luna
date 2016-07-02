@@ -2,12 +2,14 @@
 using System.Collections;
 
 public class SoundInterpreter : MonoBehaviour {
+    private GameObject attachedParent;
 	private GameObject source;
 	private AudioClip currentSound;
     private SoundDB soundDB;
     private ArrayList activeSources = new ArrayList();
 
-    public SoundInterpreter() {
+    public SoundInterpreter(GameObject attachedParent) {
+        this.attachedParent = attachedParent;
         soundDB = GameObject.Find("Databases").GetComponent<SoundDB>();
     }
 
@@ -17,6 +19,8 @@ public class SoundInterpreter : MonoBehaviour {
 
         if (oneOff) {
             source = new GameObject();
+            source.name = "Active Sound";
+            source.transform.parent = attachedParent.transform;
             AudioSource audioSource = source.AddComponent<AudioSource>();
             audioSource.clip = currentSound;
             audioSource.PlayOneShot(currentSound);

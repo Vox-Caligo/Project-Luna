@@ -18,35 +18,30 @@ public class DeterminingCollisionActions : MonoBehaviour
 	// variables for the terrain
 	private TerrainPiece currentTerrain;
 	private ColliderBoundingBox currentColliderBoundingBox;
+    private ActivatedTerrainFeatures activatedTerrainFeatures;
 
-	// grabs the player game object and the movement script
-	public DeterminingCollisionActions(GameObject player, PlayerMovement playerMovement, PlayerCombat playerCombat) {
+    // grabs the player game object and the movement script
+    public DeterminingCollisionActions(GameObject player, PlayerMovement playerMovement, PlayerCombat playerCombat) {
 		this.player = player;
 		this.playerMovement = playerMovement;
 		this.playerCombat = playerCombat;
 		currentBoundingBox = new PlayerBoundingBox (this.player);
-	}
+        activatedTerrainFeatures = new ActivatedTerrainFeatures(player, playerMovement, playerCombat);
+    }
 
 	// checks the terrain and if it has a special effect
 	public void checkIfActiveTerrain() {
-		// makes sure terrain exists
-		if (currentTerrain != null) {
+        activatedTerrainFeatures.deactivateTerrainFeatures();
+
+        // makes sure terrain exists
+        if (currentTerrain != null) {
 			currentBoundingBox.updatePlayerBoundingBox ();
 
 			// activaes terrain if on, otherwise turns terrain off
 			if (determineIfCurrentlyColliding ()) {
-				activateTerrainFeature ();
-				playerMovement.TerrainIsActivated = true;
-			} else {
-				playerMovement.TerrainIsActivated = false;
-			}
-		} else {
-			if (!playerCombat.HealthRegeneration) {
-				playerCombat.HealthRegeneration = true;
-			}
-
-			if (!playerCombat.ManaRegeneration) {
-				playerCombat.ManaRegeneration = true;
+                if (currentTerrain.getTerrainType() != null) {
+                    activatedTerrainFeatures.activateTerrainFeature(currentTerrain);
+                }
 			}
 		}
 	}
@@ -97,69 +92,6 @@ public class DeterminingCollisionActions : MonoBehaviour
 			return true;
 		}
 		return false;
-	}
-
-	// activates the features of the current terrain
-	private void activateTerrainFeature() {
-		// checks that there is terrain with features
-		if(currentTerrain != null) {
-			string currentTerrainType = currentTerrain.getTerrainType ();
-
-			// checks if the terrain causes sliding
-			if (currentTerrainType == "slippery terrain") {
-				playerMovement.IsSliding = true;
-
-				// checks if the terrain is sliding and needs a stop piece
-				if (((SlipperyTerrain)currentTerrain).needsFrictionStop) {
-					playerMovement.IsFrictionStopNeeded = true;
-				}
-			}
-
-			// checks if the terrain is a teleporter entrance
-			if (currentTerrainType == "teleporter terrain" && ((TeleporterTerrain)currentTerrain).sender) {
-				if (!((TeleporterTerrain)currentTerrain).TeleporterOnFreeze && ((TeleporterTerrain)currentTerrain).isSisterAReceiver()) {
-					playerMovement.teleport();
-				}
-			}
-
-			// checks if the current terrain is the type to climb
-			if(currentTerrainType == "climable terrain") {
-				playerMovement.IsClimbing = true;
-			}
-
-			if (currentTerrainType == "health manipulator terrain") {
-				int healthManipulation = ((HealthManipulatorTerrain)currentTerrain).healthManipulation;
-				float maxHealth = ((HealthManipulatorTerrain)currentTerrain).overboost ? playerCombat.MaxHealth * 1.5f : playerCombat.MaxHealth;
-
-				if (healthManipulation < 0) {
-					playerCombat.HealthRegeneration = false;
-					playerCombat.Health = playerCombat.Health + healthManipulation;
-				} else if (playerCombat.Health < maxHealth) {
-					playerCombat.Health = playerCombat.Health + healthManipulation;
-				}
-
-				print("Manipulated health: " + playerCombat.Health);
-			}
-
-			if (currentTerrainType == "mana manipulator terrain") {
-				int manaManipulation = ((ManaManipulatorTerrain)currentTerrain).manaManipulation;
-				float maxMana = ((ManaManipulatorTerrain)currentTerrain).overboost ? playerCombat.MaxMana * 1.5f : playerCombat.MaxMana;
-
-				if (manaManipulation < 0) {
-					playerCombat.ManaRegeneration = false;
-
-					if (playerCombat.Mana > 0) {
-						playerCombat.Mana = playerCombat.Mana + manaManipulation;
-					} else {
-						playerCombat.Mana = 0;
-					}
-				} else if (playerCombat.Mana < maxMana) {
-					playerCombat.Mana = playerCombat.Mana + manaManipulation;
-				}
-
-				print("Manipulated mana: " + playerCombat.Mana);
-			}
-		} 
 	}
 
 	// when entering terrain, sets the current terrain and gets the new bounding box

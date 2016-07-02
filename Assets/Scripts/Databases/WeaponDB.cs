@@ -10,6 +10,7 @@ class WeaponStats {
 	public int Damage { get; set; }
 	public float Length { get; set; }
 	public float Width { get; set; }
+    public string[] Sounds { get; set; }
 }
 
 /**
@@ -18,35 +19,45 @@ class WeaponStats {
  */
 public class WeaponDB : MonoBehaviour {
 
-	private Dictionary<string, WeaponStats> allWeapons;
+    private Dictionary<string, WeaponStats> allWeapons;
 
-	// sets the dictionary
-	void Awake() {
-		allWeapons = new Dictionary<string, WeaponStats> ();
-		allWeapons.Add ("Starter Sword", new WeaponStats { Speed = 1, Damage = 20, Length = .5f, Width = .2f});
-		allWeapons.Add ("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f});
-	}
+    // sets the dictionary
+    void Awake() {
+        allWeapons = new Dictionary<string, WeaponStats>();
+        allWeapons.Add("Starter Sword", new WeaponStats { Speed = 1, Damage = 20, Length = .5f, Width = .2f, Sounds = new string[] { "Slash 1", "Slash 2" } });
+        allWeapons.Add("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f });
+    }
 
-	// returns a value for a property of the given weapon
-	public float getValue(string weapon, string soughtValue) {
-		if(allWeapons.ContainsKey(weapon)) {
-			switch (soughtValue) {
-			case "Speed":
-				return allWeapons[weapon].Speed;
-			case "Damage":
-				return allWeapons[weapon].Damage;
-			case "Length":
-				return allWeapons[weapon].Length;
-			case "Width":
-				return allWeapons[weapon].Width;
-			default:
-				print(weapon + " does not have sought property " + soughtValue);
-				break;
-			}
-		} else {
-			print(weapon + " does not exist in Weapon Database");
-		}
+    // returns a value for a property of the given weapon
+    public float getValue(string weapon, string soughtValue) {
+        if (allWeapons.ContainsKey(weapon)) {
+            switch (soughtValue) {
+                case "Speed":
+                    return allWeapons[weapon].Speed;
+                case "Damage":
+                    return allWeapons[weapon].Damage;
+                case "Length":
+                    return allWeapons[weapon].Length;
+                case "Width":
+                    return allWeapons[weapon].Width;
+                default:
+                    print(weapon + " does not have sought property " + soughtValue);
+                    break;
+            }
+        } else {
+            print(weapon + " does not exist in Weapon Database");
+        }
 
-		return -1;
-	}
+        return -1;
+    }
+
+    public string getWeaponSound(string weapon) {
+        if (allWeapons.ContainsKey(weapon)) {
+            int weaponSoundNum = Random.Range(0, allWeapons.Count);
+            return allWeapons[weapon].Sounds[weaponSoundNum];
+        } else {
+            print(weapon + " does not exist in Weapon Database");
+            return "";
+        }
+    }
 }

@@ -48,7 +48,8 @@ public class PlayerMaster : MasterBehavior {
 		playerInventory = new Inventory(storage.retrievePlayerInventory());
 		playerQuests = new QuestLog ();
 		autoSave = new UtilTimer (1, 1); // replace with timeDelay when not testing
-        sounds = new SoundInterpreter();
+        sounds = new SoundInterpreter(this.gameObject);
+        sounds.playSound("Test Theme", false, true);
     }
 
 	// Updates all lower ai (movement, inventory, combat)

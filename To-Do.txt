@@ -11,13 +11,11 @@ To Do:
 		
 		Player	
 			Player Experience: Lead to more health and mana?
-			PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders a re put inside the parent so this won't be needed
-			PlayerMovement: separate sliding things into a new class			
 			Have character chat change upon karma levels
 				Change karma level for certain answers
 			Multiple Protagonists
-			Magic
-				Magic attacks
+			Range
+				Magic/Range attacks
 				Magic that drains health instead of mana (blood magic)
 				
 		NPCs
@@ -37,6 +35,8 @@ To Do:
 				Should also be a bit less random
 			The directions have them have a bit of nuance but not 100% correct
 			Replace the int casting for a little bit of range (like a float?)
+		
+		Items to heal
 		
 		UI
 			Growing as the player gains more health
@@ -70,6 +70,41 @@ To Do:
 		
 		Observation Puzzles: Need to observe the room/level/game for the answer
 		
+		Jimmy Sixer
+		
+		Player Characters:
+			Beloved: Savio
+				The crown prince who has been one with the people. He tries his best to serve
+				his people but one day is kidnapped and held for ransom. His psyche splits at
+				this point and a chilling alter ego is born.
+			Hero: Aegis
+				Defensse
+			Nomad: Barbarian Child
+				Raised by a man who had slain his village when he was a baby, he was raised
+				to seek bloodshed and fight. Eventually meets the other characters and starts
+				to assist them. At a future point, when he wants to leave to help them out more,
+				his adoptive father requires that he slays him or be slain. After winning, thanks
+				to a latent beserk mode, he finds the others and assists them. Further in he goes
+				berserk and the others have to stop him (maybe for good) 
+					Beserk becomes active once health reaches a low point and increases damage and damage resistance
+			Heretic: Priest
+				Adopted by a small town priest and raised in the church. Father begins to
+				move up in the church and gets more and more prestige. Everything is fine 
+				until they move to the city and he sees his Father partaking in a sacrificial
+				ritual with the highest members of the church. He runs away that night and
+				has taken a cynical nature.
+			Butcher: Sorio
+				A man who grew up in the slums, he eventually found love and began working towards a
+				clean life. Unfortunately the crime lord Jimmy Sixer came to his place, wounded him,
+				and took his wife. Sorio survived and swore revenge, eventually creating a gang as powerful
+				as Sixer's. A fight between the two sides occurs and Sorio encounters Sixer head on.
+				Despite taking catastrophic damage from Sixer's modified weapons, Sorio brings down the
+				crime lord and finds his wife in the next room, a shell of what she was. Despite having heard
+				that she was partially responsible for the fateful night, he never believed it until then. 
+				Their fates are currently unknown.
+		Sounds
+			Walking
+		
 	Phase Four:
 		Level Design
 			Puzzles 
@@ -83,6 +118,16 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/2
+		Dont think this is needed: 
+			PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders a re put inside the parent so this won't be needed
+		PlayerMovement: 
+			separate sliding things into a new class
+			reorder things to be cleaner/make more sense
+	
+	6/30
+		Weapon sounds were added so weapons have different sounds of attack
+	
 	6/29
 		Sound pipeline is complete
 	

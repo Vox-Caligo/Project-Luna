@@ -47,8 +47,12 @@ public class Combat : MonoBehaviour {
 	protected StatDB statDatabase;
 	protected WeaponDB weaponDatabase;
 
-	// sets the base combat for all game characters
-	public Combat(string characterName, GameObject character, string characterWeapon) {
+    // sounds
+    protected SoundInterpreter sounds;
+    protected string attackSound;
+
+    // sets the base combat for all game characters
+    public Combat(string characterName, GameObject character, string characterWeapon) {
 		// sets the character and their weapon
 		this.characterName = characterName;
 		this.character = character;
@@ -74,18 +78,24 @@ public class Combat : MonoBehaviour {
 		// sets character karma
 		karma = (int)(statDatabase.getValue (this.characterName, "Karma"));
 
-		//experiencePoints = (int)(statDatabase.getValue (this.characterName, "Experience"));
+        // sets character sounds
+        sounds = new SoundInterpreter(this.character);
 
-		// set the delay between character attacks
-		attackDelay = (int)(weaponDatabase.getValue (this.characterWeapon, "Speed"));
+        //experiencePoints = (int)(statDatabase.getValue (this.characterName, "Experience"));
+
+        // set the delay between character attacks
+        attackDelay = (int)(weaponDatabase.getValue (this.characterWeapon, "Speed"));
 
 		// set the area of the attack area
 		attackWidth = weaponDatabase.getValue(characterWeapon, "Width");
 		attackRange = weaponDatabase.getValue(characterWeapon, "Length");
 		attackArea = new AttackArea (this.character, characterName, attackWidth, attackRange);
 
-		// sets the character's bounding box
-		characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
+        // get the attack sound
+        attackSound = weaponDatabase.getWeaponSound(characterWeapon);
+
+        // sets the character's bounding box
+        characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
 		characterHeight = this.character.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
 
 		// sets the timers to be used
@@ -103,7 +113,8 @@ public class Combat : MonoBehaviour {
 		if (!inAttack && !inAttackDelay) {
 			inAttack = true;
 			attackArea.manipulateAttackArea(true, currentDirection); // used for generating the appropriate attack hit box (size, direction, height, width)
-		}
+            sounds.playSound(weaponDatabase.getWeaponSound(characterWeapon), true);
+        }
 	}
 
 	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
