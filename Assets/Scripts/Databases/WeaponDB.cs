@@ -11,6 +11,8 @@ class WeaponStats {
 	public float Length { get; set; }
 	public float Width { get; set; }
     public string[] Sounds { get; set; }
+    public float ShotDistance { get; set; }
+    public int AOE { get; set; }
 }
 
 /**
@@ -25,7 +27,10 @@ public class WeaponDB : MonoBehaviour {
     void Awake() {
         allWeapons = new Dictionary<string, WeaponStats>();
         allWeapons.Add("Starter Sword", new WeaponStats { Speed = 1, Damage = 20, Length = .5f, Width = .2f, Sounds = new string[] { "Slash 1", "Slash 2" } });
-        allWeapons.Add("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f });
+        //allWeapons.Add("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f});
+
+        // testing range and magic with this
+        allWeapons.Add("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f, ShotDistance = 5 });
     }
 
     // returns a value for a property of the given weapon

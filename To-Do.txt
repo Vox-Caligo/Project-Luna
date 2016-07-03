@@ -11,9 +11,9 @@ To Do:
 		
 		Player	
 			Player Experience: Lead to more health and mana?
-			Have character chat change upon karma levels
-				Change karma level for certain answers
 			Multiple Protagonists
+			
+		Combat
 			Range
 				Magic/Range attacks
 				Magic that drains health instead of mana (blood magic)
@@ -118,6 +118,11 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/3
+		Have character chat change upon karma levels
+			Change karma level for certain answers
+		Separated TalkingQuestGiver from TalkingNPC
+			Created Quest Giver now extends that
 	7/2
 		Dont think this is needed: 
 			PlayerMaster: beAwareOfChildColliders - make it so, when not used, colliders a re put inside the parent so this won't be needed

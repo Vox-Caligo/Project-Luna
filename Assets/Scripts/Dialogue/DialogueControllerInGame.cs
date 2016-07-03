@@ -32,8 +32,12 @@ public class DialogueControllerInGame : DialogueController
 			} else {
 				if (keyChecker.useKey (KeyCode.E)) {
                     // goes through the dialogue
-                    conversationNpc.checkIfQuestActivated();
-                    conversationNpc.checkIfQuestCompleted();
+                    if (conversationNpc.GetType().IsSubclassOf(typeof(TalkingQuestGiver))) {
+                        TalkingQuestGiver questGiver = (TalkingQuestGiver)conversationNpc;
+                        questGiver.checkIfQuestActivated();
+                        questGiver.checkIfQuestCompleted();
+                    }
+                    conversationNpc.checkIfKarmaChange();
                     conversationNpc.CurrentDialogueSection = conversationNpc.CurrentDialogueSection + 1;
 					newDialogueRunner = 0;
 					dialogueText.text = "";

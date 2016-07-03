@@ -32,13 +32,13 @@ public class TalkingNpc : InteractableItem
 	// variables for controlling the flow of dialogue
 	protected DialogueControllerInGame dialogueController;
 	protected Dictionary<int, TalkingCharacterInformation> conversationDialogue;
-    protected Dictionary<int, string> questsFromDialogue = new Dictionary<int, string>();
+    protected Dictionary<int, int> karmaFromDialogue = new Dictionary<int, int>();
     protected Dictionary<int, string> questsDialogueCompletes = new Dictionary<int, string>();
-    protected QuestLog questLog;
 
     // variables for player choices in conversation
     protected ArrayList playerOptions;
 	protected string playerChoice;
+    protected int playerKarma;
 
 	// variables for dialogue traversal
 	protected bool nextDialogue = true;
@@ -49,8 +49,10 @@ public class TalkingNpc : InteractableItem
 	public override void onInteraction () {	
 		if(dialogueController == null) {
 			dialogueController = GameObject.Find("Dialogue Controller").GetComponent<DialogueControllerInGame>();
-            questLog = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMaster>().PlayerQuests;
 
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            //questLog = player.GetComponent<PlayerMaster>().PlayerQuests;
+            playerKarma = player.GetComponent<PlayerMaster>().Karma;
         }
 
 		if(!dialogueController.InConversation) {
@@ -106,18 +108,9 @@ public class TalkingNpc : InteractableItem
 		return null;
 	}
 
-    public void checkIfQuestActivated() {
-        if (questsFromDialogue.ContainsKey(currentDialogueSection)) {
-            print("Kopo");
-            questLog.updateQuest(questsFromDialogue[currentDialogueSection], true);
-        }
-    }
-
-    public void checkIfQuestCompleted() {
-        if (questsDialogueCompletes.ContainsKey(currentDialogueSection)) {
-            print("Mopo");
-            questLog.decrementFromKillQuest(questsDialogueCompletes[currentDialogueSection]);
-            questLog.updateQuest(questsDialogueCompletes[currentDialogueSection]);
+    public void checkIfKarmaChange() {
+        if (karmaFromDialogue.ContainsKey(currentDialogueSection)) {
+            playerKarma = playerKarma + karmaFromDialogue[currentDialogueSection];
         }
     }
 }
