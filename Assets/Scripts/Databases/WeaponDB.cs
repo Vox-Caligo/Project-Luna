@@ -7,7 +7,7 @@ using System.Collections.Generic;
  */
 public class WeaponStats {
 	public string Type { get; set; }
-	public int Speed { get; set; }
+	public float Speed { get; set; }
 	public int Damage { get; set; }
 	public float Length { get; set; }
 	public float Width { get; set; }
@@ -16,18 +16,18 @@ public class WeaponStats {
     public int AOE { get; set; }
 
 	// melee weapon
-	public WeaponStats(string type, int speed, int damage, float length, float width, string[] sounds) {
+	public WeaponStats(string type, float speed, int damage, float length, float width, string[] sounds) {
 		setWeaponStats(type, speed, damage, length, width, sounds);
 	}
 
 	// range weapon
-	public WeaponStats(string type, int speed, int damage, float length, float width, string[] sounds, float shotDistance, int aoe) {
+	public WeaponStats(string type, float speed, int damage, float length, float width, string[] sounds, float shotDistance, int aoe = -1) {
 		ShotDistance = shotDistance;
 		AOE = aoe;
 		setWeaponStats(type, speed, damage, length, width, sounds);
 	}
 
-	private void setWeaponStats(string type, int speed, int damage, float length, float width, string[] sounds) {
+	private void setWeaponStats(string type, float speed, int damage, float length, float width, string[] sounds) {
 		Type = type;
 		Speed = speed;
 		Damage = damage;
@@ -48,11 +48,11 @@ public class WeaponDB : MonoBehaviour {
     // sets the dictionary
     void Awake() {
         allWeapons = new Dictionary<string, WeaponStats>();
-		allWeapons.Add("Starter Sword", new WeaponStats("Melee", 1, 20, .5f, .2f, new string[] { "Slash 1", "Slash 2" }));
+		//allWeapons.Add("Starter Sword", new WeaponStats("Melee", 1, 20, .5f, .2f, new string[] { "Slash 1", "Slash 2" }));
         //allWeapons.Add("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f});
 
         // testing range and magic with this
-		allWeapons.Add("Starter Axe", new WeaponStats ("Range", 2, 10, .5f, .5f, new string[] { "Slash 1", "Slash 2" }));
+        allWeapons.Add("Starter Sword", new WeaponStats("Range", 1.5f, 20, .5f, .2f, new string[] { "Slash 1", "Slash 2" }, 5, 2));
     }
 
 	public WeaponStats getWeapon(string weapon) {

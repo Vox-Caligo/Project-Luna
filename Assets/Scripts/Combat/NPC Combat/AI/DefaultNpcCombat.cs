@@ -11,12 +11,12 @@ public class DefaultNpcCombat : Combat
 
 	// creates a new combat for this npc
 	public DefaultNpcCombat(string characterName, GameObject character, string characterWeapon) : base(characterName, character, characterWeapon) {	
-		npcCombatUi = new NpcCombatUI(character, health, mana);
+		npcCombatUi = new NpcCombatUI(character, health.CurrentHealth, mana.CurrentMana);
 	}
 
 	// updates the ai of the attacking npc
 	public void updateNpcCombat(int currentDirection) {
-		if (this.health <= 0) {
+		if (this.health.CurrentHealth <= 0) {
 			// removes the npc if they die and applies karma to the player
 			PlayerCombat player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster> ().currentCharacterCombat ();
 			player.Karma = player.Karma + this.karma;
@@ -31,7 +31,7 @@ public class DefaultNpcCombat : Combat
 		} else {
 			// goes through attack ai and does what is needed
 			updateCombat (currentDirection);
-			npcCombatUi.updateUI(health, mana);
+			npcCombatUi.updateUI(health.CurrentHealth, mana.CurrentMana);
 		}
 	}
 }

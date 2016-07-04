@@ -48,7 +48,7 @@ public class MinionAI : DefaultAI
 	protected override void OnCollisionEnter2D (Collision2D col) {
 		base.OnCollisionEnter2D(col);
 		npcMovement.respondToCollision(col);
-		npcCombat.respondToCollision(col);
+		//npcCombat.respondToCollision(col);
 	}
 }
 

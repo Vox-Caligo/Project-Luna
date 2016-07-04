@@ -74,12 +74,12 @@ public class ActivatedTerrainFeatures : MonoBehaviour
 
         playerMovement.IsClimbing = false;
         
-        if (!playerCombat.HealthRegeneration) {
-            playerCombat.HealthRegeneration = true;
+        if (!playerCombat.Health.HealthRegeneration) {
+            playerCombat.Health.HealthRegeneration = true;
         }
 
-        if (!playerCombat.ManaRegeneration) {
-            playerCombat.ManaRegeneration = true;
+        if (!playerCombat.Mana.ManaRegeneration) {
+            playerCombat.Mana.ManaRegeneration = true;
         }
     }
 
@@ -137,34 +137,13 @@ public class ActivatedTerrainFeatures : MonoBehaviour
 
     private void healthManipulationTerrain() {
         int healthManipulation = ((HealthManipulatorTerrain)currentTerrain).healthManipulation;
-        float maxHealth = ((HealthManipulatorTerrain)currentTerrain).overboost ? playerCombat.MaxHealth * 1.5f : playerCombat.MaxHealth;
-
-        if (healthManipulation < 0) {
-            playerCombat.HealthRegeneration = false;
-            playerCombat.Health = playerCombat.Health + healthManipulation;
-        } else if (playerCombat.Health < maxHealth) {
-            playerCombat.Health = playerCombat.Health + healthManipulation;
-        }
-
-        print("Manipulated health: " + playerCombat.Health);
+        float maxHealth = ((HealthManipulatorTerrain)currentTerrain).overboost ? playerCombat.Health.MaxHealth * 1.5f : playerCombat.Health.MaxHealth;
+        playerCombat.Health.addHealth(healthManipulation, (int)maxHealth);
     }
 
     private void manaManipulationTerrain() {
         int manaManipulation = ((ManaManipulatorTerrain)currentTerrain).manaManipulation;
-        float maxMana = ((ManaManipulatorTerrain)currentTerrain).overboost ? playerCombat.MaxMana * 1.5f : playerCombat.MaxMana;
-
-        if (manaManipulation < 0) {
-            playerCombat.ManaRegeneration = false;
-
-            if (playerCombat.Mana > 0) {
-                playerCombat.Mana = playerCombat.Mana + manaManipulation;
-            } else {
-                playerCombat.Mana = 0;
-            }
-        } else if (playerCombat.Mana < maxMana) {
-            playerCombat.Mana = playerCombat.Mana + manaManipulation;
-        }
-
-        print("Manipulated mana: " + playerCombat.Mana);
+        float maxMana = ((ManaManipulatorTerrain)currentTerrain).overboost ? playerCombat.Mana.MaxMana * 1.5f : playerCombat.Mana.MaxMana;
+        playerCombat.Mana.addMana(manaManipulation, maxMana);
     }
 }

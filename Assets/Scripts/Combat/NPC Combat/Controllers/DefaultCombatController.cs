@@ -43,27 +43,14 @@ public class DefaultCombatController : MonoBehaviour
 		npcCombat.updateNpcCombat(currentDirection);
 	}
 
-	// applies damage when hitting something with an attack
-	public void respondToCollision(Collision2D col) {
-		if(npcCombat.InAttack && col.contacts[0].otherCollider.name == characterName + " Attack") {
-			npcCombat.applyAttackDamage(col.contacts [0].collider.gameObject);
-			//((NpcCombat)npcCombat).applyAttackDamage (col.contacts [0].collider.gameObject);
-		}
-	}
-
 	// checks health of the character or sets it
 	public int characterHealth(int newHealthValue = -1) {
 		if (newHealthValue == -1) {
-			return npcCombat.Health;
+			return npcCombat.Health.CurrentHealth;
 		} else {
-			npcCombat.Health = newHealthValue;
+			npcCombat.Health.CurrentHealth = newHealthValue;
 			return -1;
 		}
-	}
-
-	// applies attack damage from the npc
-	public void applyAiAttackDamage(GameObject targetCharacter) {
-		npcCombat.applyAttackDamage(targetCharacter);
 	}
 
 	// the current action the npc is doing

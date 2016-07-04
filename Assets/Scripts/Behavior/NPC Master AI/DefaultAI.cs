@@ -33,7 +33,7 @@ public class DefaultAI : MasterBehavior
 		if(npcMovement.CurrentAction == "dash" || npcMovement.CurrentAction == "bounce") {
 			if(npcMovement.InjureViaMovement) {
 				// pass to combat apply damage (lastCollision does not contain the actual gameObject)
-				npcCombat.applyAiAttackDamage(lastCollision.gameObject);
+				// npcCombat.applyAiAttackDamage(lastCollision.gameObject);
 			}
 		}
 

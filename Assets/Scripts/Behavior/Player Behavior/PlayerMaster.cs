@@ -44,7 +44,7 @@ public class PlayerMaster : MasterBehavior {
 		characterCombat = new PlayerCombat("Player", this.gameObject, karma, playerWeapon);
 		determiningCollisions = new DeterminingCollisionActions(this.gameObject, ((PlayerMovement)characterMovement), ((PlayerCombat)characterCombat));
 		keyChecker = GameObject.Find ("Databases").GetComponent<KeyboardInput> ();
-		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
+		playerHud = new PlayerHUD(this.gameObject.name, ((PlayerCombat)characterCombat).Health.CurrentHealth, ((PlayerCombat)characterCombat).Mana.CurrentMana);
 		playerInventory = new Inventory(storage.retrievePlayerInventory());
 		playerQuests = new QuestLog ();
 		autoSave = new UtilTimer (1, 1); // replace with timeDelay when not testing
@@ -64,7 +64,7 @@ public class PlayerMaster : MasterBehavior {
 			((PlayerCombat)characterCombat).updatePlayerCombat (((PlayerMovement)characterMovement).CurrentDirection, keyChecker.useKey(KeyCode.Space));
 
 			// updates player hud
-			playerHud.hudUpdate(((PlayerCombat)characterCombat).Health, ((PlayerCombat)characterCombat).Mana);
+			playerHud.hudUpdate(((PlayerCombat)characterCombat).Health.CurrentHealth, ((PlayerCombat)characterCombat).Mana.CurrentMana);
 
 			// shows the player inventory
 			if(keyChecker.useKey(KeyCode.Q)) {
@@ -102,10 +102,7 @@ public class PlayerMaster : MasterBehavior {
 
 	// checks for collisions being entered
 	protected override void OnCollisionEnter2D(Collision2D col) {
-		if(col.contacts[0].otherCollider.name == "Player Attack") {
-			// checks if the player attack is colliding with an NPC
-			((PlayerCombat)characterCombat).applyAttackDamage (col.contacts [0].collider.gameObject);
-		} else if(col.gameObject.GetComponent<TerrainPiece>() != null) {
+		if(col.gameObject.GetComponent<TerrainPiece>() != null) {
 			// checks if the player is colliding with terrain
 			determiningCollisions.interpretCurrentTerrainCollider(col);
 		} else if(col.gameObject.GetComponent<SlidingBlock>() != null) {

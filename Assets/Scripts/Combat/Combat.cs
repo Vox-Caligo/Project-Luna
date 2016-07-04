@@ -9,10 +9,8 @@ public class Combat : MonoBehaviour {
 	protected GameObject character;
 	protected string characterName;
 	protected string characterWeapon;
-	protected int health;
-	protected int maxHealth;
-	protected int mana;
-	protected int maxMana;
+    protected Health health;
+    protected Mana mana;
 	protected int damage;
 	protected int defense;
 	protected int karma;
@@ -30,9 +28,6 @@ public class Combat : MonoBehaviour {
 	protected float characterWidth;
 	protected float characterHeight;
 
-	protected bool manaRegeneration = false;
-	protected bool healthRegeneration = false;
-
 	// timer to tell if the player has been out of combat long enough to regenerate health
 	protected bool inCombat = false;
 
@@ -40,7 +35,6 @@ public class Combat : MonoBehaviour {
 	protected UtilTimer attackTimer;		// attacking
 	protected UtilTimer attackDelayTimer;	// delay between attacks
 	protected UtilTimer combatCooldownTimer;// delay after combat
-	protected UtilTimer regenerationTimer;	// time to regenerate
 
 	// databases
 	protected StatDB statDatabase;
@@ -57,12 +51,10 @@ public class Combat : MonoBehaviour {
 		weaponDatabase = GameObject.Find ("Databases").GetComponent<WeaponDB> ();
 
 		// sets character health
-		health = statDatabase.getValue (this.characterName, "Health");
-		maxHealth = health;
+		health = new Health(statDatabase.getValue (this.characterName, "Health"));
 
 		// sets character mana
-		mana = statDatabase.getValue (this.characterName, "Mana");
-		maxMana = mana;
+		mana = new Mana(statDatabase.getValue (this.characterName, "Mana"));
 
 		// sets character defense
 		defense = statDatabase.getValue (this.characterName, "Defense");
@@ -73,17 +65,16 @@ public class Combat : MonoBehaviour {
         //experiencePoints = (int)(statDatabase.getValue (this.characterName, "Experience"));
 
         // set the delay between character attacks
-        attackDelay = (int)(weaponDatabase.getValue (this.characterWeapon, "Speed"));
+        attackDelay = weaponDatabase.getValue (this.characterWeapon, "Speed");
 
         // sets the character's bounding box
         characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
 		characterHeight = this.character.GetComponent<BoxCollider2D> ().bounds.extents.y * 2;
 
 		// sets the timers to be used
-		attackTimer = new UtilTimer(1.5f, 1.5f);
-		attackDelayTimer = new UtilTimer(attackDelay, attackDelay);	// use attackDelay = (int)(weaponDatabase.getValue (this.characterWeapon, "Speed")); 
-		combatCooldownTimer = new UtilTimer(1.5f, 1.5f);
-		regenerationTimer = new UtilTimer(1.5f, 1.5f);
+		attackTimer = new UtilTimer(attackDelay, attackDelay);
+		attackDelayTimer = new UtilTimer(attackDelay, attackDelay);
+		combatCooldownTimer = new UtilTimer(attackDelay, attackDelay);
 	}
 
 	// called when the player starts an attack
@@ -93,26 +84,12 @@ public class Combat : MonoBehaviour {
 		// makes sure the player can attack
 		if (!inAttack && !inAttackDelay) {
 			inAttack = true;
-
-			if (weaponDatabase.getWeaponType (characterWeapon) == "Melee") {
-				MeleeAttackArea attackArea = new MeleeAttackArea (this.character, weaponDatabase.getWeapon(characterWeapon), currentDirection);
-			} else {
-				RangeAttackArea attackArea = new RangeAttackArea (this.character, weaponDatabase.getWeapon(characterWeapon), currentDirection);
-			}
+            AttackArea attackArea = new AttackArea(this.character, weaponDatabase.getWeapon(characterWeapon), currentDirection);
         }
 	}
 
-	// applies damage to the enemy being hit (does so by checking stats vs enemy defenses)
-	public void applyAttackDamage(GameObject target) {
-		if(target.GetComponent<MasterBehavior>() != null) {
-			print("Hitting " + target.name + " with health " + target.GetComponent<MasterBehavior>().characterHealth());
-			target.GetComponent<MasterBehavior>().characterHealth(target.GetComponent<MasterBehavior>().characterHealth() - damage);
-			target.GetComponent<MasterBehavior>().characterInCombat();
-		}
-	}
-
-	// updates what  is currently happening in combat
-	protected void updateCombat(int currentDirection) {
+    // updates what  is currently happening in combat
+    protected void updateCombat(int currentDirection) {
 		// end attack when opponent is hit
 
 		if (inAttack) {
@@ -134,22 +111,9 @@ public class Combat : MonoBehaviour {
 				inCombat = false;
 			}
 		} else {
-			// when the regeneration timer hits, regenerate
-			if(!regenerationTimer.runningTimerCountdown()) {
-				regeneration();
-			}
-		}
-	}
-
-	// restore mana/health if below the thresholds
-	protected void regeneration() {
-		if(manaRegeneration && mana < maxMana) {
-			mana++;
-		}
-
-		// goes until the character is full/half health (depends on current health)
-		if(healthRegeneration && (health < maxHealth / 2 || (health > maxHealth / 2 && health < maxHealth))) {
-			health++;
+            // regenerate health and mana if not in combat
+            health.regeneration();
+            mana.regeneration();
 		}
 	}
 
@@ -164,30 +128,6 @@ public class Combat : MonoBehaviour {
 	// checks if the character is attacking
 	public bool InAttack {
 		get {	return inAttack; }
-	}
-
-	// get/set the character's health
-	public int Health {	
-		get {	return health;	} 
-		set {	health = value;	}
-	}
-
-	// get/set the character's max health
-	public int MaxHealth {
-		get {	return maxHealth;	} 
-		set {	maxHealth = value;	}
-	}
-
-	// get/set the character's mana
-	public int Mana {	
-		get {	return mana;	} 
-		set {	mana = value;	}
-	}
-
-	// get/set the character's max mana
-	public int MaxMana {
-		get {	return maxMana;	} 
-		set {	maxMana = value;	}
 	}
 
 	// get/set the character's damage
@@ -214,15 +154,11 @@ public class Combat : MonoBehaviour {
 		set { inCombat = value; }
 	}
 
-	// get/set if mana can regenerate
-	public bool ManaRegeneration {
-		get { return manaRegeneration; }
-		set { manaRegeneration = value; }
-	}
+    public Mana Mana {
+        get { return mana; }
+    }
 
-	// get/set if health can regenerate
-	public bool HealthRegeneration {
-		get { return healthRegeneration; }
-		set { healthRegeneration = value; }
-	}
+    public Health Health {
+        get { return health; }
+    }
 }

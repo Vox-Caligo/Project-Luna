@@ -14,11 +14,11 @@ To Do:
 			Multiple Protagonists
 			
 		Combat
-			Range
-				Magic/Range attacks
-					Position attack hitbox depending on melee/range 
-						Make sure it causes damage
-				Magic that drains health instead of mana (blood magic)
+			AOE
+				Deals damage
+				Has a timer for how long it lasts
+				Does not disappear until timer is up
+			Magic that drains health instead of mana (blood magic)
 				
 		NPCs
 			Improved AI
@@ -52,6 +52,9 @@ To Do:
 			Talking not working on first key press
 			Quest updating after completion
 			Health isnt showing above enemies
+			Can't click on inventory items anymore
+			Fix dash and bounce to deal damage in the new system
+			Investigate: respondToCollision
 		
 	Phase Three:
 		Start piecing things together
@@ -120,6 +123,14 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/4
+		Separated health and mana from combat
+		Range
+			Magic/Range attacks
+				Position attack hitbox depending on melee/range 
+					Make sure it causes damage
+		Damage areas are out of Combat
+		
 	7/3
 		Have character chat change upon karma levels
 			Change karma level for certain answers

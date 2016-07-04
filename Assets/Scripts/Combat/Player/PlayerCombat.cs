@@ -15,7 +15,7 @@ public class PlayerCombat : Combat
 
 	// used to have the player in combar
 	public void updatePlayerCombat(int currentDirection, bool attackKeyPressed) {
-		if (this.health <= 0) {
+		if (this.health.CurrentHealth <= 0) {
 			// kills the  player if they have no health
 			print ("The Player Is Dead");
 		} else {
@@ -33,9 +33,8 @@ public class PlayerCombat : Combat
 					inCombat = false;
 				}
 			} else {
-				if(!regenerationTimer.runningTimerCountdown()) {
-					regeneration();
-				}
+                health.regeneration();
+                mana.regeneration();
 			}
 		}
 	}

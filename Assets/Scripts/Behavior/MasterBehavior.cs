@@ -30,9 +30,9 @@ public class MasterBehavior : MonoBehaviour
 	// changing values but done so combat doesn't have to be seen by everyone.
 	public virtual int characterHealth(int newHealthValue = -1) {
 		if (newHealthValue == -1) {
-			return characterCombat.Health;
+			return characterCombat.Health.CurrentHealth;
 		} else {
-			characterCombat.Health = newHealthValue;
+			characterCombat.Health.CurrentHealth = newHealthValue;
 			return -1;
 		}
 	}
