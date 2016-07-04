@@ -53,5 +53,6 @@ public class CollisionArea : MonoBehaviour
 	public int CurrentDirection {
 		get {return currentDirection;}
 	}
-}
 
+	protected virtual void Update() { }
+}

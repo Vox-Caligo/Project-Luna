@@ -7,65 +7,26 @@ using System.Collections;
  */
 public class AttackArea : CollisionArea
 {
-	// if the player is walking left/right
-	private bool isHorizontal = false;
+	protected int currentDirection;
 
 	// weapon area values
-	private float attackRange = 2;
-	private float attackWidth = 1;
+	protected float attackRange = 2;
+	protected float attackWidth = 1;
 
-	// creates the attack area
-	public AttackArea(GameObject character, string characterName, float attackWidth, float attackRange) : base(character)
+	// sounds
+	protected SoundInterpreter sounds;
+
+	// creates the attack area for melee
+	public AttackArea(GameObject character, WeaponStats weapon, int currentDirection) : base(character)
 	{	
-		collisionDetector.name = characterName + " Attack";
-		this.attackWidth = attackWidth;
-		this.attackRange = attackRange;
+		sounds = new SoundInterpreter(character); // sets character sounds
+		sounds.playSound(weapon.Sounds[Random.Range(0, weapon.Sounds.Length)], true);
+
+		this.currentDirection = currentDirection;
+		this.attackWidth = weapon.Width;
+		this.attackRange = weapon.Length;
+		collisionDetectionBox.size = new Vector2 (attackWidth, attackRange);
 	}
 
-	// rearranges the area by the way the player is walking
-	public override void rearrangeCollisionArea(int currentDirection) {
-		if(currentDirection % 2 == 0 && !isHorizontal) {
-			isHorizontal = true;
-			collisionDetector.transform.Rotate(new Vector3(0,0,90));
-		} else if (currentDirection % 2 == 1 && isHorizontal) {
-			isHorizontal = false;
-			collisionDetector.transform.Rotate(new Vector3(0,0,-90));
-		}
-
-		if(currentDirection == 0 || currentDirection == 1) { 	
-			collisionDetectionBox.offset = new Vector2(0, attackRange); 
-		} else {	
-			collisionDetectionBox.offset = new Vector2(0, -attackRange);
-		} 
-	}
-
-	// turns the attack area on and off depending on what is needed
-	public void manipulateAttackArea(bool active, int currentDirection = 0) {
-		if (active) {
-			collisionDetectionBox.isTrigger = false;
-			collisionDetectionBox.size = new Vector2 (attackWidth, attackRange);
-			rearrangeCollisionArea (currentDirection);
-		} else {
-			collisionDetectionBox.isTrigger = true;
-			collisionDetectionBox.size = new Vector2 (.01f, .01f);
-			collisionDetectionBox.offset = new Vector2(0, 0); 
-		}
-	}
-
-	// create a newly sized attack area
-	public void brandNewAttackArea(float attackWidth, float attackRange) {
-		this.attackWidth = attackWidth;
-		this.attackRange = attackRange;
-	}
-
-	// gets the current range of the attack
-	public int AttackRange {
-		set{attackRange = value;}
-	}
-
-	// gets the current width of the attack
-	public int AttackWidth {
-		set{attackWidth = value;}
-	}
+	protected override void Update () {	}
 }
-

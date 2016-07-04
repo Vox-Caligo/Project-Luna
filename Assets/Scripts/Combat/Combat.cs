@@ -24,7 +24,6 @@ public class Combat : MonoBehaviour {
 	protected float attackDelay = 0f;
 	
 	// attack box variables
-	protected AttackArea attackArea;
 	protected float attackWidth;
 	protected float attackRange;
 	protected bool longRange = false;
@@ -47,10 +46,6 @@ public class Combat : MonoBehaviour {
 	protected StatDB statDatabase;
 	protected WeaponDB weaponDatabase;
 
-    // sounds
-    protected SoundInterpreter sounds;
-    protected string attackSound;
-
     // sets the base combat for all game characters
     public Combat(string characterName, GameObject character, string characterWeapon) {
 		// sets the character and their weapon
@@ -72,27 +67,13 @@ public class Combat : MonoBehaviour {
 		// sets character defense
 		defense = statDatabase.getValue (this.characterName, "Defense");
 
-		// sets character damage
-		damage = (int)(weaponDatabase.getValue (this.characterWeapon, "Damage"));
-
 		// sets character karma
 		karma = (int)(statDatabase.getValue (this.characterName, "Karma"));
-
-        // sets character sounds
-        sounds = new SoundInterpreter(this.character);
 
         //experiencePoints = (int)(statDatabase.getValue (this.characterName, "Experience"));
 
         // set the delay between character attacks
         attackDelay = (int)(weaponDatabase.getValue (this.characterWeapon, "Speed"));
-
-		// set the area of the attack area
-		attackWidth = weaponDatabase.getValue(characterWeapon, "Width");
-		attackRange = weaponDatabase.getValue(characterWeapon, "Length");
-		attackArea = new AttackArea (this.character, characterName, attackWidth, attackRange);
-
-        // get the attack sound
-        attackSound = weaponDatabase.getWeaponSound(characterWeapon);
 
         // sets the character's bounding box
         characterWidth = this.character.GetComponent<BoxCollider2D> ().bounds.extents.x * 2;
@@ -112,8 +93,12 @@ public class Combat : MonoBehaviour {
 		// makes sure the player can attack
 		if (!inAttack && !inAttackDelay) {
 			inAttack = true;
-			attackArea.manipulateAttackArea(true, currentDirection); // used for generating the appropriate attack hit box (size, direction, height, width)
-            sounds.playSound(weaponDatabase.getWeaponSound(characterWeapon), true);
+
+			if (weaponDatabase.getWeaponType (characterWeapon) == "Melee") {
+				MeleeAttackArea attackArea = new MeleeAttackArea (this.character, weaponDatabase.getWeapon(characterWeapon), currentDirection);
+			} else {
+				RangeAttackArea attackArea = new RangeAttackArea (this.character, weaponDatabase.getWeapon(characterWeapon), currentDirection);
+			}
         }
 	}
 
@@ -135,7 +120,6 @@ public class Combat : MonoBehaviour {
 			if (!attackTimer.runningTimerCountdown ()) {
 				inAttack = false;
 				inAttackDelay = true;
-				attackArea.manipulateAttackArea(false);
 			}
 		} else if(inAttackDelay) {
 			// when in delay,checks if it ends and allows attack again
@@ -173,14 +157,7 @@ public class Combat : MonoBehaviour {
 	public void changeWeapon(string newWeapon) {
 		if (this.characterWeapon != newWeapon) {
 			this.characterWeapon = newWeapon;
-
-			damage = (int)weaponDatabase.getValue (this.characterWeapon, "Damage");
-			attackDelay = weaponDatabase.getValue (this.characterWeapon, "Speed");
-			attackRange = weaponDatabase.getValue (this.characterWeapon, "Length");
-			attackWidth = weaponDatabase.getValue (this.characterWeapon, "Width");
 			attackDelayTimer.RunningTimerMax = attackDelay;
-
-			attackArea.brandNewAttackArea (attackWidth, attackRange);
 		}
 	}
 
@@ -229,18 +206,6 @@ public class Combat : MonoBehaviour {
 	public float AttackDelay {
 		get {	return attackDelay;	} 
 		set {	attackDelay = value;}
-	}
-
-	// get/set the character's weapon width
-	public float AttackWidth {
-		get {	return attackWidth;	} 
-		set {	attackWidth = value;}
-	}
-
-	// get/set the character's weapon range
-	public float AttackRange {
-		get {	return attackRange;	} 
-		set {	attackRange = value;}
 	}
 
 	// get/set if the character is in combat

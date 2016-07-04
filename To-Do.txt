@@ -16,6 +16,8 @@ To Do:
 		Combat
 			Range
 				Magic/Range attacks
+					Position attack hitbox depending on melee/range 
+						Make sure it causes damage
 				Magic that drains health instead of mana (blood magic)
 				
 		NPCs
