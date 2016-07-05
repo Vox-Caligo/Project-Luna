@@ -12,13 +12,6 @@ To Do:
 		Player	
 			Player Experience: Lead to more health and mana?
 			Multiple Protagonists
-			
-		Combat
-			AOE
-				Deals damage
-				Has a timer for how long it lasts
-				Does not disappear until timer is up
-			Magic that drains health instead of mana (blood magic)
 				
 		NPCs
 			Improved AI
@@ -47,6 +40,9 @@ To Do:
 			NPC health bars disappearing (switch to newest Unity the cause?)
 			
 		Refactor code
+		
+		Combat
+			Magic that drains health instead of mana (blood magic)
 		
 		Bugs?
 			Talking not working on first key press
@@ -129,7 +125,16 @@ To Do:
 			Magic/Range attacks
 				Position attack hitbox depending on melee/range 
 					Make sure it causes damage
+				Magic checks if usable
+					If it is the attack is cast and mana is used
+					If not enough mana then it doesnt go
 		Damage areas are out of Combat
+		AOE
+			Deals damage
+			Has a timer for how long it lasts
+			Does not disappear until timer is up
+		Combat
+			Ignores injuring the owner of the attack
 		
 	7/3
 		Have character chat change upon karma levels

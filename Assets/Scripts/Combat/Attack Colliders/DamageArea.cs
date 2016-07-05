@@ -16,11 +16,14 @@ public class DamageArea : MonoBehaviour
                 target.GetComponent<MasterBehavior>().characterHealth(target.GetComponent<MasterBehavior>().characterHealth() - weapon.Damage);
                 target.GetComponent<MasterBehavior>().characterInCombat();
             }
-
-            // can't just run through with a weapon (currently)
-            Destroy(this.gameObject);
+				
+			finishAttack();
         }
     }
+
+	protected virtual void finishAttack() {
+		Destroy(this.gameObject);	// can't just run through with a weapon (currently)
+	}
 
 	protected virtual void Update () { }
 }

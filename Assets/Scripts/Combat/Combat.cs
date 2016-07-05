@@ -84,7 +84,7 @@ public class Combat : MonoBehaviour {
 		// makes sure the player can attack
 		if (!inAttack && !inAttackDelay) {
 			inAttack = true;
-            AttackArea attackArea = new AttackArea(this.character, weaponDatabase.getWeapon(characterWeapon), currentDirection);
+			AttackArea attackArea = new AttackArea(this.character, this, weaponDatabase.getWeapon(characterWeapon), currentDirection);
         }
 	}
 

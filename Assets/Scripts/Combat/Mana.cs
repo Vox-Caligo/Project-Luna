@@ -38,6 +38,15 @@ public class Mana : MonoBehaviour {
         print("Manipulated mana: " + currentMana);
     }
 
+	public bool useMana(int useAmount) {
+		if (currentMana - useAmount >= 0) {
+			currentMana -= useAmount;
+			return true;
+		} 
+
+		return false;
+	}
+
     // get/set the character's mana
     public int CurrentMana {
         get { return currentMana; }
