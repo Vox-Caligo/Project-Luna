@@ -41,9 +41,6 @@ To Do:
 			
 		Refactor code
 		
-		Combat
-			Magic that drains health instead of mana (blood magic)
-		
 		Bugs?
 			Talking not working on first key press
 			Quest updating after completion
@@ -119,6 +116,10 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/5
+		Combat
+			Magic that drains health instead of mana (blood magic)
+				Blood magic drains health, hybrid drains health when mana is empty
 	7/4
 		Separated health and mana from combat
 		Range

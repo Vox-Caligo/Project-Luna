@@ -8,7 +8,7 @@ public class RangeAttackArea : DamageArea {
 	// AOE Stuff
 	private float aoeSize = -1;
 	private bool aoeGrowing = true;
-	private float explosionSpeed = 1;
+	private float explosionSpeed = 8;
 	private Vector2 aoeMaxSize;
 
     protected override void Update ()

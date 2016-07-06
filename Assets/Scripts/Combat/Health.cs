@@ -37,6 +37,10 @@ public class Health : MonoBehaviour {
         print("Manipulated health: " + currentHealth);
     }
 
+    public void useHealth(int useAmount) {
+        currentHealth -= useAmount;
+    }
+
     // get/set the character's health
     public int CurrentHealth {
         get { return currentHealth; }

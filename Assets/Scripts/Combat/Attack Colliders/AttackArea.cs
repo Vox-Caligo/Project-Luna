@@ -44,10 +44,26 @@ public class AttackArea : CollisionArea
 
 			if (weapon.Type == "Range") {
 				collisionDetector.name = "Range Attack";
-			} else if (weapon.Type == "Magic") {
+			} else if (weapon.Type.Contains("Magic")) {
 				collisionDetector.name = "Magic Attack";
-				validAttack = characterCombat.Mana.useMana (weapon.ManaCost);
-			}
+
+                int manaCost = weapon.ManaCost;
+                if (weapon.Type == "Standard Magic") {
+                    if (characterCombat.Mana.CurrentMana - manaCost >= 0) {
+                        characterCombat.Mana.CurrentMana = characterCombat.Mana.CurrentMana - manaCost;
+                    }
+                } else if(weapon.Type == "Blood Magic") {
+                    characterCombat.Health.CurrentHealth = characterCombat.Health.CurrentHealth - manaCost;
+                } else if (weapon.Type == "Hybrid Magic") {
+                    int healthCost = manaCost - characterCombat.Mana.CurrentMana;
+                    print("Hybrid Magic Mana Pre: " + characterCombat.Mana.CurrentMana);
+                    print("Hybrid Magic Health Pre:" + characterCombat.Health.CurrentHealth);
+                    characterCombat.Mana.CurrentMana = 0;
+                    characterCombat.Health.CurrentHealth = characterCombat.Health.CurrentHealth - healthCost;
+                    print("Hybrid Magic Mana Post: " + characterCombat.Mana.CurrentMana);
+                    print("Hybrid Magic Health Post:" + characterCombat.Health.CurrentHealth);
+                }
+            }
             
 			if (validAttack) {
 				sounds.playSound(weapon.Sounds[Random.Range(0, weapon.Sounds.Length)], true);
