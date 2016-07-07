@@ -45,6 +45,11 @@ public class TalkingNpc : InteractableItem
 	protected int currentDialogueSection = 0;
 	protected int timesTalkedTo = 0;
 
+    // NPC AI
+    protected DefaultAI npcAI;
+    protected Dictionary<int, string> combatCommand = new Dictionary<int, string>();
+    protected Dictionary<int, string> movementCommand = new Dictionary<int, string>();
+
 	// initializes/continues a conversation with this NPC
 	public override void onInteraction () {	
 		if(dialogueController == null) {
@@ -53,9 +58,14 @@ public class TalkingNpc : InteractableItem
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             //questLog = player.GetComponent<PlayerMaster>().PlayerQuests;
             playerKarma = player.GetComponent<PlayerMaster>().Karma;
+
+            //if (conversationNpc.GetType().IsSubclassOf(typeof(TalkingQuestGiver))) {
+            npcAI = this.gameObject.GetComponent<DefaultAI>();
         }
 
-		if(!dialogueController.InConversation) {
+        npcAI.InConversation = true;
+
+        if (!dialogueController.InConversation) {
 			setupConversation ();
 			dialogueController.enterConversation(this);
 		}
@@ -76,7 +86,17 @@ public class TalkingNpc : InteractableItem
 	// ends the current conversation
 	public void endConversation() {	
 		timesTalkedTo++;
-	}
+        npcAI.InConversation = false;
+        print("Ended: " + movementCommand.ContainsKey(currentDialogueSection - 1));
+
+        if(combatCommand.ContainsKey(currentDialogueSection - 1)) {
+            npcAI.changeCombatCommand(combatCommand[currentDialogueSection]);
+        }
+
+        if(movementCommand.ContainsKey(currentDialogueSection - 1)) {
+            npcAI.changeMovementCommand(movementCommand[currentDialogueSection - 1]);
+        }
+    }
 
 	// a dictionary holding all the dialogue in a conversation
 	public Dictionary<int, TalkingCharacterInformation> ConversationDialogue {

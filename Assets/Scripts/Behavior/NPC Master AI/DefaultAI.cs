@@ -10,6 +10,8 @@ public class DefaultAI : MasterBehavior
 	protected Vector2 currentPosition;		// the current location
 	protected Collision2D lastCollision;	// the last collision experienced
 	protected bool inCutscene = false;		// if character is in a cutscene
+    protected bool inConversation = false;
+    protected bool overrideKarmicActions = false;
 
 	// initializes combat and movement to default values
 	protected override void Start() {
@@ -37,8 +39,10 @@ public class DefaultAI : MasterBehavior
 			}
 		}
 
-		// respond to player karma
-		karmaReactions ();
+        // respond to player karma
+        if (!overrideKarmicActions) {
+            karmaReactions();
+        }
 	}
 
 	// collects the last collision
@@ -57,10 +61,12 @@ public class DefaultAI : MasterBehavior
 	// checks if the character can use ai and then runs its combat/movement scripts
 	protected virtual void Update ()
 	{
-		// cannot use ai if in a cutscene
-		if(!inCutscene) {
-			processDecisions();
-		}
+        // cannot use ai if in a cutscene
+        if (!inCutscene && !inConversation) {
+            processDecisions();
+        } else {
+            npcMovement.CurrentAction = "halt";
+        }
 
 		npcMovement.runScript();
 		npcCombat.runScript(npcMovement.CurrentDirection);
@@ -76,6 +82,16 @@ public class DefaultAI : MasterBehavior
 		}
 	}
 
+    public void changeMovementCommand(string newCommand) {
+        overrideKarmicActions = true;
+        npcMovement.CurrentAction = newCommand;
+    }
+
+    public void changeCombatCommand(string newCommand) {
+        overrideKarmicActions = true;
+        npcCombat.CurrentAction = newCommand;
+    }
+
 	// returns the characters movement controller
 	public DefaultMovementController NpcMovement {
 		get {return npcMovement;}
@@ -86,5 +102,10 @@ public class DefaultAI : MasterBehavior
 		get {return inCutscene;}
 		set {inCutscene = value;}
 	}
+    
+    public bool InConversation {
+        get { return inConversation; }
+        set { inCutscene = value; }
+    }
 }
 

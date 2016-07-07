@@ -32,6 +32,7 @@ public class MurderousJim : TalkingQuestGiver {
                 karmaFromDialogue.Add(4, -25);
 
                 conversationDialogue.Add(6, new TalkingCharacterInformation("Minion", "Then I'm going to kill you!"));
+                movementCommand.Add(6, "pursue");
                 karmaFromDialogue.Add(6, 25);
             } else {
                 conversationDialogue.Add(0, new TalkingCharacterInformation("Minion", "Leave me alone goody-two shoes!"));

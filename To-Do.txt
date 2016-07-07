@@ -1,35 +1,29 @@
 To Do:		
-	Phase Two:			
-		Cutscene 
-			Errors when skipping too fast (text gets chopped up)
-			Animation testing
-	
-		Puzzles
-			Make indication when something is wrong/right (noise)
-			
-		Animation pipeline
-		
-		Player	
-			Player Experience: Lead to more health and mana?
-			Multiple Protagonists
-				
+	Phase Two:							
 		NPCs
-			Improved AI
+			Movement
 				Teleporting
 				Pouncing
 			Ability to receive and give items to NPCs
-			Follower NPCs
-			Reavers: modified humans and animals that listen to Vox and his subordinates
-				When a Reaver attack hits it places the user under the Reaver Effect
-					While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
-						Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
-			Shape Changers: change their looks and attack styles
-			Shopkeepers
+			
+			AI / Character Types
+				Follower NPCs
+				Reavers: modified humans and animals that listen to Vox and his subordinates
+					When a Reaver attack hits it places the user under the Reaver Effect
+						While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
+							Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
+				Shape Changers: change their looks and attack styles
+				Shopkeepers
+				
 			NPC respond when hit
 			Wander should not stray too far from the start point when it begins to move
 				Should also be a bit less random
 			The directions have them have a bit of nuance but not 100% correct
 			Replace the int casting for a little bit of range (like a float?)
+		
+		Player	
+			Player Experience: Lead to more health and mana?
+			Multiple Protagonists
 		
 		Items to heal
 		
@@ -48,6 +42,7 @@ To Do:
 			Can't click on inventory items anymore
 			Fix dash and bounce to deal damage in the new system
 			Investigate: respondToCollision
+			Cutscene: Errors when skipping too fast (text gets chopped up)
 		
 	Phase Three:
 		Start piecing things together
@@ -55,6 +50,10 @@ To Do:
 			Create NPCs that are specialized
 			Create puzzles in levels
 			Specialized Karma reactions
+			
+		Apply Sounds
+			Puzzles
+				Make indication when something is wrong/right (noise)
 			
 		The Ot Brothers (Little, Middle, Big (Bigot))
 		
@@ -116,6 +115,11 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/6
+		Talking NPC
+			Have reactions to what the player says (change movement to flee, combat to attack, etc)
+			Stop moving when talking/interacted with
+				
 	7/5
 		Combat
 			Magic that drains health instead of mana (blood magic)

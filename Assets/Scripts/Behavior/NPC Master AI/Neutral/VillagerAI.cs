@@ -25,13 +25,15 @@ public class VillagerAI : DefaultAI
 	// how to respond to the players current karma level
 	protected override void karmaReactions() {
 		// have it do things depending on players current karma
-		if (playerKarma.Karma < 0) {
+
+        // TODO: Switch back to run from negative karma
+		if (playerKarma.Karma > 0) {
 			// flee if negative karma
 			npcMovement.TargetPoint = GameObject.FindGameObjectWithTag ("Player").transform.position;
 			npcMovement.CurrentAction = "flee";
 			npcCombat.CurrentAction = "";
 		} else {
-			// do nothing otherwise
+            // do nothing otherwise
 			npcMovement.CurrentAction = "halt";
 			npcCombat.CurrentAction = "";
 		}
