@@ -57,9 +57,11 @@ public class QuestLog : MonoBehaviour
 
         if (questLogUI.Invisible) {
             questLogUIGroup.alpha = 0;
+            questLogUIGroup.blocksRaycasts = false;
         }
         else {
             questLogUIGroup.alpha = 1;
+            questLogUIGroup.blocksRaycasts = true;
         }
     }
 

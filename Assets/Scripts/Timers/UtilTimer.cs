@@ -8,8 +8,8 @@ using System.Collections;
 public class UtilTimer : MonoBehaviour
 {
 	// current and max timer
-	private float runningTimerTick;
-	private float runningTimerMax;
+	protected float runningTimerTick;
+    protected float runningTimerMax;
 
 	// sets the current and max timer
 	public UtilTimer(float timerTick, float timerMax) {

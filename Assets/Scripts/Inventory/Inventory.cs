@@ -36,6 +36,8 @@ public class Inventory : MonoBehaviour
 	private CanvasGroup inventoryUIGroup;
 	private int inventoryRunner = 0;
 	private WeaponDB weaponData;
+    private ItemDB itemData;
+    private ArrayList potionEffects = new ArrayList();
 
 	// sets default variables when created
 	public Inventory(string storedInventory = null) {
@@ -48,8 +50,11 @@ public class Inventory : MonoBehaviour
 		// finds the weapon database
 		weaponData = GameObject.Find ("Databases").GetComponent<WeaponDB> ();
 
-		// finds the current player
-		currentPlayer = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster> ();
+        // finds the item database
+        itemData = GameObject.Find("Databases").GetComponent<ItemDB>();
+
+        // finds the current player
+        currentPlayer = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster> ();
 
 		// if an inventory exists, reads it in
 		if (storedInventory != null) {
@@ -147,9 +152,29 @@ public class Inventory : MonoBehaviour
 
 	// when an item is used, applies its effects to the player
 	public void equipOrUseItem(int itemLocation) {
-		if (personalInventory [itemLocation].Type == "Weapon") {
+        string itemType = personalInventory[itemLocation].Type;
+
+        if (itemType == "Weapon") {
 			currentPlayer.currentCharacterCombat ().changeWeapon (personalInventory [itemLocation].Name);
-		}
+		} else if (itemType.Contains("Health")) {
+            if (itemType.Contains("Instant")) {
+                currentPlayer.currentCharacterCombat().Health.addHealth(itemData.getItem(itemType).ManipulatedValueAmount);
+            } else if (itemType.Contains("Regenerative")) {
+                PotionTimer newRegenerativeEffect = new PotionTimer(currentPlayer, "Health", itemData.getItem(itemType).ActiveTime, itemData.getItem(itemType).ManipulatedValueAmount);
+                potionEffects.Add(newRegenerativeEffect);
+            }
+
+            removeItemFromInventory(personalInventory[itemLocation].Name);
+        } else if(itemType.Contains("Mana")) {
+            if (itemType.Contains("Instant")) {
+                currentPlayer.currentCharacterCombat().Mana.addMana(itemData.getItem(itemType).ManipulatedValueAmount);
+            } else if (itemType.Contains("Regenerative")) {
+                PotionTimer newRegenerativeEffect = new PotionTimer(currentPlayer, "Mana", itemData.getItem(itemType).ActiveTime, itemData.getItem(itemType).ManipulatedValueAmount);
+                potionEffects.Add(newRegenerativeEffect);
+            }
+
+            removeItemFromInventory(personalInventory[itemLocation].Name);
+        }
 	}
 
 	// places an item into the inventory
@@ -195,6 +220,12 @@ public class Inventory : MonoBehaviour
 
 		return currentInventory;
 	}
+
+    public void updateRegenerativePotions() {
+        foreach(PotionTimer potionTimer in potionEffects) {
+            potionTimer.updateEffect();
+        }
+    }
 
 	// returns the inventory UI's visiblity
 	public bool inventoryIsInvisible() {

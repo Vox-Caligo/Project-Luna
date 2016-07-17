@@ -60,8 +60,8 @@ public class InventoryUI : MonoBehaviour
 
 	// when an item is clicked it is responded to by either showing descriptions or equipping
 	private void itemSlotSelected(int selectedButton) {
-		// checks if the spot is visible
-		if (!invisible && inventoryImages [selectedButton].color.a == 1) {
+        // checks if the spot is visible
+        if (!invisible && inventoryImages [selectedButton].color.a == 1) {
 			// checks if the button has been previously clicked
 			if (previouslySelectedButton != selectedButton) {
 				// resets the previously selected button to grey
@@ -90,6 +90,7 @@ public class InventoryUI : MonoBehaviour
 	// adds an item to the inventory (visually)
 	public void addItem(int itemSlot, string itemName) {
 		inventoryImages[itemSlot].color = changeVisibility(inventoryImages[itemSlot].color, true);
+
 		inventoryImages[itemSlot].sprite = Resources.Load (itemDB.getValue(itemName, "Image"), typeof(Sprite)) as Sprite;
 		itemNames [itemSlot] = itemName;
 	}
@@ -97,24 +98,37 @@ public class InventoryUI : MonoBehaviour
 	// removes an item from the inventory (visually)
 	public void removeItem(int itemSlot) {
 		inventoryImages[itemSlot].color = changeVisibility(inventoryImages[itemSlot].color, false);
-	}
+        backgroundImages[itemSlot].color = backgroundGrey;
+    }
 
 	// equips an item that has been selected twice
 	public void equipItem(int selectedButton) {
-		for (int i = equippedItems.Length - 1; i >= 0; i--) {
+        string selectedItemType = itemDB.getValue(itemNames[selectedButton], "Type");
+
+        for (int i = equippedItems.Length - 1; i >= 0; i--) {
 			if (equippedItems [i]) {
-				if (itemDB.getValue (itemNames [i], "Type") == itemDB.getValue (itemNames [selectedButton], "Type")) {
+				if (itemDB.getValue (itemNames [i], "Type") == selectedItemType) {
 					backgroundImages [i].color = backgroundGrey;
 					equippedItems [i] = false;
 				}
 			}
 		}
 
-		// applies a color to signify selection
-		equippedItems[selectedButton]= true;
-		backgroundImages [selectedButton].color = backgroundYellow;
-		parentInventory.equipOrUseItem (selectedButton);
-	}
+        // applies a color to signify selection
+        if (selectedItemType == "Weapon") {
+            equippedItems[selectedButton] = true;
+            backgroundImages[selectedButton].color = backgroundYellow;
+        } else {
+            if(selectedItemType.Contains("Instant")) {
+                backgroundImages[selectedButton].color = backgroundGrey;
+                equippedItems[selectedButton] = false;
+            } else {
+                // TODO: Timer on item that will make it disappear once time is hit
+            }
+        }
+
+        parentInventory.equipOrUseItem(selectedButton);
+    }
 
 	// turns the inventory display on and off
 	private Color changeVisibility(Color givenItem, bool makeVisible) {

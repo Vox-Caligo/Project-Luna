@@ -36,7 +36,11 @@ public class InventoryItemsDB : MonoBehaviour {
 		allInventoryImages = new Dictionary<string, InventoryItemDB> ();
 		allInventoryImages.Add ("Starter Sword", new InventoryItemDB("Starter Sword", "InventoryImages/Sword", "A sword", "Dapper", "Weapon"));
 		allInventoryImages.Add ("Starter Axe", new InventoryItemDB("Starter Axe", "InventoryImages/Axe", "An axe", "Bloodthirst", "Weapon"));
-	}
+        allInventoryImages.Add("Instant Health Potion", new InventoryItemDB("Instant Health Potion", "InventoryImages/Health Potion", "A potion to heal health", "Instant Health", "Instant Health"));
+        allInventoryImages.Add("Instant Mana Potion", new InventoryItemDB("Instant Mana Potion", "InventoryImages/Mana Potion", "A potion to return mana", "Instant Mana", "Instant Mana"));
+        allInventoryImages.Add("Regenerative Health Potion", new InventoryItemDB("Regenerative Health Potion", "InventoryImages/Health Potion", "A potion to heal health", "Regenerative Health", "Regenerative Health"));
+        allInventoryImages.Add("Regenerative Mana Potion", new InventoryItemDB("Regenerative Mana Potion", "InventoryImages/Mana Potion", "A potion to return mana", "Regenerative Mana", "Regenerative Mana"));
+    }
 
 	// returns a value for the given item
 	public string getValue(string inventoryItem, string soughtValue) {
@@ -55,7 +59,7 @@ public class InventoryItemsDB : MonoBehaviour {
 			}
 		} 
 
-		print("Inventory item does not exist");
+		print("Inventory item " + inventoryItem + " does not exist");
 		return null;
 	}
 }

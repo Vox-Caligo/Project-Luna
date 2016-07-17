@@ -75,6 +75,14 @@ public class PlayerMaster : MasterBehavior {
             if (keyChecker.useKey(KeyCode.R)) {
                 playerQuests.changeQuestLogVisibility();
             }
+
+            // testing using a useable item
+            if (keyChecker.useKey(KeyCode.V)) {
+                playerQuests.changeQuestLogVisibility();
+            }
+
+            // check for passive items
+
         } else {
 			// hides inventory during cutscenes
 			if(!playerInventory.inventoryIsInvisible()) {
@@ -91,13 +99,21 @@ public class PlayerMaster : MasterBehavior {
 		if(keyChecker.useKey(KeyCode.O)) {
 			playerInventory.addItemFromInventory("Starter Sword", "Weapon");
 			playerInventory.addItemFromInventory("Starter Axe", "Weapon");
-		}
+            playerInventory.addItemFromInventory("Regenerative Health Potion", "Regenerative Health Potion");
+            playerInventory.addItemFromInventory("Regenerative Mana Potion", "Regenerative Mana Potion");
+        }
 
 		// test to remove items
 		if(keyChecker.useKey(KeyCode.P)) {
 			playerInventory.removeItemFromInventory("Starter Sword");
 			playerInventory.removeItemFromInventory("Starter Axe");
-		}
+            playerInventory.removeItemFromInventory("Instant Health Potion");
+            playerInventory.removeItemFromInventory("Instant Mana Potion");
+            playerInventory.removeItemFromInventory("Regenerative Health Potion");
+            playerInventory.removeItemFromInventory("Regenerative Mana Potion");
+        }
+
+        playerInventory.updateRegenerativePotions();
 	}
 
 	// checks for collisions being entered

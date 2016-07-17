@@ -23,15 +23,13 @@ To Do:
 		
 		Player	
 			Player Experience: Lead to more health and mana?
-			Multiple Protagonists
-		
-		Items to heal
 		
 		UI
 			Growing as the player gains more health
 			Clean it up and tighten (FOR EVERYTHING)
 				Includes staying on when things resize
 			NPC health bars disappearing (switch to newest Unity the cause?)
+			UI for item effects that are on
 			
 		Refactor code
 		
@@ -39,7 +37,6 @@ To Do:
 			Talking not working on first key press
 			Quest updating after completion
 			Health isnt showing above enemies
-			Can't click on inventory items anymore
 			Fix dash and bounce to deal damage in the new system
 			Investigate: respondToCollision
 			Cutscene: Errors when skipping too fast (text gets chopped up)
@@ -115,6 +112,12 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/16
+		Can click on inventory items (Quest log was blocking raycasts)
+			Fixes bug: Can't click on inventory items anymore
+		Can use potions to increase/decrease health/mana
+		Potions can be instant or used over time
+	
 	7/6
 		Talking NPC
 			Have reactions to what the player says (change movement to flee, combat to attack, etc)

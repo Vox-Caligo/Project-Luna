@@ -23,9 +23,13 @@ public class Health : MonoBehaviour {
 		}
 	}
 
-    public void addHealth(int addedHealth, int maxHealth = 0) {
+    public void addHealth(int addedHealth, int newMaxHealth = 0) {
         if (addedHealth < 0) {
             healthRegeneration = false;
+        }
+
+        if(newMaxHealth != 0) {
+            maxHealth = newMaxHealth;
         }
 
         if (addedHealth + currentHealth < maxHealth) {
