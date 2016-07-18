@@ -56,12 +56,8 @@ public class AttackArea : CollisionArea
                     characterCombat.Health.CurrentHealth = characterCombat.Health.CurrentHealth - manaCost;
                 } else if (weapon.Type == "Hybrid Magic") {
                     int healthCost = manaCost - characterCombat.Mana.CurrentMana;
-                    print("Hybrid Magic Mana Pre: " + characterCombat.Mana.CurrentMana);
-                    print("Hybrid Magic Health Pre:" + characterCombat.Health.CurrentHealth);
                     characterCombat.Mana.CurrentMana = 0;
                     characterCombat.Health.CurrentHealth = characterCombat.Health.CurrentHealth - healthCost;
-                    print("Hybrid Magic Mana Post: " + characterCombat.Mana.CurrentMana);
-                    print("Hybrid Magic Health Post:" + characterCombat.Health.CurrentHealth);
                 }
             }
             

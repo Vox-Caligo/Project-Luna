@@ -25,7 +25,7 @@ public class PotionTimer : MonoBehaviour {
         this.manipulatedValue = manipulatedValue;
     }
 
-    public void updateEffect() {
+    public bool updateEffect() {
         if(secondTicks < seconds) {
             timer += Time.deltaTime;
 
@@ -39,8 +39,10 @@ public class PotionTimer : MonoBehaviour {
                     currentPlayer.currentCharacterCombat().Mana.addMana(manipulatedValue);
                 }
             }
+
+            return true;
         } else {
-            Destroy(this);
+            return false;
         }
     }
 }

@@ -50,12 +50,12 @@ public class WeaponDB : MonoBehaviour {
     // sets the dictionary
     void Awake() {
         allWeapons = new Dictionary<string, WeaponStats>();
-		//allWeapons.Add("Starter Sword", new WeaponStats("Melee", 1, 20, .5f, .2f, new string[] { "Slash 1", "Slash 2" }));
+		allWeapons.Add("Starter Sword", new WeaponStats("Melee", 1, 2, .5f, .2f, new string[] { "Slash 1", "Slash 2" }));
         //allWeapons.Add("Starter Axe", new WeaponStats { Speed = 2, Damage = 10, Length = .5f, Width = .5f});
 
         // testing range and magic with this
-		allWeapons.Add("Starter Sword", new WeaponStats("Hybrid Magic", 1.5f, 20, .5f, .2f, new string[] { "Slash 1", "Slash 2" }, 5, 2, 10));
-		allWeapons.Add("Starter Axe", new WeaponStats("Hybrid Magic", 1.5f, 20, .5f, .2f, new string[] { "Slash 1", "Slash 2" }, 0, 2, 5));
+		//allWeapons.Add("Starter Sword", new WeaponStats("Hybrid Magic", 1.5f, 20, .5f, .2f, new string[] { "Slash 1", "Slash 2" }, 5, 2, 10));
+		//allWeapons.Add("Starter Axe", new WeaponStats("Hybrid Magic", 1.5f, 20, .5f, .2f, new string[] { "Slash 1", "Slash 2" }, 0, 2, 5));
     }
 
 	public WeaponStats getWeapon(string weapon) {

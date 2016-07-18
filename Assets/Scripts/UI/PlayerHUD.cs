@@ -85,6 +85,16 @@ public class PlayerHUD : MonoBehaviour {
 		}
 	}
 
+    // adds an item effect to the player hud
+    public GameObject addEffect(string addedEffectImagePath) {
+        GameObject itemEffect = Instantiate(Resources.Load("UI/ItemEffect")) as GameObject;
+        itemEffect.GetComponent<Image>().sprite = Resources.Load(addedEffectImagePath, typeof(Sprite)) as Sprite;
+        itemEffect.name = "Item Effect";
+        itemEffect.transform.parent = standardHud.transform;
+
+        return itemEffect;
+    }
+
 	// if the player gets more health or mana during gameplay
 	public void increaseStats(int newMaxHealth, int newMaxMana) {
 		maxHealth = newMaxHealth;

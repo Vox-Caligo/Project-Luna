@@ -23,13 +23,6 @@ To Do:
 		
 		Player	
 			Player Experience: Lead to more health and mana?
-		
-		UI
-			Growing as the player gains more health
-			Clean it up and tighten (FOR EVERYTHING)
-				Includes staying on when things resize
-			NPC health bars disappearing (switch to newest Unity the cause?)
-			UI for item effects that are on
 			
 		Refactor code
 		
@@ -40,6 +33,7 @@ To Do:
 			Fix dash and bounce to deal damage in the new system
 			Investigate: respondToCollision
 			Cutscene: Errors when skipping too fast (text gets chopped up)
+			Combat UI needs to be on screen to have the instantiations actually show
 		
 	Phase Three:
 		Start piecing things together
@@ -112,6 +106,14 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/17
+		NPC health bars disappearing (switch to newest Unity the cause?)
+		Removed NPC mana from showing
+		Clean it up and tighten (FOR EVERYTHING)
+			Includes staying on when things resize
+		Realized this already exists: Growing as the player gains more health
+		UI for item effects that are on
+	
 	7/16
 		Can click on inventory items (Quest log was blocking raycasts)
 			Fixes bug: Can't click on inventory items anymore

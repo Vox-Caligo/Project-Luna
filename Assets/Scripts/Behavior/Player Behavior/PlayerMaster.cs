@@ -97,10 +97,17 @@ public class PlayerMaster : MasterBehavior {
 
 		// test to add items
 		if(keyChecker.useKey(KeyCode.O)) {
-			playerInventory.addItemFromInventory("Starter Sword", "Weapon");
-			playerInventory.addItemFromInventory("Starter Axe", "Weapon");
+			//playerInventory.addItemFromInventory("Starter Sword", "Weapon");
+			//playerInventory.addItemFromInventory("Starter Axe", "Weapon");
             playerInventory.addItemFromInventory("Regenerative Health Potion", "Regenerative Health Potion");
             playerInventory.addItemFromInventory("Regenerative Mana Potion", "Regenerative Mana Potion");
+            playerInventory.addItemFromInventory("Regenerative Health Potion", "Regenerative Health Potion");
+            playerInventory.addItemFromInventory("Regenerative Mana Potion", "Regenerative Mana Potion");
+            playerInventory.addItemFromInventory("Regenerative Health Potion", "Regenerative Health Potion");
+            playerInventory.addItemFromInventory("Regenerative Mana Potion", "Regenerative Mana Potion");
+            playerInventory.addItemFromInventory("Regenerative Health Potion", "Regenerative Health Potion");
+            playerInventory.addItemFromInventory("Regenerative Mana Potion", "Regenerative Mana Potion");
+            //playerInventory.addItemFromInventory("Regenerative Mana Potion", "Regenerative Mana Potion");
         }
 
 		// test to remove items
@@ -109,6 +116,15 @@ public class PlayerMaster : MasterBehavior {
 			playerInventory.removeItemFromInventory("Starter Axe");
             playerInventory.removeItemFromInventory("Instant Health Potion");
             playerInventory.removeItemFromInventory("Instant Mana Potion");
+            playerInventory.removeItemFromInventory("Regenerative Health Potion");
+            playerInventory.removeItemFromInventory("Regenerative Mana Potion");
+
+            playerInventory.removeItemFromInventory("Regenerative Health Potion");
+            playerInventory.removeItemFromInventory("Regenerative Mana Potion");
+            playerInventory.removeItemFromInventory("Regenerative Health Potion");
+            playerInventory.removeItemFromInventory("Regenerative Mana Potion");
+            playerInventory.removeItemFromInventory("Regenerative Health Potion");
+            playerInventory.removeItemFromInventory("Regenerative Mana Potion");
             playerInventory.removeItemFromInventory("Regenerative Health Potion");
             playerInventory.removeItemFromInventory("Regenerative Mana Potion");
         }
@@ -211,5 +227,10 @@ public class PlayerMaster : MasterBehavior {
     // returns the player's quest log
     public QuestLog PlayerQuests {
         get { return playerQuests; }
+    }
+
+    // returns the player's hud
+    public PlayerHUD PlayerHud {
+        get { return playerHud; }
     }
 }

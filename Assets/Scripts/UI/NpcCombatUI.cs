@@ -30,24 +30,23 @@ public class NpcCombatUI : MonoBehaviour
 		this.startingMana = startingMana;
 		this.characterParent = characterParent;
 
-		// creates a new npc ui and attaches it to the npc
+        // creates a new npc ui and attaches it to the npc
 		combatUI = Instantiate(Resources.Load("UI/Combat UI")) as GameObject;
 		combatUI.GetComponent<Canvas>().sortingLayerName = "npc ui";
 		characterHeight = this.characterParent.GetComponent<BoxCollider2D> ().bounds.extents.y * 1.5f;
 		combatUI.transform.position = new Vector3(characterParent.transform.position.x, 
-													characterParent.transform.position.y + characterHeight);
+													characterParent.transform.position.y + (characterHeight * .75f));
+        combatUI.transform.parent = characterParent.transform;
 
-		// finds the health/mana bars
-		healthbar = combatUI.transform.Find ("HealthMask/Health").gameObject;
-		manabar = combatUI.transform.Find ("ManaMask/Mana").gameObject;
+        // finds the health/mana bars
+        healthbar = combatUI.transform.Find ("HealthMask/Health").gameObject;
 	}
 
 	// updates the ui to show the current amount of health and mana
 	public void updateUI(float currentHealth, float currentMana) {
 		healthbar.transform.localScale = new Vector3 (currentHealth / startingHealth, 1);
-		manabar.transform.localScale = new Vector3 (currentMana / startingMana, 1);
 		combatUI.transform.position = new Vector3(characterParent.transform.position.x, 
-													characterParent.transform.position.y + characterHeight);
+													characterParent.transform.position.y + (characterHeight * .75f));
 	}
 
 	// removes the UI from above the npc

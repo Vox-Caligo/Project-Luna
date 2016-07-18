@@ -8,15 +8,17 @@ using System.Collections.Generic;
 public class ItemStats {
     public bool IsPassive { get; set; }
     public int ActiveTime { get; set; }
+    public string AddedEffectImagePath { get; set; }
 
     // value for health/mana/damage to be manipulated
     public int ManipulatedValueAmount { get; set; }
 	
-    public ItemStats(bool isPassive, int manipulatedValueAmount, int activeTime = 0) {
+    public ItemStats(bool isPassive, int manipulatedValueAmount, int activeTime = 0, string addedEffectImagePath = "") {
         setItemSets(isPassive, manipulatedValueAmount);
 
         if (!isPassive) {
             ActiveTime = activeTime;
+            AddedEffectImagePath = addedEffectImagePath;
         }
     }
 
@@ -41,8 +43,8 @@ public class ItemDB : MonoBehaviour {
         // testing health potion
 		allItems.Add("Instant Health Potion", new ItemStats(false, 5));
         allItems.Add("Instant Mana Potion", new ItemStats(false, 5));
-        allItems.Add("Regenerative Health Potion", new ItemStats(false, 5, 2));
-        allItems.Add("Regenerative Mana Potion", new ItemStats(false, 5, 2));
+        allItems.Add("Regenerative Health Potion", new ItemStats(false, 5, 10, "EffectImages/HealthRegen"));
+        allItems.Add("Regenerative Mana Potion", new ItemStats(false, 5, 2, "EffectImages/ManaRegen"));
     }
 
 	public ItemStats getItem(string weapon) {

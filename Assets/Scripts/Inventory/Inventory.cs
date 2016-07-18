@@ -38,6 +38,10 @@ public class Inventory : MonoBehaviour
 	private WeaponDB weaponData;
     private ItemDB itemData;
     private ArrayList potionEffects = new ArrayList();
+    private ArrayList potionEffectIcons = new ArrayList();
+
+    // hacky fix location for potion effect icons to be based on
+    private Vector3 masterPotionEffectsLocation = new Vector3(37.5f, 658f);
 
 	// sets default variables when created
 	public Inventory(string storedInventory = null) {
@@ -162,6 +166,10 @@ public class Inventory : MonoBehaviour
             } else if (itemType.Contains("Regenerative")) {
                 PotionTimer newRegenerativeEffect = new PotionTimer(currentPlayer, "Health", itemData.getItem(itemType).ActiveTime, itemData.getItem(itemType).ManipulatedValueAmount);
                 potionEffects.Add(newRegenerativeEffect);
+
+                GameObject newIcon = currentPlayer.PlayerHud.addEffect(itemData.getItem(itemType).AddedEffectImagePath);
+                Vector3 itemEffectPosition = newIcon.transform.position;
+                potionEffectIcons.Add(newIcon);
             }
 
             removeItemFromInventory(personalInventory[itemLocation].Name);
@@ -171,6 +179,10 @@ public class Inventory : MonoBehaviour
             } else if (itemType.Contains("Regenerative")) {
                 PotionTimer newRegenerativeEffect = new PotionTimer(currentPlayer, "Mana", itemData.getItem(itemType).ActiveTime, itemData.getItem(itemType).ManipulatedValueAmount);
                 potionEffects.Add(newRegenerativeEffect);
+
+                GameObject newIcon = currentPlayer.PlayerHud.addEffect(itemData.getItem(itemType).AddedEffectImagePath);
+                Vector3 itemEffectPosition = newIcon.transform.position;
+                potionEffectIcons.Add(newIcon);
             }
 
             removeItemFromInventory(personalInventory[itemLocation].Name);
@@ -222,8 +234,23 @@ public class Inventory : MonoBehaviour
 	}
 
     public void updateRegenerativePotions() {
-        foreach(PotionTimer potionTimer in potionEffects) {
-            potionTimer.updateEffect();
+        for(int i = potionEffects.Count - 1; i >= 0; i--) {
+            PotionTimer potionTimer = potionEffects[i] as PotionTimer;
+
+            if (!potionTimer.updateEffect()) {
+                print("Once");
+                GameObject potionEffectIcon = potionEffectIcons[i] as GameObject;
+                potionEffectIcons.Remove(potionEffectIcon);
+                Destroy(potionEffectIcon);
+
+                potionEffects.RemoveAt(i);
+                Destroy(potionTimer);
+            }
+        }
+
+        for(int i = 0; i < potionEffectIcons.Count; i++) {
+            GameObject potionEffectIcon = potionEffectIcons[i] as GameObject;
+            potionEffectIcon.transform.position = new Vector3(masterPotionEffectsLocation.x, masterPotionEffectsLocation.y - (i * potionEffectIcon.GetComponent<RectTransform>().rect.height / 2));
         }
     }
 
