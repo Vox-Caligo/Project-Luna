@@ -6,25 +6,29 @@ using System.Collections;
  */
 public class Wandering : BaseMovement
 {
-	// gets the current direction and start point
+    // gets the current direction and start point
+    private int currentDirection = -1;
 	private Vector2 currentDirectionVelocity = new Vector2();
 	private Vector2 startPoint;
+    private float allowableDistance;
 
-	// timer variables
-	private UtilTimer wanderingMotionTimer = new UtilTimer(2, 2);
+    // timer variables
+    private float maxWanderingDelay = 5;
+	private UtilTimer wanderingMotionTimer;
 
 	// sets the point where it starts
-	public Wandering (GameObject character) : base(character) {
+	public Wandering (GameObject character, float allowableDistance) : base(character) {
 		startPoint = character.GetComponent<Rigidbody2D>().position;
-	}
+        wanderingMotionTimer = new UtilTimer(maxWanderingDelay, maxWanderingDelay);
+        this.allowableDistance = allowableDistance;
+    }
 
 	// wandering around
 	public int wanderingCheck(float movementSpeed) {
-		if(!wanderingMotionTimer.runningTimerCountdown()) {
-			return proceedToWandering(movementSpeed, false);						
+        if (wanderingMotionTimer.runningTimerCountdown() && Vector2.Distance(startPoint, character.transform.position) < allowableDistance) {
+            return proceedToWandering(movementSpeed, false);						
 		} else {
-			float maxTimer = wanderingMotionTimer.RunningTimerMax;
-			wanderingMotionTimer.RunningTimerMax = Random.Range(maxTimer - maxTimer / .25f, maxTimer);
+			wanderingMotionTimer.RunningTimerMax = Random.Range(maxWanderingDelay - maxWanderingDelay / .25f, maxWanderingDelay);
 			return proceedToWandering(movementSpeed, true);
 		}
 	}
@@ -32,29 +36,34 @@ public class Wandering : BaseMovement
 	// has the player move and sets the direction they are going
 	private int proceedToWandering(float movementSpeed, bool determineNewDirection) {
 		int newCurrentDirection = -1;
+        Vector2 characterPosition = character.transform.position;
 
-		if(determineNewDirection) {
-			int newDirection = Random.Range(0, 20);
+        if (determineNewDirection) {
+            newCurrentDirection = Random.Range(0, 50);
+        }
 
-			if(newDirection <= 5) {
-				currentDirectionVelocity = new Vector2(-movementSpeed, 0);
-				newCurrentDirection = 0;
-			} else if(newDirection <= 10) {
-				currentDirectionVelocity = new Vector2(0, movementSpeed);
-				newCurrentDirection = 1;
-			} else if(newDirection <= 15) {
-				currentDirectionVelocity = new Vector2(movementSpeed, 0);
-				newCurrentDirection = 2;
-			} else if(newDirection <= 20) {
-				currentDirectionVelocity = new Vector2(0, -movementSpeed);
-				return 3;
-			} else {
-				currentDirectionVelocity = new Vector2(0,0);
-				newCurrentDirection = -1;
-			}
-		}
+        // check that either the direction is -1 or that it is not the exact opposite and it's within the distance
+        do {
+            if (newCurrentDirection <= 5 && currentDirection != 2) {
+                currentDirectionVelocity = new Vector2(characterPosition.x - movementSpeed, 0);
+                currentDirection = 0;
+            } else if (newCurrentDirection <= 10 && currentDirection != 3) {
+                currentDirectionVelocity = new Vector2(0, characterPosition.y + movementSpeed);
+                currentDirection = 1;
+            } else if (newCurrentDirection <= 15 && currentDirection != 0) {
+                currentDirectionVelocity = new Vector2(characterPosition.x + movementSpeed, 0);
+                currentDirection = 2;
+            } else if (newCurrentDirection <= 20 && currentDirection != 1) {
+                currentDirectionVelocity = new Vector2(0, characterPosition.y - movementSpeed);
+                return 3;
+            } else if(newCurrentDirection > 20) {
+                currentDirectionVelocity = new Vector2(0, 0);
+                currentDirection = -1;
+            }
+        } while (Vector2.Distance(startPoint, currentDirectionVelocity) > allowableDistance && newCurrentDirection != -1);
+        // causing an infinite loop
 
-		character.GetComponent<Rigidbody2D>().velocity = currentDirectionVelocity;
-		return newCurrentDirection;
+        character.transform.position = Vector2.MoveTowards(character.transform.position, currentDirectionVelocity, Time.deltaTime * movementSpeed);
+        return newCurrentDirection;
 	}
 }

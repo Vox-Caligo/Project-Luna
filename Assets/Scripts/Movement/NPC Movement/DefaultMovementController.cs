@@ -30,7 +30,7 @@ public class DefaultMovementController : CharacterMovementController
 	public DefaultMovementController(string characterName, GameObject character) {
 		this.characterName = characterName;
 		this.character = character;
-		wanderingFunctions = new Wandering(this.character);
+		wanderingFunctions = new Wandering(this.character, 1);
 		pursuingFunctions = new Pursuing(this.character);
 		pathfollowingFunctions = new PathFollowing(this.character, new ArrayList(){new Vector2(115f, 5f), new Vector2(115f, 10f), new Vector2(120f, 10f), new Vector2(120f, 5f)}, true);
 		bouncingFunctions = new Bounce(this.character);
@@ -75,7 +75,8 @@ public class DefaultMovementController : CharacterMovementController
 
 		// TODO: eventually just move this down here when wander is tweaked
 		currentDirection = (moveCharacter != -1) ? moveCharacter : currentDirection;
-	}
+
+    }
 
 	// ways for the npc to respond to colliding with an object
 	public void respondToCollision(Collision2D col) {

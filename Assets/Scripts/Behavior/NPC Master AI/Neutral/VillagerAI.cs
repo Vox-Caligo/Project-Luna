@@ -30,7 +30,7 @@ public class VillagerAI : DefaultAI
 		if (playerKarma.Karma > 0) {
 			// flee if negative karma
 			npcMovement.TargetPoint = GameObject.FindGameObjectWithTag ("Player").transform.position;
-			npcMovement.CurrentAction = "flee";
+			npcMovement.CurrentAction = "wander";
 			npcCombat.CurrentAction = "";
 		} else {
             // do nothing otherwise
