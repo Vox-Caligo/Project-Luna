@@ -3,23 +3,17 @@ To Do:
 		NPCs
 			Movement
 				Teleporting
-				Pouncing
-			Ability to receive and give items to NPCs
 			
 			AI / Character Types
-				Follower NPCs
-				Reavers: modified humans and animals that listen to Vox and his subordinates
-					When a Reaver attack hits it places the user under the Reaver Effect
-						While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
-							Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
+				Follower NPCs				
 				Shape Changers: change their looks and attack styles
 				Shopkeepers
+					Ability to receive and give items to NPCs
 				
 			NPC respond when hit
-			Wander should not stray too far from the start point when it begins to move
-				Should also be a bit less random
-			The directions have them have a bit of nuance but not 100% correct
-			Replace the int casting for a little bit of range (like a float?)
+				Add weight to all NPCs so that the player cant push them around
+			The directions have them have a bit of nuance but not 100% correct?
+			Replace the int casting for a little bit of range (like a float?)?
 		
 		Player	
 			Player Experience: Lead to more health and mana?
@@ -102,10 +96,22 @@ To Do:
 		Animation
 			Player enters water and changes sprite. When they leave they return. No inbetween (like a pool ladder or the like)
 				Unless feeling masochistic, in which case animate a few sections of it (one whole body then quarter it off by water levels)
+				
+		AI / Character Types
+			Reavers: modified humans and animals that listen to Vox and his subordinates
+				When a Reaver attack hits it places the user under the Reaver Effect
+					While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
+						Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
+						
+		AI Movement
+			Pouncing
 
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/19-20
+		Worked on Wandering but have decided that currently it is of little use and will be put on indefinite hold
+	
 	7/17
 		NPC health bars disappearing (switch to newest Unity the cause?)
 		Removed NPC mana from showing
