@@ -7,10 +7,11 @@ using System.Collections;
 public class DefaultShapeshifterAI : DefaultAI
 {
 	protected bool hostile = false;
+    protected bool shifted = false;
 
 	// create a minion's combat and movement
 	protected override void Start() {
-		characterName = "Reaver";
+		characterName = "Shapeshifter";
 		npcCombat = new MinionCombatController(characterName, this.gameObject);
 		npcMovement = new MinionMovementController(characterName, this.gameObject);
 	}
@@ -21,20 +22,23 @@ public class DefaultShapeshifterAI : DefaultAI
 		// will eventually go through and actually think things through
 		npcMovement.TargetPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
 
-		// pursue the player until close enough, then decide to attack
+        if (!shifted) {
+            // pursue the player until close enough, then decide to attack
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load("test1") as Sprite;
 
-		// if far away head towards the player, if close then attack
-		if(Vector2.Distance(currentPosition, npcMovement.TargetPoint) > 1.5f/*this.gameObject.GetComponent<BoxCollider2D>().bounds.*/) {
-			npcMovement.CurrentAction = "pursue";
-			npcCombat.CurrentAction = "";
-		} else {
-			npcMovement.CurrentAction = "nearby-player";
-			npcCombat.CurrentAction = "attack";
-		}
+        } else {
+            // if far away head towards the player, if close then attack
+            if (Vector2.Distance(currentPosition, npcMovement.TargetPoint) > 1.5f/*this.gameObject.GetComponent<BoxCollider2D>().bounds.*/) {
 
-		// testing purposes
-		npcMovement.CurrentAction = "halt";
-		npcCombat.CurrentAction = "";
+                // determine when the character changes skin (change movement/combat to new character)
+
+                npcMovement.CurrentAction = "pursue";
+                npcCombat.CurrentAction = "";
+            } else {
+                npcMovement.CurrentAction = "nearby-player";
+                npcCombat.CurrentAction = "attack";
+            }
+        }
 
 		base.processDecisions();
 	}

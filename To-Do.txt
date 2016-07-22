@@ -1,12 +1,8 @@
 To Do:		
 	Phase Two:							
 		NPCs
-			Movement
-				Teleporting
-			
 			AI / Character Types
 				Follower NPCs				
-				Shape Changers: change their looks and attack styles
 				Shopkeepers
 					Ability to receive and give items to NPCs
 				
@@ -102,7 +98,8 @@ To Do:
 				When a Reaver attack hits it places the user under the Reaver Effect
 					While under the effect, player health cannot regenerate and, when the player experiences death, it causes a perma...death
 						Permadeath results in meeting with the Eternal (who respawns the player) but comes at a penalty
-						
+			Shape Changers: change their looks and attack styles			
+			
 		AI Movement
 			Pouncing
 
