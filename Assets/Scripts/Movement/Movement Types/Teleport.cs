@@ -7,56 +7,48 @@ using System.Collections;
  */
 public class Teleport : BaseMovement
 {
-	private Vector2 currentMovement;
-	private Vector2 dashLocation;
-	private bool dashing = false;
-	
-	public Teleport(GameObject character) : base(character) {}
+    // gets the current direction and start point
+    private Vector2 currentDirectionVelocity = new Vector2();
+    private Vector2 homePoint;
 
-	// checks if it should head to a position or no longer pursuing if there
-	public int pursuitCheck(Vector2 targetPoint, float movementSpeed) {
-		float targetX = targetPoint.x;
-		float targetY = targetPoint.y;
-		float currentX = this.character.GetComponent<Rigidbody2D> ().position.x;
-		float currentY = this.character.GetComponent<Rigidbody2D> ().position.y;
+    // timer variables
+    private float teleportTimeDelay = 2;
+    private UtilTimer teleportDelayTimer;
 
-		Vector2 currentPosition = character.transform.position;
-		character.transform.position = Vector2.MoveTowards(character.transform.position, targetPoint, Time.deltaTime * movementSpeed);
-		Vector2 newPosition = character.transform.position;
-		return calculateDirection(currentPosition, newPosition);
-	}
+    // sets the point where it starts
+    public Teleport(GameObject character) : base(character) {
+        homePoint = character.GetComponent<Rigidbody2D>().position;
+        teleportDelayTimer = new UtilTimer(teleportTimeDelay, teleportTimeDelay);
+    }
 
-	// checks if the character is dashing and pursues if it's supposed to
-	public int dashCheck(Vector2 targetPoint, float movementSpeed) {
-		if (!dashing) {
-			dashing = true;
-			dashLocationCalculator(targetPoint);
-		} else {
-			dashLocationCalculator(dashLocation);
-		}
+    public void targetedTeleport(Vector3 target, float teleportDistance, int direction) {
+        Vector3 teleportLocation;
 
-		return pursuitCheck(dashLocation, movementSpeed * 4);
-	}
+        if (direction == 0) {
+            teleportLocation = new Vector3(target.x - teleportDistance, target.y);
+        } else if(direction == 1) {
+            teleportLocation = new Vector3(target.x, target.y + teleportDistance);
+        } else if (direction == 2) {
+            teleportLocation = new Vector3(target.x + teleportDistance, target.y);
+        } else {
+            teleportLocation = new Vector3(target.x, target.y - teleportDistance);
+        }
 
-	// calculates where the player will dash too until it stops
-	private void dashLocationCalculator(Vector2 targetPoint) {
-		float newTargetPointX = (targetPoint.x - character.transform.position.x) * 2f;
-		float newTargetPointY = (targetPoint.y - character.transform.position.y) * 2f;
+        teleport(teleportLocation);
+    }
 
-		if (Mathf.Abs(newTargetPointX) <= 100 && Mathf.Abs(newTargetPointY) <= 100) {
-			dashLocation.x = targetPoint.x + (targetPoint.x - character.transform.position.x) * 2f;
-			dashLocation.y = targetPoint.y + (targetPoint.y - character.transform.position.y) * 2f;
-		}
-	}
+    public void randomTeleport(float allowableDistance) {
+        float randomX = Random.Range(-allowableDistance, allowableDistance);
+        float randomY = Random.Range(-allowableDistance, allowableDistance);
 
-	// checks if the player is fleeing
-	public int fleeCheck(Vector2 targetPoint, float movementSpeed) {
-		return pursuitCheck (targetPoint, -movementSpeed);
-	}
+        Vector3 teleportLocation = new Vector3(homePoint.x + randomX, homePoint.y + randomY);
+        teleport(teleportLocation);
+    }
 
-	// get/set if the character is dashing
-	public bool Dashing {
-		get { return dashing; }
-		set { dashing = value; }
-	}
+    private void teleport(Vector3 newLocation) {
+        if (!teleportDelayTimer.runningTimerCountdown()) {
+            print("hit");
+            character.transform.position = newLocation;
+        }
+    }
 }

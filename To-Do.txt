@@ -109,6 +109,10 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/21
+		Teleporting NPCs work
+			This includes randomly in an area as well as in a targeted direction
+	
 	7/19-20
 		Worked on Wandering but have decided that currently it is of little use and will be put on indefinite hold
 	
