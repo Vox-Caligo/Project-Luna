@@ -1,8 +1,7 @@
 To Do:		
 	Phase Two:							
 		NPCs
-			AI / Character Types
-				Follower NPCs				
+			AI / Character Types		
 				Shopkeepers
 					Ability to receive and give items to NPCs
 				
@@ -15,6 +14,7 @@ To Do:
 			Player Experience: Lead to more health and mana?
 			
 		Refactor code
+			Character movement moved to top controller and get/set
 		
 		Bugs?
 			Talking not working on first key press
@@ -106,6 +106,9 @@ To Do:
 ------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------
+	7/22
+		Follower NPCs working
+	
 	7/21
 		Teleporting NPCs work
 			This includes randomly in an area as well as in a targeted direction

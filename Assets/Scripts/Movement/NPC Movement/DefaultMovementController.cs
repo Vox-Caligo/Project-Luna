@@ -16,6 +16,8 @@ public class DefaultMovementController : CharacterMovementController
 	protected int currentDirection = 0;
 	protected bool injureViaMovement = false;
 	protected Vector2 targetPoint;
+    protected int targetDirection;
+    protected float followSpeed;
 	protected Vector3 previousLocation;
     protected int teleportDirection;
 
@@ -77,6 +79,9 @@ public class DefaultMovementController : CharacterMovementController
                 break;
             case "target teleport":
                 teleportFunctions.targetedTeleport(targetPoint, 3, teleportDirection);
+                break;
+            case "follow":
+                moveCharacter = pursuingFunctions.followCharacter(targetPoint, targetDirection, followSpeed, movementSpeed);
                 break;
         default:
 			break;
@@ -140,8 +145,19 @@ public class DefaultMovementController : CharacterMovementController
 		set {targetPoint = value;}
 	}
 
+    // get/set the targets current direction
+    public int TargetDirection {
+        get { return targetDirection; }
+        set { targetDirection = value; }
+    }
+
     // get/set the current npc point of interest
     public int TeleportDirection {
         set { teleportDirection = value; }
+    }
+
+    // set the current character follow speed
+    public float FollowSpeed {
+        set { followSpeed = value; }
     }
 }

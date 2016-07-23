@@ -47,4 +47,8 @@ public class MasterBehavior : MonoBehaviour
 		get { return karma; }
 		set { karma = value; }
 	}
+
+    public CharacterMovementController CharacterMovement {
+        get { return characterMovement; }
+    }
 }

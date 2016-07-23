@@ -40,7 +40,9 @@ public class StatDB : MonoBehaviour {
 		allCharacters.Add ("Player", new StandardStats(20, 10, 10));
 		allCharacters.Add ("Minion", new StandardStats(10, 5, 5, 5, 5));
 		allCharacters.Add ("Villager", new StandardStats(10, 5, 5, -5, 5));
-	}
+        allCharacters.Add ("Shapeshifter", new StandardStats(10, 5, 5, -5, 5));
+        allCharacters.Add ("Follower", new StandardStats(10, 5, 5, -5, 5));
+    }
 
 	// returns a value for a property of the given character
 	public int getValue(string character, string soughtValue) {

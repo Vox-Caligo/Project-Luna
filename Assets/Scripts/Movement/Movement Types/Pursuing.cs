@@ -38,8 +38,8 @@ public class Pursuing : BaseMovement
 		return pursuitCheck(dashLocation, movementSpeed * 4);
 	}
 
-	// calculates where the player will dash too until it stops
-	private void dashLocationCalculator(Vector2 targetPoint) {
+    // calculates where the character will dash too until it stops
+    private void dashLocationCalculator(Vector2 targetPoint) {
 		float newTargetPointX = (targetPoint.x - character.transform.position.x) * 2f;
 		float newTargetPointY = (targetPoint.y - character.transform.position.y) * 2f;
 
@@ -49,13 +49,35 @@ public class Pursuing : BaseMovement
 		}
 	}
 
-	// checks if the player is fleeing
+	// checks if the character is fleeing
 	public int fleeCheck(Vector2 targetPoint, float movementSpeed) {
 		return pursuitCheck (targetPoint, -movementSpeed);
 	}
 
-	// get/set if the character is dashing
-	public bool Dashing {
+    // have the character follow a character
+    public int followCharacter(Vector2 targetPoint, int leaderDirection, float followDistance, float movementSpeed) {
+        // checks if the character is within a certain distance
+
+        if (Vector2.Distance(character.transform.position, targetPoint) > followDistance) {
+            Vector2 pointToApproach;
+            if (leaderDirection == 0) {
+                pointToApproach = new Vector3(targetPoint.x + followDistance, targetPoint.y);
+            } else if (leaderDirection == 1) {
+                pointToApproach = new Vector3(targetPoint.x, targetPoint.y - followDistance);
+            } else if (leaderDirection == 2) {
+                pointToApproach = new Vector3(targetPoint.x - followDistance, targetPoint.y);
+            } else {
+                pointToApproach = new Vector3(targetPoint.x, targetPoint.y + followDistance);
+            }
+
+            return pursuitCheck(pointToApproach, movementSpeed);
+        }
+
+        return -1;
+    }
+
+    // get/set if the character is dashing
+    public bool Dashing {
 		get { return dashing; }
 		set { dashing = value; }
 	}

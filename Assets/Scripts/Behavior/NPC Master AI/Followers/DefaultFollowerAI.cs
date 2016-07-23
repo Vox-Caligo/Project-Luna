@@ -7,14 +7,18 @@ using System.Collections;
 public class DefaultFollowerAI : DefaultAI
 {
 	protected bool hostile = false;
+    protected GameObject targetCharacter;
+    protected bool followAtSpeed = false;
 
 	// set the combat, movement, and check the players karma
 	protected override void Start() {
-		characterName = "Villager";
+		characterName = "Follower";
 		npcCombat = new VillagerCombatController(characterName, this.gameObject);
 		npcMovement = new MinionMovementController(characterName, this.gameObject);
 		playerKarma = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster>().currentCharacterCombat();
-	}
+        targetCharacter = GameObject.FindGameObjectWithTag("Player");
+
+    }
 
 	// run through ai
 	protected override void processDecisions ()
@@ -24,17 +28,13 @@ public class DefaultFollowerAI : DefaultAI
 
 	// how to respond to the players current karma level
 	protected override void karmaReactions() {
-		// have it do things depending on players current karma
-		if (playerKarma.Karma < 0) {
-			// flee if negative karma
-			npcMovement.TargetPoint = GameObject.FindGameObjectWithTag ("Player").transform.position;
-			npcMovement.CurrentAction = "flee";
-			npcCombat.CurrentAction = "";
-		} else {
-			// do nothing otherwise
-			npcMovement.CurrentAction = "halt";
-			npcCombat.CurrentAction = "";
-		}
+		// flee if negative karma
+		npcMovement.TargetPoint = targetCharacter.transform.position;
+        npcMovement.TargetDirection = targetCharacter.GetComponent<PlayerMaster>().currentCharacterMovement().CurrentDirection;
+        npcMovement.FollowSpeed = 1.5f; // change this to be character speed or players depending on actions
+
+        npcMovement.CurrentAction = "follow";
+		npcCombat.CurrentAction = "";
 	}
 
 	// how to respond to a collision

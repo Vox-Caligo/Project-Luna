@@ -47,7 +47,6 @@ public class Teleport : BaseMovement
 
     private void teleport(Vector3 newLocation) {
         if (!teleportDelayTimer.runningTimerCountdown()) {
-            print("hit");
             character.transform.position = newLocation;
         }
     }
