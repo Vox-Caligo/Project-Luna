@@ -42,6 +42,7 @@ public class StatDB : MonoBehaviour {
 		allCharacters.Add ("Villager", new StandardStats(10, 5, 5, -5, 5));
         allCharacters.Add ("Shapeshifter", new StandardStats(10, 5, 5, -5, 5));
         allCharacters.Add ("Follower", new StandardStats(10, 5, 5, -5, 5));
+        allCharacters.Add ("Shopkeeper", new StandardStats(10, 5, 5, -5, 5));
     }
 
 	// returns a value for a property of the given character

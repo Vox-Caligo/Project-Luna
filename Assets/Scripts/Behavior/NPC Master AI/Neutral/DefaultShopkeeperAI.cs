@@ -6,11 +6,12 @@ using System.Collections;
  */
 public class DefaultShopkeeperAI : DefaultAI
 {
-	protected bool hostile = false;
+    protected ArrayList personalInventory;
+    protected ArrayList acceptedTypesToBuy;
 
 	// set the combat, movement, and check the players karma
 	protected override void Start() {
-		characterName = "Villager";
+		characterName = "Shopkeeper";
 		npcCombat = new VillagerCombatController(characterName, this.gameObject);
 		npcMovement = new MinionMovementController(characterName, this.gameObject);
 		playerKarma = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMaster>().currentCharacterCombat();
